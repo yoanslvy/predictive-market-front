@@ -14,7 +14,7 @@ export const metadata = {
   title: 'Explore - UNCX Network',
   description: 'UNCX Token Vesting and Liquidity Locking',
   alternates: {
-    canonical: `/lockers/explore/pools`,
+    canonical: `/grants/explore/latest`,
   },
   twitter: {
     card: 'summary_large_image',

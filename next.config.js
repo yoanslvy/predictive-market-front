@@ -14,60 +14,24 @@ const nextConfig = {
         source: '/',
         destination:
           process.env.NEXT_PUBLIC_IS_SAFE === 'true'
-            ? '/lockers/manage/lockers-v2'
-            : '/lockers/explore/pools',
+            ? '/grants/manage/grants'
+            : '/grants/explore/pools',
         permanent: true,
       },
       {
         source: '/amm/:path*', // Match all routes under `/amm`
         destination:
           process.env.NEXT_PUBLIC_IS_SAFE === 'true'
-            ? '/lockers/manage/lockers-v2'
-            : '/lockers/explore/pools',
+            ? '/grants/manage/grants'
+            : '/grants/explore/latest',
         permanent: true, // Set false for a 307 Temporary Redirect, true for 308 Permanent Redirect
       },
       {
         source: '/chain/:path*', // Match all routes under `/amm`
         destination:
           process.env.NEXT_PUBLIC_IS_SAFE === 'true'
-            ? '/lockers/manage/lockers-v2'
-            : '/lockers/explore/pools',
-        permanent: true, // Set false for a 307 Temporary Redirect, true for 308 Permanent Redirect
-      },
-      {
-        source: '/services', // Match all routes under `/amm`
-        destination:
-          process.env.NEXT_PUBLIC_IS_SAFE === 'true'
-            ? '/lockers/manage/lockers-v2'
-            : '/lockers/explore/pools',
-        permanent: true, // Set false for a 307 Temporary Redirect, true for 308 Permanent Redirect
-      },
-      {
-        source: '/dashboard', // Match all routes under `/amm`
-        destination:
-          process.env.NEXT_PUBLIC_IS_SAFE === 'true'
-            ? '/lockers/manage/lockers-v2'
-            : '/lockers/explore/pools',
-        permanent: true, // Set false for a 307 Temporary Redirect, true for 308 Permanent Redirect
-      },
-      {
-        source: '/uncx-staking', // Match all routes under `/amm`
-        destination: 'https://app.uncx.network/staking/explore', // Redirect to external domain
-        permanent: true, // Set false for a 307 Temporary Redirect, true for 308 Permanent Redirect
-      },
-      {
-        source: '/staking', // Match all routes under `/amm`
-        destination: 'https://app.uncx.network/staking/explore', // Redirect to external domain
-        permanent: true, // Set false for a 307 Temporary Redirect, true for 308 Permanent Redirect
-      },
-      {
-        source: '/minter', // Match all routes under `/amm`
-        destination: 'https://app.uncx.network/minter/mint', // Redirect to external domain
-        permanent: true, // Set false for a 307 Temporary Redirect, true for 308 Permanent Redirect
-      },
-      {
-        source: '/terms/:path*', // Match all routes under `/amm`
-        destination: 'https://app.uncx.network/terms-conditions/:path*', // Redirect to external domain
+            ? '/grants/manage/grants'
+            : '/grants/explore/latest',
         permanent: true, // Set false for a 307 Temporary Redirect, true for 308 Permanent Redirect
       },
     ]

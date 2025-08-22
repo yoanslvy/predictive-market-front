@@ -8,7 +8,6 @@ import Value from '@modules/Value'
 
 import { getAllGrants, getGrant } from '@/src/app/server/getAllGrants'
 import Pagination from '@/src/components/modules/Pagination'
-import { timeDifference } from '@/src/utils/global'
 
 export const shortenEthAddress = (address: string, startLength?: number, endLength?: number) =>
   `${address?.substring(0, startLength || 5)}...${address?.substring(58 - (endLength || 1))}`
@@ -78,7 +77,7 @@ export default async function TokenTableServer({
           },
           {
             title: 'Deadline',
-            render: ({ data }) => timeDifference(Number(data.deadline) * 1000),
+            render: ({ data }) => Number(data.deadline) * 1000,
           },
 
           /*    {
@@ -127,7 +126,7 @@ export default async function TokenTableServer({
         total={Number(grants.length)}
         perPage={Number(props.entriesPerPage)}
         page={props.page ? Number(props.page) : 1}
-        pathname={`/lockers/explore/latest`}
+        pathname={`/grants/explore/latest`}
         query={{ page: props.page, filter: props.filter, chain: props.chain }}
       />
     </>

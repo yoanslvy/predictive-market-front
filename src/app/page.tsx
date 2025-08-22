@@ -1,5 +1,5 @@
 import { redirect } from 'next/navigation'
 
 export default function HomePage() {
-  redirect('/lockers/explore/latest')
+  redirect('/grants/explore/latest')
 }

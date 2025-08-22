@@ -14,13 +14,7 @@ export const metadata: Metadata = {
   description: 'Most advanced decentralized token and liquidity locker',
 }
 
-export default function RootLayout({
-  children,
-  search,
-}: {
-  children: ReactNode
-  search: ReactNode
-}) {
+export default function RootLayout({ children }: { children: ReactNode }) {
   return (
     <>
       <Page
@@ -45,7 +39,7 @@ export default function RootLayout({
         ]}>
         {children}
       </Page>
-      {search}
+
       <div id="modal-root" />
       <Toaster />
       <Tooltip />

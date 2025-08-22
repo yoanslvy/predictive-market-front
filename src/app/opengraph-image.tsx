@@ -1,12 +1,12 @@
 'server-only'
 
+import IconSuccess from '@images/emoji/lock.svg'
+
 import OpenGraphImage from '@/src/components/modules/OpenGraphImage'
 import { OGPSection } from '@/src/components/modules/OpenGraphImage/OGPSection'
 import { OGPStats, TokenData } from '@/src/components/modules/OpenGraphImage/OGPStats'
 import { OGPTvl } from '@/src/components/modules/OpenGraphImage/OGPTvl'
 import { getTokenIconUrl } from '@/src/components/modules/TokenAsset/utils'
-import { fetchTvl } from '@server/fetchers/fetchTvl'
-import IconSuccess from "@images/emoji/lock.svg";
 
 export const revalidate = 600
 
@@ -24,12 +24,9 @@ export const size = {
 export const contentType = 'image/jpeg'
 
 export default async function Image() {
-
-  let tvl = await fetchTvl()
-
-  const imageData = await fetch(new URL('@src/app/(metadata)/opengraph_background.png', import.meta.url)).then((res) =>
-    res.arrayBuffer()
-  )
+  const imageData = await fetch(
+    new URL('@src/app/(metadata)/opengraph_background.png', import.meta.url)
+  ).then((res) => res.arrayBuffer())
 
   // const tokens: TokenData[] = [
   //   { address: '0x14feE680690900BA0ccCfC76AD70Fd1b95D10e16', symbol: '$PAAL', iconUrl: '' },
@@ -42,13 +39,14 @@ export default async function Image() {
 
   return OpenGraphImage(
     <OGPTvl>
-      <div style={{
-        width: '95px',
-        display: 'flex',
-        placeItems: 'center',
-        alignItems: 'center',
-        justifyContent: 'space-between'
-      }}>
+      <div
+        style={{
+          width: '95px',
+          display: 'flex',
+          placeItems: 'center',
+          alignItems: 'center',
+          justifyContent: 'space-between',
+        }}>
         <strong
           style={{
             fontSize: '46px',
@@ -59,21 +57,16 @@ export default async function Image() {
             textTransform: 'uppercase',
           }}>
           TVL
-
         </strong>
         {/* <IconSuccess /> */}
-
       </div>
-      <span style={{
-        fontSize: '100px',
-      }}>
-        ${formatter.format(tvl)}
-      </span>
-
+      <span
+        style={{
+          fontSize: '100px',
+        }}></span>
     </OGPTvl>,
     imageData
   )
-
 
   // return OpenGraphImage(
   //   <OGPSection>

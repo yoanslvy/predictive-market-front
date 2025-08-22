@@ -136,12 +136,12 @@ export default async function sitemap() {
     }
   }) ?? []
 
-  
+
   return [
     ...tokenMap,
 
     {
-      url: baseUrl.concat('/lockers/explore/pools'),
+      url: baseUrl.concat('/grants/explore/latest'),
       lastModified: new Date()
     },
     {
