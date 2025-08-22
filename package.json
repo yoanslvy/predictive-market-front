@@ -21,6 +21,7 @@
     "node": "22.x"
   },
   "dependencies": {
+    "@graphql-yoga/plugin-persisted-operations": "^3.6.3",
     "@heroicons/react": "^2.0.18",
     "@internationalized/date": "^3.2.0",
     "@nivo/core": "^0.83.0",
@@ -70,13 +71,15 @@
     "tailwindcss-animate": "^1.0.7",
     "uniqolor": "1.1.1",
     "uuid": "^9.0.1",
-    "viem": "^2.34.0",
-    "wagmi": "^2.16.4",
+    "viem": "^2.23.1",
+    "wagmi": "^2.14.11",
     "zod": "^3.24.1",
     "zod-validation-error": "^3.4.1",
     "zustand": "^4.4.2"
   },
   "devDependencies": {
+    "@graphprotocol/client-cli": "3.0.0",
+    "@graphql-mesh/transform-prefix": "^0.99.7",
     "@svgr/webpack": "^8.1.0",
     "@trivago/prettier-plugin-sort-imports": "^4.3.0",
     "@types/js-cookie": "^3.0.6",
