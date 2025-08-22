@@ -1,0 +1,54 @@
+.container {
+  background: var(--color-bg-80);
+  border-radius: 16px;
+  display: flex;
+  flex-flow: column;
+  gap: 1px;
+  overflow: clip;
+}
+
+.header {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  padding: 16px;
+}
+
+.heading {
+  flex: 1 0 0;
+  margin-right: auto;
+
+  & + .tools {
+    &:empty {
+      display: none;
+    }
+  }
+}
+
+.tools {
+  display: flex;
+  gap: 12px;
+  justify-content: flex-end;
+}
+
+.switch {
+  flex: 0 0 auto;
+  background: var(--color-bg-100);
+  border-radius: 8px;
+  padding: 2px;
+
+  & + .tools {
+    flex: 1 0 0;
+  }
+}
+
+.tab {
+  composes: tab from '../Tabs/Tabs.module.scss';
+  border-radius: 6px;
+}
+
+.body {
+  &:empty {
+    display: none;
+  }
+}

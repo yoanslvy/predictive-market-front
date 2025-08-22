@@ -1,0 +1,47 @@
+.container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.xxs {
+  gap: 4px;
+}
+.xs {
+  gap: 8px;
+}
+.sm {
+  gap: 16px;
+}
+.md {
+  gap: 24px;
+}
+
+.jc-s {
+  justify-content: start;
+}
+.jc-c {
+  justify-content: center;
+}
+.jc-sa {
+  justify-content: space-around;
+}
+.jc-sb {
+  justify-content: space-between;
+}
+.jc-se {
+  justify-content: space-evenly;
+}
+
+.ai-stretch {
+  align-items: stretch;
+}
+.ai-start {
+  align-items: start;
+}
+.ai-center {
+  align-items: center;
+}
+.ai-end {
+  align-items: end;
+}

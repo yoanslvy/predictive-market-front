@@ -1,0 +1,92 @@
+.container {
+  flex: 0 1 auto;
+  display: inline-flex;
+  vertical-align: middle;
+  align-items: center;
+  text-align: center;
+  justify-content: center;
+  white-space: nowrap;
+  font-weight: 400;
+}
+
+.caption {
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.sm {
+  font-size: 9px;
+  line-height: 10px;
+  text-transform: uppercase;
+  height: 20px;
+  padding: 4px 6px;
+  border-radius: 6px;
+
+  &.default {
+    color: var(--color-hover);
+  }
+}
+
+.md {
+  font-size: 14px;
+  line-height: 20px;
+  height: 24px;
+  border: 1px currentColor solid;
+  padding: 1px 7px;
+  border-radius: 8px;
+}
+
+.lg {
+  font-size: 16px;
+  line-height: 24px;
+  height: 32px;
+  border-radius: 8px;
+}
+
+.fill {
+  background: currentColor;
+
+  .caption {
+    color: var(--color-bg-100);
+  }
+}
+
+.comment {
+  color: var(--color-muted);
+}
+
+.primary {
+  color: rgba(var(--color-primary) / 1);
+}
+
+.secondary {
+  color: rgba(var(--color-secondary) / 1);
+}
+
+.success {
+  color: var(--color-success);
+}
+
+.danger {
+  color: var(--color-danger);
+}
+
+.info {
+  color: var(--color-info);
+}
+
+.warning {
+  color: var(--color-warn);
+}
+
+.prompt {
+  color: var(--color-prompt);
+}
+
+.clear {
+  color: var(--color-transparent);
+
+  .caption {
+    color: var(--color-light);
+  }
+}

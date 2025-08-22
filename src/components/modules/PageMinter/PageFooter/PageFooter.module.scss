@@ -1,0 +1,82 @@
+.container {
+  max-width: calc(836px + var(--page-padding) * 2);
+  padding: var(--page-padding);
+  margin: 0 auto;
+  display: flex;
+  gap: 16px;
+  flex-flow: row wrap;
+  justify-content: space-between;
+  font-size: 14px;
+  font-weight: 400;
+
+  @media (max-width: 768px) {
+    flex-flow: column;
+    align-items: center;
+    font-size: 12px;
+    flex-flow: column-reverse;
+  }
+}
+
+.info {
+  padding: 8px 16px;
+  border-radius: 12px;
+  background: var(--color-bg-100);
+  justify-content: center;
+
+  &Data {
+    @media (max-width: 480px) {
+      flex-flow: column-reverse;
+    }
+  }
+}
+
+.copyright {
+  display: flex;
+  gap: 12px;
+  align-items: center;
+
+  &Icon {
+    width: 20px;
+  }
+}
+
+.trustpilot {
+  display: flex;
+  gap: 12px;
+  align-items: center;
+
+  &Icon {
+    width: 18px;
+    height: 18px;
+  }
+}
+
+.links {
+  &List {
+    margin: 0;
+    padding: 0;
+    list-style: none;
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    flex-flow: row wrap;
+  }
+}
+
+.link {
+  flex: 1 0 auto;
+  display: block;
+  color: var(--color-text);
+  text-decoration: none;
+  text-align: center;
+
+  &[href]:focus-visible,
+  &[href]:hover {
+    color: rgba(var(--color-primary-a) / 1);
+  }
+
+  &Icon {
+    display: block;
+    height: 20px;
+  }
+}

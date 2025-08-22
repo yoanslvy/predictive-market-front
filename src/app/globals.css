@@ -1,0 +1,66 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  :root {
+    @apply dark:bg-dark-base-999 dark:text-sky-50;
+  }
+}
+
+@layer components {
+  .green-button {
+    @apply bg-[#19de72] my-auto rounded-full
+    py-1 h-10 mx-2 w-32 text-xl font-semibold flex items-center 
+    justify-center cursor-pointer border border-[#234169];
+  }
+
+  .dark-backround-style {
+    @apply bg-dark-base-999 shadow-md 
+    shadow-black/40 rounded-3xl border border-zinc-900;
+  }
+
+  .background-style {
+    @apply backdrop-blur-md shadow-md shadow-black/40 rounded-2xl 
+  border-[#292c32] bg-dark-base-900;
+  }
+
+  .light-background-style {
+    @apply first-letter:shadow-black/40 
+    backdrop-blur-md rounded-2xl
+    border-dark-base-400 border bg-dark-base-600;
+  }
+}
+
+@layer utilities {
+  .font-apk-protocol {
+    font-family: var(--font-apk-protocol), sans-serif;
+  }
+}
+
+/* 
+ @layer components {
+  .base-card-singleColGrid {
+    @apply grid max-w grid-cols-1 bg-[#111111]/70 gap-4 rounded-3xl p-5 m-auto max-w-5xl
+  }
+ } */
+
+@media (prefers-color-scheme: dark) {
+  html {
+    color-scheme: dark;
+  }
+  body {
+    color: white;
+  }
+}
+
+/* Hide scrollbar for Chrome, Safari and Opera */
+.modal-content::-webkit-scrollbar {
+  display: none;
+}
+
+/* Hide scrollbar for IE, Edge and Firefox */
+.modal-content {
+  -ms-overflow-style: none;  /* IE and Edge */
+  scrollbar-width: none;  /* Firefox */
+}

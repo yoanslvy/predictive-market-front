@@ -1,0 +1,90 @@
+@import '@styles/_mixins';
+
+.container {
+  display: inline-flex;
+  vertical-align: 100%;
+  align-items: center;
+  vertical-align: middle;
+  --outline-shift: -8px;
+  --outline-size: 2px;
+  --chain-size: 12px;
+  --chain-shift: 2px;
+}
+
+.combo {
+  display: flex;
+  align-items: flex-end;
+}
+
+.icons {
+  display: flex;
+  flex-direction: row-reverse;
+}
+
+.withChain {
+  composes: withChain from '../TokenAsset/TokenAsset.module.scss';
+}
+
+.icon {
+  position: relative;
+
+  &:not(:last-child) {
+    margin-left: var(--outline-shift);
+    mask: radial-gradient(
+      calc(var(--outline-size) + (var(--size) / 2)) at
+        calc(-1 * var(--outline-shift) + (-1 * var(--size) / 2)) calc(var(--size) / 2),
+      rgba(0, 0, 0, 0) 98%,
+      #000
+    );
+  }
+}
+
+.chain {
+  composes: chain from '../TokenAsset/TokenAsset.module.scss';
+}
+
+.title {
+  flex: 1 0 0;
+  text-overflow: ellipsis;
+  font-weight: inherit;
+  color: inherit;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+
+  @media (min-width: 960.1px) {
+    max-width: 30ch;
+  }
+
+  @media (max-width: 960px) {
+    max-width: 18ch;
+  }
+}
+
+.xxs {
+  composes: xxs from '../TokenAsset/TokenAsset.module.scss';
+}
+
+.xs {
+  composes: xs from '../TokenAsset/TokenAsset.module.scss';
+}
+
+.sm {
+  composes: sm from '../TokenAsset/TokenAsset.module.scss';
+}
+
+.md {
+  composes: md from '../TokenAsset/TokenAsset.module.scss';
+}
+
+.lg {
+  composes: lg from '../TokenAsset/TokenAsset.module.scss';
+}
+
+.xl {
+  composes: xl from '../TokenAsset/TokenAsset.module.scss';
+}
+
+.xxl {
+  composes: xxl from '../TokenAsset/TokenAsset.module.scss';
+}

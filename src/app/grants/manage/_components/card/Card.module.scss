@@ -1,0 +1,86 @@
+@import '@styles/_mixins';
+
+.container{
+  display: flex;
+  flex-wrap: wrap;
+  gap: 24px;
+
+}
+
+.card{
+  display: flex;
+  flex-direction: column;
+  flex: 0 0 calc(50% - 12px);
+  background-color: var(--color-bg-80);
+  border-radius: 16px;
+  @media (max-width: 767px) {
+    flex: 0 0 100%;
+  }
+
+  &[href]:focus-visible,
+  &[href]:hover {
+    transition: all 0.5s;
+    background: var(--color-shade);
+    .cardHeader,
+    .cardAsset:before{
+      background: rgba(30, 33, 40, 0.3);
+    }
+  }
+  &.loading {
+    pointer-events: none;
+
+    .content > * {
+      @include element-preloader-animated;
+    }
+  }
+} 
+.cardHeader{
+  padding: 24px 16px;
+  background-color: var(--color-bg-70);
+  border-radius: 16px 16px 0 0;
+  font-size: 14px;
+}
+.cardAsset{
+  padding: 0 16px;
+  position: relative;
+  display: flex;
+  align-items: center;
+  z-index: 2;
+  justify-content: space-between;
+  &:before{
+    content: '';
+    position: absolute;
+    height: 50%;
+    width: 100%;
+    background-color: var(--color-bg-70);
+    top: 0;
+    left: 0;
+    z-index: -1;
+  }
+}
+
+.cardTokens{
+  padding: 0 16px;
+}
+.cardFooter{
+  display: flex;
+  padding: 24px 16px;
+  flex-wrap: wrap;
+  gap: 8px 0;
+}
+.cardDetail{
+  flex: 1 0 0;
+  display: flex;
+  flex-direction: column;
+  @media (max-width: 479px){
+    flex: 1 0 50%;
+  }
+}
+
+.colorLight{
+  color: var(--color-light);
+}
+
+.colorPrimary{
+  color: rgba(var(--color-primary) / 1);
+}

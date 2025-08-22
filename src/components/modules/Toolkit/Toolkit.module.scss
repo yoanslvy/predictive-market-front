@@ -1,0 +1,134 @@
+.container {
+  @media (max-width: 960px) {
+    display: none;
+    flex-flow: column;
+    justify-content: flex-end;
+    position: fixed;
+    z-index: 210;
+    left: 0;
+    right: 0;
+    top: 80px;
+    bottom: 0;
+    animation: fadeIn 0.25s ease forwards;
+    background: rgba(0, 0, 0, 0.8);
+
+    @keyframes fadeIn {
+      from {
+        opacity: 0;
+        visibility: hidden;
+      }
+
+      to {
+        opacity: 1;
+        visibility: visible;
+      }
+    }
+
+    &.open {
+      pointer-events: all;
+      display: flex;
+    }
+  }
+
+  @media (min-width: 960.1px) {
+    display: block !important;
+    border-radius: 16px;
+  }
+}
+
+body:has(.open) {
+  touch-action: none;
+  pointer-events: none;
+  overflow: hidden;
+  overscroll-behavior: contain;
+}
+
+.modal {
+  composes: radii from '../../../styles/_common.scss';
+  width: 100%;
+  display: flex;
+  flex-flow: column;
+  gap: 16px;
+  border-radius: var(--radii, 16px);
+  background: var(--color-bg-80);
+  padding: 16px;
+
+  @media (max-width: 960px) {
+    position: relative;
+    border-radius: var(--radii, 16px) var(--radii, 16px) 0 0;
+    animation: slideIn 0.25s ease forwards;
+    max-height: 100%;
+
+    @keyframes slideIn {
+      from {
+        transform: translateY(25vh);
+      }
+
+      to {
+        transform: translateY(0);
+      }
+    }
+  }
+}
+
+.opener {
+  z-index: 99;
+
+  @media (min-width: 960.1px) {
+    display: none !important;
+  }
+
+  @media (max-width: 960px) {
+    position: fixed;
+    right: var(--page-padding);
+    bottom: 80px;
+  }
+
+  &Open {
+    display: none;
+  }
+}
+
+.close {
+  position: absolute;
+  right: 16px;
+  top: 16px;
+  width: 24px;
+  height: 24px;
+  min-width: 24px;
+  padding: 0;
+
+  background: none;
+  color: rgba(var(--color-primary) / 1);
+
+  &:focus-visible,
+  &:hover {
+    background: none;
+  }
+
+  @media (min-width: 960.1px) {
+    display: none !important;
+  }
+}
+
+.content,
+.header {
+  display: flex;
+  flex-flow: column;
+  gap: 16px;
+  flex: 0 0 auto;
+}
+
+.body {
+  display: grid;
+  gap: 16px;
+  grid-template-columns: 100%;
+  flex: 0 1 auto;
+  margin: 0 -16px -16px;
+  padding: 0 16px 16px;
+
+  @media (max-width: 960px) {
+    overflow: auto;
+    overflow: overlay;
+  }
+}

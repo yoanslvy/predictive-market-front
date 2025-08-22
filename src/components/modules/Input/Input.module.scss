@@ -1,0 +1,133 @@
+.container {
+  flex: 1 0 auto;
+  display: inline-flex;
+  vertical-align: middle;
+  flex-flow: column;
+  gap: 16px;
+  border-color: var(--color-bg-40);
+  --input-padding: 16px;
+
+  &.pending {
+    &:after {
+      content: '';
+      flex: 0 0 auto;
+      width: calc(100% - var(--radii, 2px));
+      margin: -17px calc(var(--radii, 2px) / 2) 0;
+      height: 1px;
+      border-radius: 4px;
+
+      animation: pending 2.5s linear infinite;
+      background: linear-gradient(
+          to right,
+          rgba(var(--color-primary) / 1) 30%,
+          rgba(var(--color-primary) / 0) 30%
+        )
+        top left / 150% 150% no-repeat;
+
+      @keyframes pending {
+        0% {
+          background-position: 300% 0;
+        }
+        100% {
+          background-position: -300% 0;
+        }
+      }
+    }
+  }
+}
+
+.title {
+  composes: container from '../Heading/Heading.module.scss';
+  font-size: 16px;
+  line-height: 24px;
+}
+
+.body {
+  display: flex;
+  align-items: center;
+  border-color: inherit;
+  flex: 1;
+}
+
+.clear {
+  margin-left: -36px;
+  opacity: 0;
+  visibility: hidden;
+  transition: 0.25s ease;
+  color: rgba(var(--color-primary) / 1);
+
+  &:hover,
+  &:focus-visible {
+    color: rgba(var(--color-primary-a) / 1);
+  }
+
+  &.active {
+    opacity: 1;
+    visibility: visible;
+  }
+}
+
+.input {
+  flex: 0 0 100%;
+  composes: radii from '../../../styles/_common.scss';
+  composes: radii-child from '../../../styles/_common.scss';
+  border-radius: var(--radii, 12px);
+  background: var(--color-bg-100);
+  border: 1px solid;
+  border-color: inherit;
+  padding: 0 var(--input-padding);
+  color: var(--color-light);
+  font-size: inherit;
+  font-weight: inherit;
+  width: 100%;
+  transition: 0.25s ease;
+
+  &::placeholder {
+    color: var(--color-text);
+  }
+
+  &.disabled {
+    background: var(--color-bg-90);
+    color: var(--color-bg-40);
+
+    &::placeholder {
+      color: var(--color-bg-40);
+    }
+  }
+}
+
+.xl {
+  font-size: 20px;
+  font-weight: 700;
+
+  .input {
+    height: 64px;
+  }
+}
+
+.lg {
+  font-size: 20px;
+  font-weight: 700;
+
+  .input {
+    height: 48px;
+  }
+}
+
+.md {
+  font-size: 20px;
+  font-weight: 700;
+
+  .input {
+    height: 40px;
+  }
+}
+
+.sm {
+  font-size: 14px;
+  font-weight: 400;
+
+  .input {
+    height: 36px;
+  }
+}

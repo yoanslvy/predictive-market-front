@@ -1,0 +1,29 @@
+.container {
+  display: flex;
+  flex-flow: column;
+  gap: 16px;
+  align-items: stretch;
+}
+
+.header {
+  display: flex;
+  flex-flow: column;
+  gap: 16px;
+  align-items: center;
+  text-align: center;
+}
+
+.image {
+  width: 50px;
+  height: 40px;
+}
+
+.title {
+  font-weight: 400;
+  font-size: 14px;
+  line-height: 20px;
+}
+
+.button {
+  width: 100%;
+}

@@ -1,0 +1,40 @@
+.card{
+  display: flex;
+  gap: 16px;
+  padding: 24px;
+  background-color: var(--color-bg-100);
+  border-radius: 16px;
+  flex: 1 auto;
+  @media (max-width: 768px) {
+    width: 100%;
+  }
+}
+.heading{
+  display: flex;
+  flex-flow: column;
+  gap: 8px
+}
+
+.icon{
+  display: flex;
+  justify-content: flex-end;
+}
+
+.description{
+  padding-right: 24px;
+}
+
+.flow-column{
+  flex-flow: column;
+  .icon{
+    padding-bottom: 24px;
+  }
+}
+
+.flow-row{
+  flex-flow: row;
+  .heading{
+    justify-content: flex-end;
+    padding-bottom: 24px;
+  }
+}

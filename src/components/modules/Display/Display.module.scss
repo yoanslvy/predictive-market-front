@@ -1,0 +1,73 @@
+.container {
+  composes: radii from '../../../styles/_common.scss';
+  border-radius: var(--radii, 16px);
+
+  border: 1px var(--color-bg-40) solid;
+  background: var(--color-bg-100);
+  padding: 16px;
+
+  display: flex;
+  flex-flow: column;
+  gap: 16px;
+
+  container-type: inline-size;
+}
+
+.header,
+.footer {
+  display: flex;
+  flex-flow: row wrap;
+  gap: 8px 16px;
+  align-items: center;
+  justify-content: space-between;
+  font-size: 12px;
+  line-height: 16px;
+}
+
+.body {
+  display: flex;
+  flex-flow: column;
+  gap: 16px;
+}
+
+.title {
+  color: var(--color-text);
+}
+
+.input {
+  display: flex;
+  gap: 8px;
+  align-items: center;
+}
+
+.control {
+  composes: container from '../Input/Input.module.scss';
+  flex: 1 0 64px;
+  margin: 0 -8px;
+  border: 0;
+  font-size: 28px;
+  font-weight: 700;
+  border-color: transparent !important;
+  --input-padding: 8px;
+
+  @container (width < 340px) {
+    font-size: 20px;
+  }
+}
+
+.presets {
+  display: flex;
+  gap: 8px;
+  overflow-x: auto;
+  overflow-x: overlay;
+  margin: 0 -16px;
+  padding: 0 16px;
+}
+
+.preset {
+  flex: 1 0 max-content;
+}
+
+.max {
+  color: var(--color-text);
+}

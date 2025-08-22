@@ -1,0 +1,6 @@
+<svg xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 10 11">
+    <circle cx="5" cy="2.5" r="2" />
+    <circle cx="8.75" cy="5.5" r="1.25" />
+    <circle cx="1.25" cy="1.25" r="1.25" transform="matrix(-1 0 0 1 2.5 4.25)" />
+    <path d="M8 7.5c.5 1 1 2 1 3h1c0-2.291-.75-3-2-3Zm0 3H2s0-5 3-5 3 5 3 5Zm-6-3c-.5 1-1 2-1 3H0c0-2.291.75-3 2-3Z" />
+</svg>

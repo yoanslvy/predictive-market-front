@@ -1,0 +1,23 @@
+.container{
+  max-width: 530px;
+  margin: auto;
+  display: flex;
+  flex-flow: column;
+  justify-content: center;
+  align-items: center;
+  padding: 24px;
+  gap: 16px;
+  background-color: var(--color-bg-80);
+}
+
+.description{
+  font-size: 14px;
+}
+
+.action{
+  display: flex;
+  gap: 16px;
+  button{
+    width: 120px;
+  }
+}

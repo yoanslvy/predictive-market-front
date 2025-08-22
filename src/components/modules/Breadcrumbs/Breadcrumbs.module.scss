@@ -1,0 +1,43 @@
+.container {
+  padding: 4px;
+  border-radius: 16px;
+  height: 32px;
+  width: max-content;
+  max-width: 100%;
+  background: var(--color-bg-100);
+  overflow: auto;
+  overflow: overlay;
+}
+
+.list {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+  display: flex;
+}
+
+.item {
+  &:not(:last-child) {
+    border-right: 1px var(--color-bg-60) solid;
+  }
+}
+
+.link {
+  height: 24px;
+  color: var(--color-text);
+  display: flex;
+  gap: 8px;
+  align-items: center;
+  font-size: 12px;
+  line-height: 16px;
+  padding: 2px 12px;
+
+  &:hover {
+    color: rgba(var(--color-primary-a) / 1);
+  }
+}
+
+.icon {
+  width: 16px;
+  height: 16px;
+}

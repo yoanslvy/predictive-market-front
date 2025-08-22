@@ -1,0 +1,89 @@
+@import "@styles/_mixins";
+
+.container {
+  color: var(--color-light);
+  display: inline-flex;
+  vertical-align: middle;
+  flex-flow: column;
+  gap: 4px;
+  flex: 0 1 auto;
+}
+
+.header {
+}
+
+.body {
+  display: flex;
+  align-items: center;
+}
+
+.icon {
+  margin-right: 8px;
+  display: flex;
+  color: rgba(var(--color-primary) / 1);
+
+  & > * {
+    min-height: 1.1em;
+  }
+}
+
+.title {
+  display: block;
+  color: var(--color-text);
+  font-weight: 400;
+  font-size: 12px;
+  line-height: 16px;
+}
+
+.value {
+  .loading & {
+    flex: 1 0 0;
+    @include element-preloader-animated;
+  }
+}
+
+.prefix,
+.suffix {
+  font-weight: 400;
+  color: var(--color-text);
+}
+
+.footer{
+  font-weight: 400;
+  font-size: 14px;
+}
+
+.lg {
+  font-size: 24px;
+  font-weight: 700;
+
+  .title {
+    text-transform: uppercase;
+  }
+}
+
+.md {
+  font-size: 18px;
+  font-weight: 700;
+
+  .title {
+    text-transform: uppercase;
+  }
+}
+
+.sm {
+  font-size: 16px;
+}
+
+.xs {
+  font-size: 14px;
+}
+
+.xxs {
+  font-size: 12px;
+}
+
+.center{
+  text-align: center;
+  justify-content: center;
+}

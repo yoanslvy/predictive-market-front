@@ -1,0 +1,44 @@
+{
+  "compilerOptions": {
+    "target": "es2020",
+    "lib": ["dom", "dom.iterable", "es2020", "esnext"],
+    "allowJs": true,
+    "skipLibCheck": true,
+    "strict": true,
+    "forceConsistentCasingInFileNames": true,
+    "noEmit": true,
+    "esModuleInterop": true,
+    "module": "esnext",
+    "moduleResolution": "node",
+    "resolveJsonModule": true,
+    "isolatedModules": true,
+    "jsx": "preserve",
+    "incremental": true,
+    "plugins": [
+      {
+        "name": "next"
+      }
+    ],
+    "baseUrl": ".",
+    "paths": {
+      "@/*": ["./*"],
+      "@api/*": ["./src/app/api/*"],
+      "@server/*": ["./src/server/*"],
+      // "@queries/*": ["./src/app/server/queries/*"],
+      "@graphql/*": ["./src/interfaces/graphql/*"],
+      "@public/*": ["./public/*"],
+
+      "@modules/*": ["./src/components/modules/*"],
+      "@components/*": ["./src/components/*"],
+      "@interfaces/*": ["./src/interfaces/*"],
+      "@images/*": ["./src/images/*"],
+      "@utils/*": ["./src/utils/*"],
+      "@src/*": ["./src/*"],
+      "@styles/*": ["./src/styles/*"],
+      "@cn": ["./src/src/utils"],
+      "@ts-types/*": ["./src/ts-types/*"],
+    }
+  },
+  "include": ["next-env.d.ts", "**/*.ts", "**/*.tsx", ".next/types/**/*.ts", "src/resolvers.js"],
+  "exclude": ["node_modules", "src/components/modal/index.jsx"]
+}

@@ -1,0 +1,32 @@
+.container {
+  display: flex;
+  align-items: center;
+  position: relative;
+  z-index: 1;
+}
+
+.token {
+  position: relative;
+  width: auto;
+  border-radius: 50%;
+
+  &:not(:first-child) {
+    z-index: -1;
+  }
+
+  &:not(:last-child) {
+    margin-right: -14px;
+  }
+}
+
+img.token {
+  border: 3px var(--color-bg-80) solid;
+}
+
+.xl {
+  .token {
+    &:not(:last-child) {
+      margin-right: -16px;
+    }
+  }
+}

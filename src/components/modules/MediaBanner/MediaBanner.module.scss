@@ -1,0 +1,40 @@
+.container {
+  display: flex;
+  align-items: center;
+  padding: 48px;
+  position: relative;
+  background: #000;
+  color: var(--color-light);
+  border: 1px var(--color-separator) solid;
+  border-radius: 12px;
+  overflow: clip;
+  min-height: 240px;
+
+  &:first-child {
+    margin-bottom: 16px;
+  }
+}
+
+.content {
+  flex: 1 0 0;
+  font-size: 28px;
+  line-height: 40px;
+  font-weight: 600;
+  z-index: 1;
+  max-width: 400px;
+}
+
+.illustration {
+  position: absolute;
+  top: 0;
+  right: 0;
+  height: 100%;
+  width: clamp(320px, 100%, 780px);
+  object-fit: cover;
+  z-index: 0;
+}
+
+video.illustration + img.illustration {
+  opacity: 0;
+  visibility: hidden;
+}

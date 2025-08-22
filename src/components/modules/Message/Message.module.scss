@@ -1,0 +1,56 @@
+.container {
+  composes: radii from '../../../styles/_common.scss';
+  border-radius: var(--radii, 16px);
+  padding: 16px;
+  display: flex;
+  align-items: center;
+  flex-flow: row wrap;
+  gap: 8px 12px;
+}
+
+.icon {
+  order: 2;
+  flex: 0 0 auto;
+  width: 24px;
+  height: 24px;
+  display: flex;
+  align-items: stretch;
+  justify-content: stretch;
+}
+
+.title {
+  order: 1;
+  flex: 1 0 0;
+  font-size: 14px;
+  font-weight: 700;
+  line-height: 20px;
+  color: var(--color-light);
+}
+
+.text {
+  flex: 0 0 100%;
+  order: 3;
+  font-size: 12px;
+  font-weight: 400;
+  color: var(--color-text);
+}
+
+.info {
+  background: #182035;
+}
+
+.prompt {
+  background: #281b35;
+}
+
+.warn {
+  background: #202012;
+}
+
+.success {
+  background: #112022;
+}
+
+.danger {
+  background: #2e121b;
+}

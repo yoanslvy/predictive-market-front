@@ -1,0 +1,10 @@
+.button {
+  composes: button from '../Button/Button.module.scss';
+  font-size: 12px !important;
+  font-weight: 400 !important;
+  direction: rtl;
+}
+
+.icon {
+  color: var(--color-light);
+}

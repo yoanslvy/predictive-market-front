@@ -1,0 +1,80 @@
+.container {
+  display: flex;
+  align-items: center;
+}
+
+.icon {
+  flex: 0 0 auto;
+  display: flex;
+  align-items: stretch;
+  justify-content: stretch;
+  overflow: hidden;
+  border-radius: 50%;
+}
+
+.icon {
+  height: var(--chain-size);
+  width: var(--chain-size);
+}
+
+.title {
+  flex: 1 0 0;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  font-weight: inherit;
+  color: inherit;
+}
+
+.xxs {
+  gap: 8px;
+
+  .icon {
+    height: 12px;
+    width: 12px;
+  }
+}
+
+.xs {
+  gap: 8px;
+
+  .icon {
+    height: 20px;
+    width: 20px;
+  }
+}
+
+.sm {
+  gap: 8px;
+
+  .icon {
+    height: 32px;
+    width: 32px;
+  }
+}
+
+.md {
+  gap: 16px;
+
+  .icon {
+    height: 40px;
+    width: 40px;
+  }
+}
+
+.lg {
+  gap: 16px;
+
+  .icon {
+    height: 56px;
+    width: 56px;
+  }
+}
+
+.xl {
+  gap: 16px;
+
+  .icon {
+    height: 88px;
+    width: 88px;
+  }
+}

@@ -1,0 +1,65 @@
+@mixin visually-hidden {
+  position: absolute;
+  clip: rect(0 0 0 0);
+  width: 1px;
+  height: 1px;
+  margin: -1px;
+  overflow: hidden;
+}
+
+@mixin element-preloader-direct {
+  background-color: var(--color-bg-60);
+  background-size: 400px auto !important;
+  background-repeat: no-repeat;
+  border-radius: 8px;
+  visibility: visible !important;
+}
+
+@mixin element-preloader-direct-animated {
+  @include element-preloader-direct;
+
+  background-image: linear-gradient(
+    90deg,
+    var(--color-bg-60) 0%,
+    rgba(var(--color-primary) / 0.2) 50%,
+    var(--color-bg-60) 100%
+  ) !important;
+  animation: element-preloader 2s ease-in-out infinite;
+
+  @keyframes element-preloader {
+    from {
+      background-position: -400px center;
+    }
+    to {
+      background-position: 400px center;
+    }
+  }
+}
+
+@mixin element-preloader {
+  position: relative !important;
+
+  &::after {
+    content: "" !important;
+    position: absolute;
+    left: 0 !important;
+    top: 0 !important;
+    right: 0 !important;
+    bottom: 0 !important;
+    max-width: 100%;
+    height: 100%;
+    padding: 0 !important;
+    margin: 0 !important;
+    border: none !important;
+
+    @include element-preloader-direct;
+  }
+}
+
+@mixin element-preloader-animated {
+  @include element-preloader;
+
+  &::after {
+    @include element-preloader-direct-animated;
+  }
+}

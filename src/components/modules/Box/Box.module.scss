@@ -1,0 +1,58 @@
+.container {
+  --outshift: -16px;
+  composes: radii from '../../../styles/_common.scss';
+  border-radius: var(--radii, 16px);
+  display: grid;
+  grid-template-columns: 16px [content-start] 1fr [image-start] 64px 1fr [content-end] 16px [image-end];
+  grid-template-rows: [image-start] 16px [content-start] 1fr [content-end] 16px [image-end];
+}
+
+.glass {
+  backdrop-filter: blur(8px);
+  box-shadow: 0px 12px 12px rgba(0, 0, 0, 0.3);
+}
+
+.light {
+  background: var(--color-hover);
+  --color-separator: var(--color-bg-80);
+
+  &.glass {
+    background: rgba(35, 43, 63, 0.75);
+  }
+}
+
+.shade {
+  background: var(--color-bg-80);
+  --color-separator: var(--color-bg-100);
+
+  &.glass {
+    background: rgba(20, 22, 29, 0.75);
+  }
+}
+
+.dark {
+  background: var(--color-bg-100);
+  --color-separator: var(--color-bg-60);
+
+  &.glass {
+    background: rgba(4, 5, 8, 0.75);
+  }
+}
+
+.image {
+  grid-area: image;
+  height: calc(100% + 32px);
+  place-self: right bottom;
+
+  min-width: 320px;
+  object-fit: contain;
+  object-position: right bottom;
+  border-radius: inherit;
+}
+
+.content {
+  grid-area: content;
+  display: flex;
+  flex-flow: column;
+  gap: 16px;
+}

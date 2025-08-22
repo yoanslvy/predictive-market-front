@@ -1,0 +1,69 @@
+.container {
+}
+
+.list {
+  overflow-x: auto;
+  overflow-x: overlay;
+  display: flex;
+  align-items: baseline;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+  scroll-snap-type: inline mandatory;
+  scroll-behavior: smooth;
+  margin: 0 var(--outshift) -8px;
+  padding: 0 calc(-1 * var(--outshift)) 8px;
+}
+
+.item {
+}
+
+.tab {
+  composes: link from '../Button/Button.module.scss';
+  scroll-snap-align: center;
+}
+
+.active {
+  scroll-snap-stop: always;
+}
+
+.section {
+  .list {
+    gap: 24px;
+  }
+
+  .tab {
+    font-weight: 700;
+    color: var(--color-light);
+    padding: 0;
+    border: 0;
+
+    &.active {
+      color: rgba(var(--color-primary) / 1);
+      position: relative;
+
+      &:after {
+        content: '';
+        position: absolute;
+        left: 0;
+        bottom: 0;
+        width: 28px;
+        max-width: 100%;
+        height: 4px;
+        border-radius: 4px;
+        background: currentColor;
+      }
+    }
+  }
+}
+
+.switch {
+  .tab {
+    padding: 8px 16px;
+
+    &.active {
+      background: rgba(var(--color-primary) / 1);
+      color: var(--color-dark);
+    }
+  }
+}

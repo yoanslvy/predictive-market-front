@@ -1,0 +1,49 @@
+.container {
+  composes: radii from '../../../styles/_common.scss';
+  composes: radii-child from '../../../styles/_common.scss';
+  display: flex;
+  gap: 1px;
+  border-radius: var(--radii, 8px);
+  overflow: clip;
+}
+
+.horizontal {
+  flex-flow: row;
+  height: 16px;
+}
+
+.vertical {
+  flex-flow: column;
+  width: 16px;
+}
+
+.item {
+  flex: 0 1 calc(100% * var(--ratio, 0));
+  background: var(--color, rgba(var(--color-primary) / 1));
+  min-width: 1px;
+
+  &:not(.color) {
+    opacity: calc(25% + 75% * var(--rating, 0));
+  }
+}
+
+.success {
+  background: var(--color-success);
+}
+
+.warn {
+  background: var(--color-warn);
+}
+
+.danger {
+  background: var(--color-danger);
+}
+
+.info {
+  background: var(--color-info);
+}
+
+.leftover {
+  flex: 1 0 0;
+  background: var(--color-bg-40);
+}

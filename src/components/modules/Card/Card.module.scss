@@ -1,0 +1,24 @@
+.container {
+  composes: container from '../Box/Box.module.scss';
+}
+
+.header {
+  display: flex;
+  gap: 16px;
+  flex-flow: row wrap;
+  align-items: center;
+}
+
+.heading {
+  margin-right: auto;
+
+  @media (max-width: 960px) {
+    width: 100%;
+  }
+}
+
+.body {
+  display: flex;
+  flex-flow: column;
+  gap: 16px;
+}

@@ -1,0 +1,20 @@
+.container {
+  display: flex;
+  gap: 4px;
+  align-items: center;
+  color: var(--color-muted);
+
+  &::before,
+  &::after {
+    content: "";
+    flex: 1 0 0;
+    border-top: 1px currentColor solid;
+  }
+}
+
+.title {
+  max-width: 100%;
+  overflow: hidden;
+  color: currentColor;
+  text-overflow: ellipsis;
+}

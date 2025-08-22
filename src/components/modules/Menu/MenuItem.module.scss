@@ -1,0 +1,52 @@
+.container {
+  min-height: inherit;
+  flex: 1 0 0;
+  margin: -16px;
+  padding: 16px;
+  max-width: calc(100% + 32px);
+  display: flex;
+  gap: 24px;
+  align-items: center;
+  color: var(--color-light);
+  white-space: nowrap;
+
+  &:hover {
+    color: rgba(var(--color-primary) / 1);
+  }
+}
+
+.active {
+  color: rgba(var(--color-primary) / 1);
+  background-color: var(--color-bg-100);
+}
+
+.icon {
+  flex: 0 0 auto;
+  width: 40px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.content {
+  flex: 1 0 0;
+  display: grid;
+  gap: 8px;
+}
+
+.title {
+  font-size: 18px;
+  line-height: 24px;
+  font-weight: 700;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.subtitle {
+  color: var(--color-text);
+  font-weight: 400;
+  font-size: 12px;
+  line-height: 16px;
+  text-overflow: ellipsis;
+  overflow: hidden;
+}

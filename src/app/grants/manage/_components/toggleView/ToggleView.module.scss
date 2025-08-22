@@ -1,0 +1,29 @@
+.container{
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  background-color: var(--color-bg-80);
+  padding: 16px;
+  border-radius: 16px;
+}
+
+.toggle{
+  display: flex;
+  border-radius: 12px;
+  background-color: var(--color-bg-60);
+}
+
+.item{
+  padding: 8px;
+  cursor: pointer;
+  &:first-child{
+    border-radius: 12px 0 0 12px;
+  }
+  &:last-child{
+    border-radius: 0 12px 12px 0;
+  }
+}
+
+.itemActive{
+  background-color: var(--color-bg-100);
+}

@@ -1,0 +1,128 @@
+.container {
+  composes: container from '../Display/Display.module.scss';
+}
+
+.header,
+.footer {
+  composes: header from '../Display/Display.module.scss';
+}
+
+.title {
+  color: var(--color-text);
+  font-weight: 400;
+}
+
+.combo {
+  display: flex;
+  align-items: center;
+  width: 100%;
+}
+
+.input {
+  composes: control from '../Display/Display.module.scss';
+  display: flex !important;
+  gap: 0 !important;
+  flex-flow: row !important;
+  align-items: center;
+  margin-right: auto;
+  margin: 0;
+  color: var(--color-light);
+}
+
+.segment {
+  &[data-placeholder],
+  &[data-placeholder] + .segment {
+    color: var(--color-text);
+  }
+
+  &.hour {
+    margin-left: 0.5em;
+  }
+}
+
+.toggle {
+  margin-left: auto;
+}
+
+.action {
+  composes: container from '../Button/Button.module.scss';
+  composes: default from '../Button/Button.module.scss';
+  composes: md from '../Button/Button.module.scss';
+  color: rgba(var(--color-primary) / 1);
+
+  &:hover,
+  &:focus-visible {
+    color: rgba(var(--color-primary-a) / 1);
+  }
+
+  .icon {
+    width: 20px;
+    max-width: none;
+    height: 20px;
+    margin: 0 -4px;
+  }
+}
+
+.calendar {
+  display: flex;
+  flex-flow: column;
+  background: var(--color-hover);
+  padding: 16px;
+  border-radius: 16px;
+  gap: 8px;
+  pointer-events: all;
+}
+
+.step {
+  composes: container from '../Button/Button.module.scss';
+  composes: link from '../Button/Button.module.scss';
+  composes: md from '../Button/Button.module.scss';
+  color: rgba(var(--color-primary) / 1);
+}
+
+.nav {
+  display: flex;
+  gap: 8px;
+  align-items: center;
+}
+
+.grid {
+  border-spacing: 2px;
+  border-collapse: separate;
+  font-size: 16px;
+  line-height: 20px;
+
+  tr > * {
+    width: 24px;
+    height: 24px;
+    vertical-align: middle;
+    text-align: center;
+  }
+
+  th {
+    font-size: 12px;
+    line-height: 16px;
+  }
+
+  .cell {
+    color: var(--color-light);
+    width: 24px;
+    height: 24px;
+
+    &:hover {
+      color: rgba(var(--color-primary) / 1);
+    }
+  }
+
+  .past {
+    color: var(--color-text);
+  }
+}
+
+.presets {
+  composes: presets from '../Display/Display.module.scss';
+}
+
+.preset {
+  composes: preset from '../Display/Display.module.scss';
+}

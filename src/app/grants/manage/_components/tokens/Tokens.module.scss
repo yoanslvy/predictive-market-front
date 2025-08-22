@@ -1,0 +1,44 @@
+.container{
+  display: flex;
+  align-items: center;
+  padding: 16px 16px 16px 0;
+  border-radius: 16px;
+  background-color: var(--color-hover);
+}
+
+.tokens{
+  display: flex;
+  flex-grow: 1;
+}
+
+.token{
+  display: flex;
+  flex-grow: 1;
+  text-align: center;
+  justify-content: center;
+  gap: 8px; 
+  cursor: pointer;
+  &:first-child{
+    border-right: 1px solid var(--color-bg-80); 
+  }
+}
+
+.symbol{
+  font-size: 12px;
+  line-height: 16px;
+  text-align: left;
+  color: var(--color-light);
+  text-transform: uppercase;
+}
+
+.iconToken{
+  width: 44px;
+  height: 44px;
+  border-radius: 99999px;
+}
+
+.iconArrow{
+  width: 20px;
+  height: 20px;
+  fill: var(--color-light);
+}

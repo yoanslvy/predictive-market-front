@@ -1,0 +1,82 @@
+.container{
+  display: flex;
+  flex-direction: column;
+  gap: 16px
+}
+
+.accordionItem{
+  border-radius: 16px;
+  background-color: var(--color-bg-80);
+
+  &:hover{
+    background-color: var(--color-bg-60);
+    cursor: pointer;
+    .icon{
+      fill: rgba(var(--color-primary-a) / 1);
+    }
+  }
+}
+
+.accordionHeader{
+  display: flex;
+  padding: 16px 44px 16px 24px;
+  color: var(--color-light);
+  width: 100%;
+  border-radius: 16px;
+
+  font-size: 20px;
+  font-weight: bold;
+  line-height: 32px;
+  align-items: center;
+  justify-content: space-between;
+  gap: 8px;
+  position: relative;
+}
+
+.accordionIcon{
+  width: 20px;
+  height: 20px;
+  position: absolute;
+  top: 22px;
+  right: 24px;
+  &.isOpen{
+    transform: rotate(180deg);
+    fill: rgba(var(--color-primary-a) / 1);
+  }
+}
+
+.accordionCollapse{
+  display: flex;
+  flex-direction: column;
+  padding: 0 24px 24px 24px;
+  gap: 24px;
+  border-radius: 16px;
+  p{
+    font-size: 18px;
+    line-height: 24px;
+  }
+  ul{
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+    font-size: 14px;
+    line-height: 20px;
+    li{
+      padding-left: 32px;
+      position: relative;
+      &::before{
+        content: url("data:image/svg+xml,%3Csvg width='20' height='20' viewBox='0 0 20 20' fill='none' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath fill-rule='evenodd' clip-rule='evenodd' d='M9.99999 2.41667C5.81183 2.41667 2.41666 5.81185 2.41666 10C2.41666 14.1882 5.81183 17.5833 9.99999 17.5833C14.1882 17.5833 17.5833 14.1882 17.5833 10C17.5833 5.81185 14.1882 2.41667 9.99999 2.41667ZM0.916656 10C0.916656 4.98342 4.9834 0.916672 9.99999 0.916672C15.0166 0.916672 19.0833 4.98342 19.0833 10C19.0833 15.0166 15.0166 19.0833 9.99999 19.0833C4.9834 19.0833 0.916656 15.0166 0.916656 10ZM14.2803 6.96968C14.5732 7.26257 14.5732 7.73744 14.2803 8.03034L9.28032 13.0303C8.98743 13.3232 8.51255 13.3232 8.21966 13.0303L5.71966 10.5303C5.42677 10.2374 5.42677 9.76257 5.71966 9.46968C6.01255 9.17678 6.48743 9.17678 6.78032 9.46968L8.74999 11.4393L13.2197 6.96968C13.5126 6.67678 13.9874 6.67678 14.2803 6.96968Z' fill='%2300C85D'/%3E%3C/svg%3E%0A");
+        position: absolute;
+        left: 0;
+        margin: auto;
+  
+      }
+    }
+  }
+}
+
+.accordionBody{
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}

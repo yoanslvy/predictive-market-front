@@ -1,0 +1,29 @@
+.container {
+}
+
+.lookup {
+  display: flex;
+  flex-flow: row wrap;
+  gap: 16px;
+  container-type: inline-size;
+}
+
+.amm {
+  flex: 1 0 120px;
+
+  @container (width < 680px) {
+    flex: 0 0 100%;
+  }
+}
+
+.token {
+  flex: 1 0 200px;
+}
+
+.dropdown {
+  width: 100%;
+}
+
+.selected {
+  composes: button from '../Dropdown/Dropdown.module.scss';
+}

@@ -1,0 +1,107 @@
+.container {
+  display: flex;
+  // flex-flow: column;
+  justify-content: space-between;
+  gap: 2px;
+  width: 100%;
+}
+
+.title {
+  color: var(--color-light);
+  font-size: inherit;
+  max-width: 100%;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  margin: 0;
+  margin-right: 6px;
+}
+
+.subtitle {
+  font-weight: 400;
+  font-size: 14px;
+  line-height: 20px;
+  z-index: auto;
+  .title:empty + &,
+  &:only-child {
+    color: var(--color-light);
+  }
+}
+
+.tooltip {
+  // position: absolute;
+  // margin-right: 0%;
+  top: 1px;
+  right: 0;
+  cursor: pointer;
+}
+
+.xxl{
+  font-size: 48px;
+  line-height: 56px;
+}
+
+.xl {
+  font-size: 34px;
+  line-height: 40px;
+}
+
+.lg {
+  font-size: 28px;
+  line-height: 40px;
+}
+
+.md {
+  font-size: 24px;
+  line-height: 32px;
+}
+
+.sm {
+  font-size: 18px;
+  line-height: 24px;
+}
+
+.xs {
+  font-size: 16px;
+  line-height: 20px;
+}
+
+.xxl,
+.xl,
+.lg,
+.md,
+.sm,
+.xs {
+  .title {
+    font-weight: 700;
+  }
+}
+
+.xxs {
+  font-size: inherit;
+  line-height: inherit;
+  font-weight: 400;
+
+  .title {
+    font-weight: 400;
+  }
+}
+
+.sm,
+.xs {
+  .subtitle {
+    font-size: 12px;
+    line-height: 16px;
+  }
+}
+
+.gap-xs {
+  gap: 4px;
+}
+
+.gap-sm {
+  gap: 8px;
+}
+
+.gap-md {
+  gap: 16px;
+}

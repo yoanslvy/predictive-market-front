@@ -1,0 +1,9 @@
+{
+  "short_name": "UNCX",
+  "name": "UNCX Network",
+  "description": "Decentralised Vesting and Liquidity Locking protocol",
+  "iconPath": "uncx-logo-solo-brand-logo.svg",
+  "display": "standalone",
+  "theme_color": "#000000",
+  "background_color": "#ffffff"
+}

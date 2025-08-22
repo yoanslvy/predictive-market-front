@@ -1,0 +1,46 @@
+.container {
+  display: flex;
+  flex-flow: column;
+  gap: 16px;
+}
+
+.title {
+  display: flex;
+  font-size: 12px;
+  line-height: 16px;
+  font-weight: 400;
+  text-transform: uppercase;
+  color: var(--color-text);
+  margin: 0 16px;
+}
+
+.list {
+  overflow: clip;
+  max-width: 100%;
+}
+
+.itemToggle{
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  width: 100%;
+  padding: 16px;
+  cursor: pointer;
+  span{
+    color: var(--color-light);
+    font-size: 18px;
+    font-style: normal;
+    font-weight: 700;
+    line-height: 24px; 
+  }
+  &.active{
+    background-color: var(--color-bg-70);
+    svg{
+      transform: rotate(180deg);
+      path{
+        fill: rgba(var(--color-primary) / 1);
+      }
+    }
+  }
+
+}

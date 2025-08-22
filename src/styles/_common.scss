@@ -1,0 +1,39 @@
+.positive {
+  color: var(--color-success);
+}
+
+.negative {
+  color: var(--color-danger);
+}
+
+.info {
+  color: var(--color-info);
+}
+
+:where(.radii:not(.radii .radii .radii .radii .radii .radii .radii)) {
+  --radii: 0;
+}
+
+:where(.radii:not(.radii .radii .radii .radii .radii .radii)) {
+  --radii: 2px;
+}
+
+:where(.radii:not(.radii .radii .radii .radii .radii)) {
+  --radii: 4px;
+}
+
+:where(.radii:not(.radii .radii .radii .radii)) {
+  --radii: 6px;
+}
+
+:where(.radii:not(.radii .radii .radii)) {
+  --radii: 8px;
+}
+
+:where(.radii:not(.radii .radii)) {
+  --radii: 16px;
+}
+
+:where(.radii-child:not(.radii .radii)) {
+  --radii: 12px;
+}

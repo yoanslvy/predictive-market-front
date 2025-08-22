@@ -1,0 +1,121 @@
+.sm {
+  font-size: 12px;
+  line-height: 16px;
+}
+
+.md {
+  font-size: 14px;
+  line-height: 16px;
+}
+
+.lg {
+  font-size: 16px;
+  line-height: 20px;
+}
+
+.center {
+  text-align: center;
+}
+
+.start {
+  text-align: start;
+}
+
+.end {
+  text-align: end;
+}
+
+.light {
+  color: var(--color-light);
+}
+
+.success {
+  color: var(--color-success);
+}
+
+.warn {
+  color: var(--color-warn);
+}
+
+.danger {
+  color: var(--color-danger);
+}
+
+.info {
+  color: var(--color-info);
+}
+
+.container {
+  h1,
+  h2,
+  h3,
+  h4,
+  h5 {
+    font-weight: 700;
+  }
+
+  h1 {
+    font-size: 32px;
+    line-height: 40px;
+  }
+
+  h2 {
+    font-size: 28px;
+    line-height: 40px;
+  }
+
+  h3 {
+    font-size: 24px;
+    line-height: 32px;
+  }
+
+  h4 {
+    font-size: 18px;
+    line-height: 24px;
+  }
+
+  h5 {
+    font-size: 14px;
+    line-height: 20px;
+  }
+
+  p,
+  ul,
+  ol {
+    margin: 24px 0 0;
+  }
+
+  ul {
+    margin-left: 1.15em;
+    list-style: disc;
+  }
+
+  ol {
+    margin-left: 1.5em;
+  }
+
+  p + ul,
+  p + ol {
+    margin-top: 16px;
+  }
+
+  li {
+    margin: 0.5em 0;
+
+    &:first-child {
+      margin-top: 0;
+    }
+
+    &:last-child {
+      margin-bottom: 0;
+    }
+  }
+
+  & > :first-child {
+    margin-top: 0;
+  }
+
+  & > :last-child {
+    margin-bottom: 0;
+  }
+}

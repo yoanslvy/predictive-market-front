@@ -1,0 +1,9 @@
+{
+  "name": "UNCX Network",
+  "description": "Decentralised Vesting and Liquidity Locking protocol",
+  "iconPath": "https://safe-wallet.uncx.network/brand/uncx-logo-solo-brand-logo.svg",
+  "display": "fullscreen",
+  "orientation": "portrait",
+  "short_name": "UNCX Network",
+  "background_color": "#000000"
+}

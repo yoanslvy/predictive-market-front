@@ -1,0 +1,20 @@
+.container {
+  composes: radii from "../../../styles/_common.scss";
+  border-radius: var(--list-radius, var(--radii, 16px));
+  background: var(--list-background, var(--color-bg-80));
+}
+
+.list {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.item {
+  min-height: 64px;
+  display: flex;
+  align-items: center;
+  justify-content: stretch;
+  padding: 16px;
+  border-top: 1px var(--list-delimiter, var(--color-bg-100)) solid;
+}

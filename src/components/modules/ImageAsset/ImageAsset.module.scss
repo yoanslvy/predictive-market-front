@@ -1,0 +1,114 @@
+@import '@styles/_mixins';
+
+.container {
+  display: inline-flex;
+  max-width: 100%;
+  align-items: center;
+  vertical-align: middle;
+  --chain-size: 12px;
+  --chain-shift: 2px;
+}
+
+.combo {
+  display: flex;
+  align-items: flex-end;
+}
+
+.icon {
+  flex: 0 0 auto;
+  display: flex;
+  align-items: stretch;
+  justify-content: stretch;
+
+  height: var(--size);
+  width: var(--size);
+
+  &.loading {
+    @include element-preloader-animated;
+  }
+}
+
+.image {
+  border-radius: 50%;
+  overflow: hidden;
+}
+
+.unknown {
+  width: calc(var(--size) + 2px);
+  height: calc(var(--size) + 2px);
+  max-width: none;
+  max-height: none;
+  margin: -1px;
+}
+
+.withChain {
+  --chain-radius: calc(var(--chain-size) / 2);
+  mask: radial-gradient(
+    calc(var(--chain-radius) + var(--chain-shift)) at calc(100% - var(--chain-radius))
+      calc(100% - var(--chain-radius)),
+    #0000 98%,
+    #000
+  );
+}
+
+.chain {
+  --size: var(--chain-size);
+  width: var(--chain-size);
+  height: var(--chain-size);
+  margin: 0 0 0 calc(-1 * var(--chain-size));
+  border-radius: 50%;
+  position: relative;
+}
+
+.title {
+  flex: 1 0 0;
+  text-overflow: ellipsis;
+  font-weight: inherit;
+  color: inherit;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+
+  @media (min-width: 960.1px) {
+    max-width: 30ch;
+  }
+
+  @media (max-width: 960px) {
+    max-width: 18ch;
+  }
+}
+
+.xxs {
+  gap: 4px;
+  --size: 20px;
+}
+
+.xs {
+  gap: 8px;
+  --size: 24px;
+}
+
+.sm {
+  gap: 8px;
+  --size: 32px;
+}
+
+.md {
+  gap: 16px;
+  --size: 40px;
+}
+
+.lg {
+  gap: 16px;
+  --size: 48px;
+}
+
+.xl {
+  gap: 16px;
+  --size: 56px;
+}
+
+.xxl {
+  gap: 16px;
+  --size: 86px;
+}

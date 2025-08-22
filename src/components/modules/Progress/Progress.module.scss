@@ -1,0 +1,51 @@
+.container {
+  flex: 0 1 auto;
+  display: inline-flex;
+  flex-flow: column;
+  align-items: stretch;
+  gap: 8px;
+  font-size: 12px;
+  line-height: 16px;
+
+  &.block {
+    width: 100%;
+  }
+}
+
+.progress {
+  width: 100%;
+  margin: 0 !important;
+}
+
+.value {
+  color: var(--color-light);
+}
+
+.lg {
+  position: relative;
+  font-size: 14px;
+  line-height: 20px;
+
+  .progress {
+    height: 32px;
+    background: var(--color-bg-60);
+    border: 1px var(--color-bg-40) solid;
+  }
+
+  .value {
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    transform: translate(-50%, -50%);
+  }
+}
+
+.sm {
+  font-size: 12px;
+}
+
+.info {
+  .progress {
+    color: var(--color-info);
+  }
+}
