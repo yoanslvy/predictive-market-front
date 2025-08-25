@@ -47,19 +47,19 @@ if (projectId) {
 }
 
 export const chains = [
-  mainnet,
-  base,
-  unichain,
-  arbitrum,
-  polygon,
-  optimism,
-  avalanche,
-  bsc,
-  iota,
-  telos,
+  /*   mainnet,
+    base,
+    unichain,
+    arbitrum,
+    polygon,
+    optimism,
+    avalanche,
+    bsc,
+    iota,
+    telos, */
   sepolia,
-  sei,
-  baseSepolia,
+  /*  sei,
+   baseSepolia, */
 ]
 
 export const transports = {

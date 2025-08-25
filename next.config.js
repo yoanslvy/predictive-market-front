@@ -15,7 +15,7 @@ const nextConfig = {
         destination:
           process.env.NEXT_PUBLIC_IS_SAFE === 'true'
             ? '/grants/manage/grants'
-            : '/grants/explore/pools',
+            : '/grants/explore/latest',
         permanent: true,
       },
       {
