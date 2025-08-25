@@ -52,7 +52,10 @@ export const GrantForm: FC<GrantFormProps> = ({ className }) => {
   }, [isConfirmed, clearForm])
 
   const handleSubmit = async () => {
-    if (!isConnected || !isFormValid() || isSubmitting) return
+    console.log('handleSubmit')
+    console.log({ isConnected, isFormValid, isSubmitting })
+    if (!isConnected || isSubmitting) return
+    console.log('handleSubmit 2')
 
     try {
       setIsSubmitting(true)
@@ -60,6 +63,17 @@ export const GrantForm: FC<GrantFormProps> = ({ className }) => {
       const deadline = parseInt(grantFormData.deadline.value)
       const amount = parseUnits(grantFormData.amount.value, 18) // Assuming 18 decimals
       const minBond = parseUnits(grantFormData.minBond.value, 18)
+
+      console.log({ deadline, amount, minBond })
+
+      console.log({
+        question: grantFormData.question.value,
+        collateralToken: grantFormData.collateralToken.value as `0x${string}`,
+        amount,
+        recipient: grantFormData.recipient.value as `0x${string}`,
+        deadline,
+        minBond,
+      })
 
       writeContract({
         address: GRANT_MANAGER_ADDRESS,

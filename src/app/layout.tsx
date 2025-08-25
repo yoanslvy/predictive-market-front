@@ -27,10 +27,7 @@ export async function generateMetadata(): Promise<Metadata> {
       template: `%s - Most trusted DeFi Vesting Provider`,
     },
 
-    openGraph: {
-      // images: ['/some-specific-page-image.jpg', ...previousImages],
-      url: ogUrl,
-    },
+   
 
     metadataBase: new URL('https://app.uncx.network/'),
 
