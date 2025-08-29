@@ -17,6 +17,7 @@ export default async function GrantLayout({
     grantId?: string
     question?: string
     bond?: string
+    deadline?: string
   }
 }) {
   const grantId = searchParams.grantId as string
@@ -27,6 +28,12 @@ export default async function GrantLayout({
 
   const question = searchParams.question as string
   const bond = searchParams.bond as string
+  const deadline = searchParams.deadline as string
+
+  // Check if deadline has passed
+  const now = new Date()
+  const deadlineDate = deadline ? new Date(Number(deadline) * 1000) : null
+  const isDeadlinePassed = deadlineDate ? deadlineDate < now : false
 
   return (
     <>
@@ -52,10 +59,41 @@ export default async function GrantLayout({
               </div>
             </div>
           )}
+
+          {deadline && (
+            <div className="flex items-start space-x-3">
+              <div
+                className={`flex-shrink-0 w-2 h-2 rounded-full mt-2 ${
+                  isDeadlinePassed ? 'bg-[#ff4063]' : 'bg-[#ff9900]'
+                }`}></div>
+              <div>
+                <span
+                  className={`text-xs font-semibold uppercase tracking-wider ${
+                    isDeadlinePassed ? 'text-[#ff4063]' : 'text-[#ff9900]'
+                  }`}>
+                  Deadline
+                </span>
+                <p className="text-base text-[#80838f] mt-1">
+                  {deadlineDate ? deadlineDate.toLocaleString() : deadline}
+                </p>
+                {isDeadlinePassed && (
+                  <p className="text-sm text-[#ff4063] mt-1 font-medium">
+                    ⚠️ Deadline has passed - Answer submission is no longer available
+                  </p>
+                )}
+              </div>
+            </div>
+          )}
         </div>
       </div>
       <Suspense>
-        <GrantTab grantId={grantId} question={question} bond={bond} />
+        <GrantTab
+          grantId={grantId}
+          question={question}
+          bond={bond}
+          deadline={deadline}
+          isDeadlinePassed={isDeadlinePassed}
+        />
       </Suspense>
     </>
   )

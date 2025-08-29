@@ -22,6 +22,7 @@ type Grant = {
   id: string
   question: string
   bond: string
+  deadline: string
   answer?: string
   maxPrevious?: string
 }
@@ -29,9 +30,13 @@ type Grant = {
 interface SubmitAnswerProps {
   grant: Grant
   className?: string
+  isDeadlinePassed: boolean
 }
 
-export const SubmitAnswer: FC<SubmitAnswerProps> = ({ grant, className }) => {
+export const SubmitAnswer: FC<SubmitAnswerProps> = ({ grant, className, isDeadlinePassed }) => {
+  if (isDeadlinePassed) {
+    return <div>Deadline has passed</div>
+  }
   const { address, isConnected } = useAccount()
   const [isSubmitting, setIsSubmitting] = useState(false)
   const [isApproving, setIsApproving] = useState(false)

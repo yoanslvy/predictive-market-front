@@ -11,10 +11,14 @@ export default async function GrantTab({
   grantId,
   question,
   bond,
+  deadline,
+  isDeadlinePassed,
 }: {
   grantId: string
   question: string
   bond: string
+  deadline: string
+  isDeadlinePassed: boolean
 }) {
   const pathname = '/grants/grant'
   let searchParams = useSearchParams()
@@ -24,6 +28,7 @@ export default async function GrantTab({
     id: grantId,
     question,
     bond,
+    deadline,
   }
 
   const tabs: TabProps[] = [
@@ -32,9 +37,9 @@ export default async function GrantTab({
       value: 'submitAnswer',
       href: {
         pathname: `${pathname}`,
-        query: { service: 'answer', grantId, question, bond },
+        query: { service: 'overview', grantId, question, bond, deadline },
       },
-      isActive: service == 'answer' || !service,
+      isActive: service == 'overview' || !service,
     },
     {
       caption: 'Resolve Grant',
@@ -42,7 +47,7 @@ export default async function GrantTab({
       prefetch: true,
       href: {
         pathname: `${pathname}`,
-        query: { service: 'resolve', grantId, question, bond },
+        query: { service: 'resolve', grantId, question, bond, deadline },
       },
       isActive: service === 'resolve',
     },
@@ -51,8 +56,10 @@ export default async function GrantTab({
   return (
     <>
       <Tabs items={tabs} value={service as string | undefined} />
+      {(service === 'overview' || !service) && (
+        <SubmitAnswer grant={grant} isDeadlinePassed={isDeadlinePassed} />
+      )}
       {service === 'resolve' && <ResolveForm grant={grant} />}
-      {(service === 'answer' || !service) && <SubmitAnswer grant={grant} />}
     </>
   )
 }

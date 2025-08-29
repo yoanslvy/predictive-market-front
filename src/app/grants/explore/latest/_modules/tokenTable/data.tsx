@@ -103,7 +103,7 @@ export default async function TokenTableServer({
     <>
       <Table
         rowHref={(data) => {
-          return `/grants/grant?grantId=${data?.grantId}&question=${data?.question}&bond=${data?.bond}`
+          return `/grants/grant?grantId=${data?.grantId}&question=${data?.question}&bond=${data?.bond}&deadline=${data?.deadline}`
         }}
         isLoading={false}
         columns={[
