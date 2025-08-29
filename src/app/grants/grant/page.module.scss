@@ -1,0 +1,45 @@
+.container {
+}
+
+.value {
+  // composes: container from "@/components/modules/Value/Value.module.scss";
+  height: 40px;
+  font-size: 16px;
+  font-weight: 400;
+  padding: 8px 16px;
+  background: var(--color-bg-100);
+  border-radius: 12px;
+}
+
+.body {
+  display: flex;
+  gap: 24px;
+  flex-flow: column;
+}
+
+.tool {
+  &Title {
+    color: var(--color-muted);
+  }
+
+  &Value {
+    font-size: inherit;
+    font-weight: inherit;
+    color: var(--color-light);
+  }
+}
+
+.token {
+  width: 20px;
+  height: 20px;
+  max-height: none;
+  max-width: none;
+  align-self: center;
+  justify-self: center;
+}
+
+.tools {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}

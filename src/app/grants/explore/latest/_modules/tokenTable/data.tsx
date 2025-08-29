@@ -12,9 +12,58 @@ import Pagination from '@/src/components/modules/Pagination'
 export const shortenEthAddress = (address: string, startLength?: number, endLength?: number) =>
   `${address?.substring(0, startLength || 5)}...${address?.substring(58 - (endLength || 1))}`
 
-const now = new Date()
+export function timeDifference(timestamp: number): string {
+  const now: Date = new Date()
+  const targetDate: Date = new Date(timestamp)
+  const isFuture: boolean = targetDate.getTime() > now.getTime()
+  const seconds: number = Math.abs(Math.floor((targetDate.getTime() - now.getTime()) / 1000))
+  const minutes: number = Math.floor(seconds / 60)
+  const hours: number = Math.floor(minutes / 60)
+  const days: number = Math.floor(hours / 24)
 
-const formatter = Intl.NumberFormat('en', { notation: 'compact' })
+  // Calculate months using average days per month
+  const totalMonths: number = Math.floor(days / 30.44)
+
+  // Convert months to years and remaining months
+  const years: number = Math.floor(totalMonths / 12)
+  const months: number = totalMonths % 12
+
+  if (years > 0) {
+    if (months > 0) {
+      return isFuture
+        ? `in ${years} ${years === 1 ? 'year' : 'years'} and ${months} ${
+            months === 1 ? 'month' : 'months'
+          }`
+        : `${years} ${years === 1 ? 'year' : 'years'} and ${months} ${
+            months === 1 ? 'month' : 'months'
+          } ago`
+    } else {
+      return isFuture
+        ? `in ${years} ${years === 1 ? 'year' : 'years'}`
+        : `${years} ${years === 1 ? 'year' : 'years'} ago`
+    }
+  } else if (months > 0) {
+    return isFuture
+      ? `in ${months} ${months === 1 ? 'month' : 'months'}`
+      : `${months} ${months === 1 ? 'month' : 'months'} ago`
+  } else if (days > 0) {
+    return isFuture
+      ? `in ${days} ${days === 1 ? 'day' : 'days'}`
+      : `${days} ${days === 1 ? 'day' : 'days'} ago`
+  } else if (hours > 0) {
+    return isFuture
+      ? `in ${hours} ${hours === 1 ? 'hour' : 'hours'}`
+      : `${hours} ${hours === 1 ? 'hour' : 'hours'} ago`
+  } else if (minutes > 0) {
+    return isFuture
+      ? `in ${minutes} ${minutes === 1 ? 'minute' : 'minutes'}`
+      : `${minutes} ${minutes === 1 ? 'minute' : 'minutes'} ago`
+  } else {
+    return isFuture
+      ? `in ${seconds} ${seconds === 1 ? 'second' : 'seconds'}`
+      : `${seconds} ${seconds === 1 ? 'second' : 'seconds'} ago`
+  }
+}
 
 type Grant = {
   grantId: string
@@ -26,6 +75,7 @@ type Grant = {
   resolved: string
   question: string
   deadline: string
+  bond: string
 }
 
 export default async function TokenTableServer({
@@ -53,9 +103,7 @@ export default async function TokenTableServer({
     <>
       <Table
         rowHref={(data) => {
-          return '/'
-          /*           return `/lockers/univ${data.version.toString()}/chain/${data.chain}/address/${data.id}`
-           */
+          return `/grants/grant?grantId=${data?.grantId}&question=${data?.question}&bond=${data?.bond}`
         }}
         isLoading={false}
         columns={[
@@ -77,7 +125,7 @@ export default async function TokenTableServer({
           },
           {
             title: 'Deadline',
-            render: ({ data }) => Number(data.deadline) * 1000,
+            render: ({ data }) => timeDifference(Number(data.deadline) * 1000),
           },
 
           /*    {

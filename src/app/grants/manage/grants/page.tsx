@@ -34,13 +34,9 @@ export default async function LockersV2Layout({
 
   return (
     <>
-      <>
-        {isCorrectParams && (
-          <Suspense key={key}>
-            <GrantForm />
-          </Suspense>
-        )}
-      </>
+      <Suspense key={key}>
+        <GrantForm />
+      </Suspense>
     </>
   )
 }

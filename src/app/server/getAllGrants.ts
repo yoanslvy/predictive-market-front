@@ -9,7 +9,7 @@ export const getAllGrants = async () => {
     })
 
     const contract = getContract({
-        address: getAddress('0xe48DBCd180C114A669B75274DeF111dC2B1ccB9c'),
+        address: getAddress('0x667B6911206f208FDEa3Ab647Aa84996863AFf48'),
         abi: simpleGrantManagerAbi,
         client: publicClient,
     })
@@ -27,23 +27,31 @@ export const getGrant = async (grantId: string) => {
     })
 
     const contract = getContract({
-        address: getAddress('0xe48DBCd180C114A669B75274DeF111dC2B1ccB9c'),
+        address: getAddress('0x667B6911206f208FDEa3Ab647Aa84996863AFf48'),
         abi: simpleGrantManagerAbi,
         client: publicClient,
     })
 
-    const grant = await contract.read.grants([grantId]) as any[]
+    const [grant, bond] = await Promise.all([
+        contract.read.getGrant([grantId]) as Promise<any>,
+        contract.read.getGrantQuestionBond([grantId])
+    ])
+
+
 
     return {
         grantId: grantId,
-        collateralToken: grant[0],
-        conditionId: grant[1],
-        questionId: grant[2],
-        amount: grant[3],
-        recipient: grant[4],
-        resolved: grant[5],
-        question: grant[6],
-        deadline: grant[7],
+        collateralToken: grant.collateralToken,
+        conditionId: grant.conditionId,
+        questionId: grant.questionId,
+        amount: grant.amount,
+        recipient: grant.recipient,
+        resolved: grant.resolved,
+        question: grant.question,
+        deadline: grant.deadline,
+        bond: bond,
     }
 
 }
+
+
