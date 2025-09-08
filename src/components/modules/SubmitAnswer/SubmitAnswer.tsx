@@ -35,9 +35,6 @@ interface SubmitAnswerProps {
 }
 
 export const SubmitAnswer: FC<SubmitAnswerProps> = ({ grant, className, isopeningTimePassed }) => {
-  if (isopeningTimePassed) {
-    return <div>openingTime has passed</div>
-  }
   const { address, isConnected } = useAccount()
   const [isSubmitting, setIsSubmitting] = useState(false)
   const [isApproving, setIsApproving] = useState(false)
