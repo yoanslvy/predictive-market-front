@@ -10,7 +10,7 @@ import { getAllGrants, getGrant } from '@/src/app/server/getAllGrants'
 import Pagination from '@/src/components/modules/Pagination'
 
 export const shortenEthAddress = (address: string, startLength?: number, endLength?: number) =>
-  `${address?.substring(0, startLength || 5)}...${address?.substring(58 - (endLength || 1))}`
+  `${address?.substring(0, startLength || 5)}...${address?.substring(38 - (endLength || 1))}`
 
 export function timeDifference(timestamp: number): string {
   const now: Date = new Date()
@@ -107,7 +107,7 @@ export default async function TokenTableServer({
         }}
         isLoading={false}
         columns={[
-          {
+       /*    {
             title: 'Grant ID',
             render: ({ data }) => (
               <>
@@ -118,7 +118,7 @@ export default async function TokenTableServer({
                 </div>
               </>
             ),
-          },
+          }, */
           {
             title: 'Question',
             render: ({ data }) => <Tag type={'info'}>{data.question}</Tag>,
@@ -149,20 +149,25 @@ export default async function TokenTableServer({
               <Value value={Number(data.lockedPercent).toFixed()} suffix="%" size="sm" />
             ),
           }, 
+           */
 
           {
-            title: 'Unlock Date',
-            render: ({ data }) => '∞',
+            title: 'Collateral token',
+            render: ({ data }) =>   <>
+            <div className="justify-between items-center flex w-fit">
+              <Tag className="ml-3" type={'comment'}>
+                {shortenEthAddress(data.collateralToken)}
+              </Tag>
+            </div>
+          </>,
           },
-          */
-
+        
           {
             title: 'Amount',
             type: 'number',
             render: ({ data }) => (
               <Value
                 value={formatUnits(BigInt(data.amount), 18)} // Remove formatter.format
-                prefix="$"
                 size="md"
               />
             ),
