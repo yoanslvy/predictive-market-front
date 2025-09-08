@@ -155,7 +155,7 @@ export const GrantForm: FC<GrantFormProps> = ({ className }) => {
     try {
       setIsSubmitting(true)
 
-      const deadline = parseInt(grantFormData.deadline.value)
+      const openingTime = parseInt(grantFormData.openingTime.value)
       const amount = parseUnits(grantFormData.amount.value, 18) // Assuming 18 decimals
       const minBond = parseUnits(grantFormData.minBond.value, 18)
 
@@ -168,7 +168,7 @@ export const GrantForm: FC<GrantFormProps> = ({ className }) => {
           grantFormData.collateralToken.value as `0x${string}`,
           amount,
           grantFormData.recipient.value as `0x${string}`,
-          deadline,
+          openingTime,
           minBond,
         ],
       })
@@ -178,11 +178,11 @@ export const GrantForm: FC<GrantFormProps> = ({ className }) => {
     }
   }
 
-  // Generate deadline timestamp for one week from now
-  const generateDeadlineTimestamp = () => {
+  // Generate openingTime timestamp for one week from now
+  const generateopeningTimeTimestamp = () => {
     const oneWeekFromNow = Math.floor(Date.now() / 1000) + 7 * 24 * 60 * 60
     updateForm({
-      name: 'deadline',
+      name: 'openingTime',
       input: oneWeekFromNow.toString(),
     })
   }
@@ -261,30 +261,31 @@ export const GrantForm: FC<GrantFormProps> = ({ className }) => {
         </div>
 
         <div className={styles.section}>
-          <div className={styles.deadlineContainer}>
+          <div className={styles.openingTimeContainer}>
             <Input
-              title="Deadline (Unix Timestamp)"
+              title="opening Time (Unix Timestamp)"
               placeholder="1735689600"
-              value={grantFormData.deadline.value}
-              onValueChange={(value) => updateForm({ name: 'deadline', input: value })}
+              value={grantFormData.openingTime.value}
+              onValueChange={(value) => updateForm({ name: 'openingTime', input: value })}
               className={styles.input}
             />
             <Button
               type="secondary"
               buttonType="button"
               size="sm"
-              onClick={generateDeadlineTimestamp}
+              onClick={generateopeningTimeTimestamp}
               className={styles.generateButton}>
               +7 days
             </Button>
           </div>
-          {grantFormData.deadline.value && (
-            <div className={styles.deadlinePreview}>
-              Deadline: {new Date(parseInt(grantFormData.deadline.value) * 1000).toLocaleString()}
+          {grantFormData.openingTime.value && (
+            <div className={styles.openingTimePreview}>
+              openingTime:{' '}
+              {new Date(parseInt(grantFormData.openingTime.value) * 1000).toLocaleString()}
             </div>
           )}
-          {grantFormData.deadline.message && (
-            <div className={styles.error}>{grantFormData.deadline.message}</div>
+          {grantFormData.openingTime.message && (
+            <div className={styles.error}>{grantFormData.openingTime.message}</div>
           )}
         </div>
 

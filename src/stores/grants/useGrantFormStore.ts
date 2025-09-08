@@ -13,7 +13,7 @@ interface GrantFormData {
     collateralToken: StringValue
     amount: StringValue
     recipient: StringValue
-    deadline: StringValue
+    openingTime: StringValue
     minBond: StringValue
     hasAcceptedTerms: boolean
 }
@@ -37,7 +37,7 @@ const createInitialState = (): GrantFormData => ({
     collateralToken: { ...InitValue },
     amount: { ...InitValue },
     recipient: { ...InitValue },
-    deadline: { ...InitValue },
+    openingTime: { ...InitValue },
     minBond: { ...InitValue },
     hasAcceptedTerms: false
 })
@@ -87,15 +87,15 @@ export const useGrantFormStore = create<GrantFormState>()(
                                 !isAddress(input) ? 'Invalid recipient address' : ''
                         break
 
-                    case 'deadline':
-                        const deadlineTimestamp = parseInt(input)
+                    case 'openingTime':
+                        const openingTimeTimestamp = parseInt(input)
                         const now = Math.floor(Date.now() / 1000)
 
-                        state.grantFormData.deadline.value = input
-                        state.grantFormData.deadline.message =
-                            input.length === 0 ? 'Deadline is required' :
-                                isNaN(deadlineTimestamp) ? 'Invalid timestamp' :
-                                    deadlineTimestamp <= now ? 'Deadline must be in the future' : ''
+                        state.grantFormData.openingTime.value = input
+                        state.grantFormData.openingTime.message =
+                            input.length === 0 ? 'openingTime is required' :
+                                isNaN(openingTimeTimestamp) ? 'Invalid timestamp' :
+                                    openingTimeTimestamp <= now ? 'openingTime must be in the future' : ''
                         break
 
                     case 'minBond':
@@ -136,8 +136,8 @@ export const useGrantFormStore = create<GrantFormState>()(
                 grantFormData.amount.message === '' &&
                 grantFormData.recipient.value.length > 0 &&
                 grantFormData.recipient.message === '' &&
-                grantFormData.deadline.value.length > 0 &&
-                grantFormData.deadline.message === '' &&
+                grantFormData.openingTime.value.length > 0 &&
+                grantFormData.openingTime.message === '' &&
                 grantFormData.minBond.value.length > 0 &&
                 grantFormData.minBond.message === '' &&
                 grantFormData.hasAcceptedTerms

@@ -103,11 +103,11 @@ export default async function TokenTableServer({
     <>
       <Table
         rowHref={(data) => {
-          return `/grants/grant?grantId=${data?.grantId}&question=${data?.question}&bond=${data?.bond}&deadline=${data?.deadline}`
+          return `/grants/grant?grantId=${data?.grantId}&question=${data?.question}&bond=${data?.bond}&openingTime=${data?.deadline}&resolved=${data?.resolved}`
         }}
         isLoading={false}
         columns={[
-       /*    {
+          /*    {
             title: 'Grant ID',
             render: ({ data }) => (
               <>
@@ -124,8 +124,9 @@ export default async function TokenTableServer({
             render: ({ data }) => <Tag type={'info'}>{data.question}</Tag>,
           },
           {
-            title: 'Deadline',
-            render: ({ data }) => timeDifference(Number(data.deadline) * 1000),
+            title: 'Opening time',
+            render: ({ data }) =>
+              !!data?.resolved ? 'Resolved' : timeDifference(Number(data.deadline) * 1000),
           },
 
           /*    {
@@ -153,15 +154,17 @@ export default async function TokenTableServer({
 
           {
             title: 'Collateral token',
-            render: ({ data }) =>   <>
-            <div className="justify-between items-center flex w-fit">
-              <Tag className="ml-3" type={'comment'}>
-                {shortenEthAddress(data.collateralToken)}
-              </Tag>
-            </div>
-          </>,
+            render: ({ data }) => (
+              <>
+                <div className="justify-between items-center flex w-fit">
+                  <Tag className="ml-3" type={'comment'}>
+                    {shortenEthAddress(data.collateralToken)}
+                  </Tag>
+                </div>
+              </>
+            ),
           },
-        
+
           {
             title: 'Amount',
             type: 'number',

@@ -22,20 +22,21 @@ type Grant = {
   id: string
   question: string
   bond: string
-  deadline: string
+  openingTime: string
   answer?: string
   maxPrevious?: string
+  resolved: boolean
 }
 
 interface SubmitAnswerProps {
   grant: Grant
   className?: string
-  isDeadlinePassed: boolean
+  isopeningTimePassed: boolean
 }
 
-export const SubmitAnswer: FC<SubmitAnswerProps> = ({ grant, className, isDeadlinePassed }) => {
-  if (isDeadlinePassed) {
-    return <div>Deadline has passed</div>
+export const SubmitAnswer: FC<SubmitAnswerProps> = ({ grant, className, isopeningTimePassed }) => {
+  if (isopeningTimePassed) {
+    return <div>openingTime has passed</div>
   }
   const { address, isConnected } = useAccount()
   const [isSubmitting, setIsSubmitting] = useState(false)
@@ -111,6 +112,17 @@ export const SubmitAnswer: FC<SubmitAnswerProps> = ({ grant, className, isDeadli
   }
 
   const error = answerWriteError || answerReceiptError
+
+  if (grant.resolved) {
+    return (
+      <div className="mb-6">
+        <div className="flex items-center space-x-3 mb-4">
+          <div className="flex-shrink-0 w-3 h-3 bg-[#00e068] rounded-full"></div>
+          <h3 className="text-lg font-semibold text-[#80838f]">Grant is resolved</h3>
+        </div>
+      </div>
+    )
+  }
 
   return (
     <Card title="Submit Answer" className={clsx(styles.container, className)} type="shade">

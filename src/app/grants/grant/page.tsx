@@ -1,9 +1,5 @@
 import { Suspense } from 'react'
 
-import { isAddress } from 'viem'
-
-import { isChainIdSupported } from '@modules/ChainAsset/utils'
-
 import GrantTab from './components/Tabs'
 
 export const dynamic = 'force-dynamic'
@@ -17,7 +13,8 @@ export default async function GrantLayout({
     grantId?: string
     question?: string
     bond?: string
-    deadline?: string
+    openingTime?: string
+    resolved?: string
   }
 }) {
   const grantId = searchParams.grantId as string
@@ -28,12 +25,13 @@ export default async function GrantLayout({
 
   const question = searchParams.question as string
   const bond = searchParams.bond as string
-  const deadline = searchParams.deadline as string
+  const openingTime = searchParams.openingTime as string
+  const resolved = searchParams.resolved == 'true' ? true : false
 
-  // Check if deadline has passed
+  // Check if openingTime has passed
   const now = new Date()
-  const deadlineDate = deadline ? new Date(Number(deadline) * 1000) : null
-  const isDeadlinePassed = deadlineDate ? deadlineDate < now : false
+  const openingTimeDate = openingTime ? new Date(Number(openingTime) * 1000) : null
+  const isopeningTimePassed = openingTimeDate ? openingTimeDate < now : false
 
   return (
     <>
@@ -60,26 +58,30 @@ export default async function GrantLayout({
             </div>
           )}
 
-          {deadline && (
+          {openingTime && (
             <div className="flex items-start space-x-3">
               <div
                 className={`flex-shrink-0 w-2 h-2 rounded-full mt-2 ${
-                  isDeadlinePassed ? 'bg-[#ff4063]' : 'bg-[#ff9900]'
+                  isopeningTimePassed ? 'bg-[#ff4063]' : 'bg-[#ff9900]'
                 }`}></div>
               <div>
                 <span
                   className={`text-xs font-semibold uppercase tracking-wider ${
-                    isDeadlinePassed ? 'text-[#ff4063]' : 'text-[#ff9900]'
+                    isopeningTimePassed ? 'text-[#ff4063]' : 'text-[#ff9900]'
                   }`}>
-                  Deadline
+                  opening time:
                 </span>
                 <p className="text-base text-[#80838f] mt-1">
-                  {deadlineDate ? deadlineDate.toLocaleString() : deadline}
+                  {openingTimeDate ? openingTimeDate.toLocaleString() : openingTime}
                 </p>
-                {isDeadlinePassed && (
-                  <p className="text-sm text-[#ff4063] mt-1 font-medium">
-                    ⚠️ Deadline has passed - Answer submission is no longer available
-                  </p>
+                {resolved && (
+                  <p className="text-sm text-[#ff4063] mt-1 font-medium">Grant resolved</p>
+                )}
+                {!resolved && !isopeningTimePassed && (
+                  <p className="text-sm text-[#ff4063] mt-1 font-medium">Grant not open yet</p>
+                )}
+                {!resolved && isopeningTimePassed && (
+                  <p className="text-sm mt-1 font-medium">Grant open</p>
                 )}
               </div>
             </div>
@@ -91,8 +93,9 @@ export default async function GrantLayout({
           grantId={grantId}
           question={question}
           bond={bond}
-          deadline={deadline}
-          isDeadlinePassed={isDeadlinePassed}
+          openingTime={openingTime}
+          isopeningTimePassed={isopeningTimePassed}
+          resolved={resolved}
         />
       </Suspense>
     </>

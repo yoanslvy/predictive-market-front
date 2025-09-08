@@ -16,7 +16,7 @@ type Grant = {
   id: string
   question: string
   bond: string
-  deadline: string
+  openingTime: string
   answer?: string
   maxPrevious?: string
 }
@@ -63,8 +63,6 @@ export const RedeemGrant: FC<RedeemGrantProps> = ({ grant, className }) => {
       // Parse the values from the form
       const grantId = grant.id as `0x${string}`
 
-      console.log({grantId})
-
       writeResolveContract({
         address: GRANT_MANAGER_ADDRESS,
         abi: simpleGrantManagerAbi,
@@ -90,9 +88,7 @@ export const RedeemGrant: FC<RedeemGrantProps> = ({ grant, className }) => {
           <div className="flex-shrink-0 w-3 h-3 bg-[#00e068] rounded-full"></div>
           <h3 className="text-lg font-semibold text-[#80838f]">Redeem Grant</h3>
         </div>
-        <p className="text-sm text-[#80838f] opacity-80">
-          Redeem your YES tokens for collateral.
-        </p>
+        <p className="text-sm text-[#80838f] opacity-80">Redeem your YES tokens for collateral.</p>
       </div>
 
       <form className="space-y-6" onSubmit={(e) => e.preventDefault()}>

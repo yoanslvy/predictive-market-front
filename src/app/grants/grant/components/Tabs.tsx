@@ -2,24 +2,26 @@
 
 import { useSearchParams } from 'next/navigation'
 
+import RedeemGrant from '@/src/components/modules/RedeemGrant'
 import ResolveForm from '@/src/components/modules/ResolveForm'
 import SubmitAnswer from '@/src/components/modules/SubmitAnswer'
 import Tabs from '@/src/components/modules/Tabs'
 import { TabProps } from '@/src/components/modules/Tabs/Tabs'
-import RedeemGrant from '@/src/components/modules/RedeemGrant'
 
 export default async function GrantTab({
   grantId,
   question,
   bond,
-  deadline,
-  isDeadlinePassed,
+  openingTime,
+  isopeningTimePassed,
+  resolved,
 }: {
   grantId: string
   question: string
   bond: string
-  deadline: string
-  isDeadlinePassed: boolean
+  openingTime: string
+  isopeningTimePassed: boolean
+  resolved: boolean
 }) {
   const pathname = '/grants/grant'
   let searchParams = useSearchParams()
@@ -29,7 +31,8 @@ export default async function GrantTab({
     id: grantId,
     question,
     bond,
-    deadline,
+    openingTime,
+    resolved,
   }
 
   const tabs: TabProps[] = [
@@ -38,7 +41,7 @@ export default async function GrantTab({
       value: 'submitAnswer',
       href: {
         pathname: `${pathname}`,
-        query: { service: 'overview', grantId, question, bond, deadline },
+        query: { service: 'overview', grantId, question, bond, openingTime, resolved },
       },
       isActive: service == 'overview' || !service,
     },
@@ -48,7 +51,7 @@ export default async function GrantTab({
       prefetch: true,
       href: {
         pathname: `${pathname}`,
-        query: { service: 'resolve', grantId, question, bond, deadline },
+        query: { service: 'resolve', grantId, question, bond, openingTime, resolved },
       },
       isActive: service === 'resolve',
     },
@@ -58,17 +61,17 @@ export default async function GrantTab({
       prefetch: true,
       href: {
         pathname: `${pathname}`,
-        query: { service: 'redeem', grantId, question, bond, deadline },
+        query: { service: 'redeem', grantId, question, bond, openingTime, resolved },
       },
       isActive: service === 'redeem',
-    }
+    },
   ]
 
   return (
     <>
       <Tabs items={tabs} value={service as string | undefined} />
       {(service === 'overview' || !service) && (
-        <SubmitAnswer grant={grant} isDeadlinePassed={isDeadlinePassed} />
+        <SubmitAnswer grant={grant} isopeningTimePassed={isopeningTimePassed} />
       )}
       {service === 'resolve' && <ResolveForm grant={grant} />}
       {service === 'redeem' && <RedeemGrant grant={grant} />}
