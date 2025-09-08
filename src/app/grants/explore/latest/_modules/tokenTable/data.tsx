@@ -99,6 +99,7 @@ export default async function TokenTableServer({
     })
   )) as Grant[]
 
+
   return (
     <>
       <Table

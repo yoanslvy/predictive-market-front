@@ -77,7 +77,9 @@ export const SubmitAnswer: FC<SubmitAnswerProps> = ({ grant, className, isopenin
       const grantId = grant.id as `0x${string}`
       const answer = BigInt(SubmitAnswerData.answer.value)
       const maxPrevious = parseUnits(SubmitAnswerData.maxPrevious.value, 18)
-      const bondAmount = BigInt(grant.bond)
+      const bondAmount = BigInt(grant.bond == "0" ? parseEther("0.001") : grant.bond) // Default to 0.001 ETH if bond is 0
+
+      console.log(grant.bond)
 
       writeAnswerContract({
         address: GRANT_MANAGER_ADDRESS,
