@@ -68,7 +68,6 @@ export const ResolveForm: FC<ResolveFormProps> = ({ grant, className }) => {
         abi: simpleGrantManagerAbi,
         functionName: 'resolveGrant',
         args: [grantId],
-        value: BigInt(grant.bond),
       })
     } catch (error) {
       console.error('Error submitting answer:', error)

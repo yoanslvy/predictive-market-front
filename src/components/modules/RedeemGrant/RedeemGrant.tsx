@@ -63,12 +63,13 @@ export const RedeemGrant: FC<RedeemGrantProps> = ({ grant, className }) => {
       // Parse the values from the form
       const grantId = grant.id as `0x${string}`
 
+      console.log({grantId})
+
       writeResolveContract({
         address: GRANT_MANAGER_ADDRESS,
         abi: simpleGrantManagerAbi,
         functionName: 'redeemGrant',
         args: [grantId],
-        value: BigInt(grant.bond),
       })
     } catch (error) {
       console.error('Error submitting answer:', error)
