@@ -1,5 +1,6 @@
 import { Suspense } from 'react'
 
+import CurrentAnswer from './components/CurrentAnswer'
 import GrantTab from './components/Tabs'
 
 export const dynamic = 'force-dynamic'
@@ -88,6 +89,7 @@ export default async function GrantLayout({
               </div>
             </div>
           )}
+          <CurrentAnswer grantId={grantId} />
         </div>
       </div>
       <Suspense>

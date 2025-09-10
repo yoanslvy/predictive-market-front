@@ -56,4 +56,28 @@ export const getGrant = async (grantId: string) => {
 
 }
 
+export const getGrantBestAnswer = async (grantId: string) => {
+    let publicClient = createPublicClient({
+        chain: sepolia,
+        transport: http(),
+    })
+
+    const contract = getContract({
+        address: getAddress(singleManagerAddress),
+        abi: simpleGrantManagerAbi,
+        client: publicClient,
+    })
+
+
+    const answer = await contract.read.getGrantQuestionBestAnswer([grantId as Hex])
+
+
+    if (answer == "0x0000000000000000000000000000000000000000000000000000000000000000") return "YES"
+
+    return "NO"
+
+
+}
+
+
 
