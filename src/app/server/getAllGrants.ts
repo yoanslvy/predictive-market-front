@@ -2,7 +2,7 @@ import { sepolia } from 'viem/chains'
 import { createPublicClient, http, getContract, getAddress } from 'viem'
 import { simpleGrantManagerAbi } from '../contract/SimpleGrantManager'
 
-export const singleManagerAddress = '0x667B6911206f208FDEa3Ab647Aa84996863AFf48'
+export const singleManagerAddress = '0x4F07b6daCcd6dF8D52efd32F22534304Cc0e1114'
 
 export const getAllGrants = async () => {
     let publicClient = createPublicClient({

@@ -4,7 +4,7 @@ import { FC, useState, useEffect } from 'react'
 
 import clsx from 'clsx'
 
-import { parseUnits, formatUnits } from 'viem'
+import { parseUnits, formatUnits, erc20Abi } from 'viem'
 
 import { useAccount, useWriteContract, useWaitForTransactionReceipt, useReadContract } from 'wagmi'
 
@@ -16,31 +16,8 @@ import Card from '../Card'
 import Input from '../Input'
 import styles from './GrantForm.module.scss'
 
-const GRANT_MANAGER_ADDRESS = '0x667B6911206f208FDEa3Ab647Aa84996863AFf48' as const
+const GRANT_MANAGER_ADDRESS = '0x4F07b6daCcd6dF8D52efd32F22534304Cc0e1114' as const
 
-// Standard ERC20 ABI for approve and allowance functions
-const erc20Abi = [
-  {
-    name: 'approve',
-    type: 'function',
-    stateMutability: 'nonpayable',
-    inputs: [
-      { name: 'spender', type: 'address' },
-      { name: 'amount', type: 'uint256' },
-    ],
-    outputs: [{ name: '', type: 'bool' }],
-  },
-  {
-    name: 'allowance',
-    type: 'function',
-    stateMutability: 'view',
-    inputs: [
-      { name: 'owner', type: 'address' },
-      { name: 'spender', type: 'address' },
-    ],
-    outputs: [{ name: '', type: 'uint256' }],
-  },
-] as const
 
 interface GrantFormProps {
   className?: string
@@ -151,14 +128,19 @@ export const GrantForm: FC<GrantFormProps> = ({ className }) => {
 
   const handleSubmit = async () => {
     if (!isConnected || isSubmitting) return
-
+  
     try {
       setIsSubmitting(true)
-
-      const openingTime = parseInt(grantFormData.openingTime.value)
-      const amount = parseUnits(grantFormData.amount.value, 18) // Assuming 18 decimals
+  
+      // default: 1 day from now
+      const defaultOpeningTime = Math.floor(Date.now() / 1000) + 60 * 60
+      const openingTime = grantFormData.openingTime.value
+        ? parseInt(grantFormData.openingTime.value)
+        : defaultOpeningTime
+  
+      const amount = parseUnits(grantFormData.amount.value, 18)
       const minBond = parseUnits(grantFormData.minBond.value, 18)
-
+  
       writeGrantContract({
         address: GRANT_MANAGER_ADDRESS,
         abi: simpleGrantManagerAbi,
@@ -263,7 +245,7 @@ export const GrantForm: FC<GrantFormProps> = ({ className }) => {
         <div className={styles.section}>
           <div className={styles.openingTimeContainer}>
             <Input
-              title="opening Time (Unix Timestamp)"
+              title="opening Time (Unix Timestamp), if empty, defaults to +1 hour"
               placeholder="1735689600"
               value={grantFormData.openingTime.value}
               onValueChange={(value) => updateForm({ name: 'openingTime', input: value })}
@@ -301,17 +283,6 @@ export const GrantForm: FC<GrantFormProps> = ({ className }) => {
           {grantFormData.minBond.message && (
             <div className={styles.error}>{grantFormData.minBond.message}</div>
           )}
-        </div>
-
-        <div className={styles.section}>
-          <label className={styles.checkbox}>
-            <input
-              type="checkbox"
-              checked={grantFormData.hasAcceptedTerms}
-              onChange={(e) => updateBooleans({ hasAcceptedTerms: e.target.checked })}
-            />
-            <span>I understand that this grant will be locked until the question is resolved</span>
-          </label>
         </div>
 
         {error && (

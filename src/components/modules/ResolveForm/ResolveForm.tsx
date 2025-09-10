@@ -10,7 +10,7 @@ import { simpleGrantManagerAbi } from '@/src/app/contract/SimpleGrantManager'
 
 import Button from '../Button'
 
-const GRANT_MANAGER_ADDRESS = '0x667B6911206f208FDEa3Ab647Aa84996863AFf48' as const
+const GRANT_MANAGER_ADDRESS = '0x4F07b6daCcd6dF8D52efd32F22534304Cc0e1114' as const
 
 type Grant = {
   id: string
