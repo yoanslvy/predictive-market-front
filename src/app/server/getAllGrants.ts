@@ -34,12 +34,11 @@ export const getGrant = async (grantId: string) => {
         client: publicClient,
     })
 
-    const [grant, bond] = await Promise.all([
+    const [grant, bond, minBond] = await Promise.all([
         contract.read.getGrant([grantId as Hex]) as Promise<any>,
-        contract.read.getGrantQuestionBond([grantId as Hex])
+        contract.read.getGrantQuestionBond([grantId as Hex]),
+        contract.read.getGrantQuestionMinBond([grantId as Hex])
     ])
-
-
 
     return {
         grantId: grantId,
@@ -52,6 +51,7 @@ export const getGrant = async (grantId: string) => {
         question: grant.question,
         deadline: grant.deadline,
         bond: bond,
+        minBond: minBond
     }
 
 }

@@ -76,6 +76,7 @@ type Grant = {
   question: string
   deadline: string
   bond: bigint
+  minBond: bigint
 }
 
 export default async function TokenTableServer({
@@ -104,7 +105,7 @@ export default async function TokenTableServer({
     <>
       <Table
         rowHref={(data) => {
-          return `/grants/grant?grantId=${data?.grantId}&question=${data?.question}&bond=${data?.bond.toString()}&openingTime=${data?.deadline}&resolved=${data?.resolved}`
+          return `/grants/grant?grantId=${data?.grantId}&question=${data?.question}&bond=${data?.bond.toString()}&openingTime=${data?.deadline}&resolved=${data?.resolved}&minBond=${data?.minBond.toString()}`
         }}
         isLoading={false}
         columns={[

@@ -4,7 +4,7 @@ import { FC, useState, useEffect } from 'react'
 
 import clsx from 'clsx'
 
-import { parseEther, parseUnits } from 'viem'
+import { parseUnits } from 'viem'
 
 import { useAccount, useWriteContract, useWaitForTransactionReceipt, useReadContract } from 'wagmi'
 
@@ -26,6 +26,7 @@ type Grant = {
   answer?: string
   maxPrevious?: string
   resolved: boolean
+  minBond: string
 }
 
 interface SubmitAnswerProps {
@@ -38,6 +39,7 @@ export const SubmitAnswer: FC<SubmitAnswerProps> = ({ grant, className, isopenin
   const { address, isConnected } = useAccount()
   const [isSubmitting, setIsSubmitting] = useState(false)
   const [isApproving, setIsApproving] = useState(false)
+
 
   const { SubmitAnswerData, updateForm, updateBooleans, clearForm, isFormValid } =
     useSubmitAnswerStore()
@@ -77,16 +79,17 @@ export const SubmitAnswer: FC<SubmitAnswerProps> = ({ grant, className, isopenin
       const grantId = grant.id as `0x${string}`
       const answer = BigInt(SubmitAnswerData.answer.value)
       const maxPrevious = parseUnits(SubmitAnswerData.maxPrevious.value, 18)
-      const bondAmount = BigInt(grant.bond == "0" ? parseEther("0.001") : grant.bond) // Default to 0.001 ETH if bond is 0
+      const bondAmount = BigInt(grant.bond)
+      const minBondAmount = BigInt(grant.minBond ) 
 
-      console.log(grant.bond)
+
 
       writeAnswerContract({
         address: GRANT_MANAGER_ADDRESS,
         abi: simpleGrantManagerAbi,
         functionName: 'submitAnswer',
         args: [grantId, answer, maxPrevious],
-        value: bondAmount,
+        value: bondAmount > minBondAmount ? bondAmount : minBondAmount,
       })
     } catch (error) {
       console.error('Error submitting answer:', error)

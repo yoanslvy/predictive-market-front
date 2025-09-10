@@ -13,6 +13,7 @@ export default async function GrantLayout({
     grantId?: string
     question?: string
     bond?: string
+    minBond?: string
     openingTime?: string
     resolved?: string
   }
@@ -25,6 +26,7 @@ export default async function GrantLayout({
 
   const question = searchParams.question as string
   const bond = searchParams.bond as string
+  const minBond = searchParams.minBond as string
   const openingTime = searchParams.openingTime as string
   const resolved = searchParams.resolved == 'true' ? true : false
 
@@ -93,6 +95,7 @@ export default async function GrantLayout({
           grantId={grantId}
           question={question}
           bond={bond}
+          minBond={minBond}
           openingTime={openingTime}
           isopeningTimePassed={isopeningTimePassed}
           resolved={resolved}

@@ -12,6 +12,7 @@ export default async function GrantTab({
   grantId,
   question,
   bond,
+  minBond,
   openingTime,
   isopeningTimePassed,
   resolved,
@@ -19,6 +20,7 @@ export default async function GrantTab({
   grantId: string
   question: string
   bond: string
+  minBond: string
   openingTime: string
   isopeningTimePassed: boolean
   resolved: boolean
@@ -33,6 +35,7 @@ export default async function GrantTab({
     bond,
     openingTime,
     resolved,
+    minBond
   }
 
   const tabs: TabProps[] = [
@@ -41,7 +44,7 @@ export default async function GrantTab({
       value: 'submitAnswer',
       href: {
         pathname: `${pathname}`,
-        query: { service: 'overview', grantId, question, bond, openingTime, resolved },
+        query: { service: 'overview', grantId, question, bond, openingTime, resolved, minBond },
       },
       isActive: service == 'overview' || !service,
     },
@@ -51,7 +54,7 @@ export default async function GrantTab({
       prefetch: true,
       href: {
         pathname: `${pathname}`,
-        query: { service: 'resolve', grantId, question, bond, openingTime, resolved },
+        query: { service: 'resolve', grantId, question, bond, openingTime, resolved, minBond },
       },
       isActive: service === 'resolve',
     },
@@ -61,7 +64,7 @@ export default async function GrantTab({
       prefetch: true,
       href: {
         pathname: `${pathname}`,
-        query: { service: 'redeem', grantId, question, bond, openingTime, resolved },
+        query: { service: 'redeem', grantId, question, bond, openingTime, resolved, minBond },
       },
       isActive: service === 'redeem',
     },

@@ -140,6 +140,8 @@ export const GrantForm: FC<GrantFormProps> = ({ className }) => {
   
       const amount = parseUnits(grantFormData.amount.value, 18)
       const minBond = parseUnits(grantFormData.minBond.value, 18)
+
+      console.log({ openingTime, amount, minBond })
   
       writeGrantContract({
         address: GRANT_MANAGER_ADDRESS,
@@ -151,7 +153,7 @@ export const GrantForm: FC<GrantFormProps> = ({ className }) => {
           amount,
           grantFormData.recipient.value as `0x${string}`,
           openingTime,
-          minBond,
+          1n,
         ],
       })
     } catch (error) {
