@@ -74,7 +74,7 @@ export const getGrantBestAnswer = async (grantId: string) => {
 
     if (answer == "0x0000000000000000000000000000000000000000000000000000000000000000") return "NO"
 
-    return "NO"
+    return "YES"
 
 
 }
