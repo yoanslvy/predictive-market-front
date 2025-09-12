@@ -1,5 +1,3 @@
-'server-only'
-
 import { formatUnits } from 'viem'
 
 import Table from '@modules/Table'
@@ -99,7 +97,6 @@ export default async function TokenTableServer({
       return grantData as Grant
     })
   )) as Grant[]
-
 
   return (
     <>
