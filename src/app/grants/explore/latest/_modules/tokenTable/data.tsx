@@ -1,3 +1,5 @@
+import Link from 'next/link'
+
 import { formatUnits } from 'viem'
 
 import Table from '@modules/Table'
@@ -6,6 +8,9 @@ import Value from '@modules/Value'
 
 import { getAllGrants, getGrant } from '@/src/app/server/getAllGrants'
 import Pagination from '@/src/components/modules/Pagination'
+import Etherscan from '@/src/images/apps/etherscan.svg'
+
+import EtherscanLink from '../../../_components/CollateralToken'
 
 export const shortenEthAddress = (address: string, startLength?: number, endLength?: number) =>
   `${address?.substring(0, startLength || 5)}...${address?.substring(38 - (endLength || 1))}`
@@ -154,13 +159,10 @@ export default async function TokenTableServer({
           {
             title: 'Collateral token',
             render: ({ data }) => (
-              <>
-                <div className="justify-between items-center flex w-fit">
-                  <Tag className="ml-3" type={'comment'}>
-                    {shortenEthAddress(data.collateralToken)}
-                  </Tag>
-                </div>
-              </>
+              <EtherscanLink
+                address={data.collateralToken}
+                shortenedAddress={shortenEthAddress(data.collateralToken)}
+              />
             ),
           },
 

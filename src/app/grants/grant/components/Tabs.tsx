@@ -2,6 +2,8 @@
 
 import { useSearchParams } from 'next/navigation'
 
+import { useAccount } from 'wagmi'
+
 import RedeemGrant from '@/src/components/modules/RedeemGrant'
 import ResolveForm from '@/src/components/modules/ResolveForm'
 import SubmitAnswer from '@/src/components/modules/SubmitAnswer'
@@ -25,6 +27,10 @@ export default async function GrantTab({
   isopeningTimePassed: boolean
   resolved: boolean
 }) {
+  const { address } = useAccount()
+
+  if (!address) return null
+
   const pathname = '/grants/grant'
   let searchParams = useSearchParams()
   let service = searchParams.get('service')
@@ -35,7 +41,7 @@ export default async function GrantTab({
     bond,
     openingTime,
     resolved,
-    minBond
+    minBond,
   }
 
   const tabs: TabProps[] = [
