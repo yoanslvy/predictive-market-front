@@ -128,7 +128,7 @@ export default async function TokenTableServer({
             render: ({ data }) => <Tag type={'info'}>{data.question}</Tag>,
           },
           {
-            title: 'Opening time',
+            title: 'Grant Opening time',
             render: ({ data }) =>
               !!data?.resolved ? 'Resolved' : timeDifference(Number(data.deadline) * 1000),
           },
@@ -157,7 +157,7 @@ export default async function TokenTableServer({
            */
 
           {
-            title: 'Collateral token',
+            title: 'Reward token',
             render: ({ data }) => (
               <EtherscanLink
                 address={data.collateralToken}
@@ -167,7 +167,7 @@ export default async function TokenTableServer({
           },
 
           {
-            title: 'Amount',
+            title: 'Reward Amount',
             type: 'number',
             render: ({ data }) => (
               <Value

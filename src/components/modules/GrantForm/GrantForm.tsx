@@ -15,6 +15,8 @@ import Button from '../Button'
 import Card from '../Card'
 import Input from '../Input'
 import styles from './GrantForm.module.scss'
+import DateTimePicker from '../DateTimePicker'
+import { CalendarDateTime } from '@internationalized/date'
 
 const GRANT_MANAGER_ADDRESS = '0x4F07b6daCcd6dF8D52efd32F22534304Cc0e1114' as const
 
@@ -162,15 +164,6 @@ export const GrantForm: FC<GrantFormProps> = ({ className }) => {
     }
   }
 
-  // Generate openingTime timestamp for one week from now
-  const generateopeningTimeTimestamp = () => {
-    const oneWeekFromNow = Math.floor(Date.now() / 1000) + 7 * 24 * 60 * 60
-    updateForm({
-      name: 'openingTime',
-      input: oneWeekFromNow.toString(),
-    })
-  }
-
   const error = grantWriteError || grantReceiptError || approvalWriteError || approvalReceiptError
 
   return (
@@ -198,7 +191,7 @@ export const GrantForm: FC<GrantFormProps> = ({ className }) => {
 
         <div className={styles.section}>
           <Input
-            title="Collateral Token Address"
+            title="Reward Token"
             placeholder="0x..."
             value={grantFormData.collateralToken.value}
             onValueChange={(value) => updateForm({ name: 'collateralToken', input: value })}
@@ -211,7 +204,7 @@ export const GrantForm: FC<GrantFormProps> = ({ className }) => {
 
         <div className={styles.section}>
           <Input
-            title="Grant Amount"
+            title="Reward Amount"
             placeholder="0.0"
             type="number"
             value={grantFormData.amount.value}
@@ -233,7 +226,7 @@ export const GrantForm: FC<GrantFormProps> = ({ className }) => {
 
         <div className={styles.section}>
           <Input
-            title="Recipient Address"
+            title="Grant Recipient Address"
             placeholder="0x..."
             value={grantFormData.recipient.value}
             onValueChange={(value) => updateForm({ name: 'recipient', input: value })}
@@ -246,13 +239,15 @@ export const GrantForm: FC<GrantFormProps> = ({ className }) => {
 
         <div className={styles.section}>
           <div className={styles.openingTimeContainer}>
-            <Input
-              title="opening Time (Unix Timestamp), if empty, defaults to +1 hour"
+                {/*
+           <Input
+              title="Grant Opening Time (Unix Timestamp)"
               placeholder="1735689600"
               value={grantFormData.openingTime.value}
               onValueChange={(value) => updateForm({ name: 'openingTime', input: value })}
               className={styles.input}
             />
+          
             <Button
               type="secondary"
               buttonType="button"
@@ -260,14 +255,41 @@ export const GrantForm: FC<GrantFormProps> = ({ className }) => {
               onClick={generateopeningTimeTimestamp}
               className={styles.generateButton}>
               +7 days
-            </Button>
+            </Button> */}
+
+            <DateTimePicker
+              title="Grant Opening Time (UTC)"
+              type="datetime"
+             value={
+              grantFormData.openingTime.value
+                ? new CalendarDateTime(
+                    new Date(parseInt(grantFormData.openingTime.value) * 1000).getUTCFullYear(),
+                    new Date(parseInt(grantFormData.openingTime.value) * 1000).getUTCMonth() + 1,
+                    new Date(parseInt(grantFormData.openingTime.value) * 1000).getUTCDate(),
+                    new Date(parseInt(grantFormData.openingTime.value) * 1000).getUTCHours(),
+                    new Date(parseInt(grantFormData.openingTime.value) * 1000).getUTCMinutes(),
+                    new Date(parseInt(grantFormData.openingTime.value) * 1000).getUTCSeconds()
+                  )
+                : undefined
+            }
+             onValueChange={(value: Date | null) => {
+                updateForm({
+                  name: 'openingTime',
+                  input: value ? Math.floor(value.getTime() / 1000).toString() : '',
+                })
+              }}
+              presets={[
+                {
+                  caption: '+7 days',
+                  onClick: () => {
+                    const oneWeekFromNow = Math.floor(Date.now() / 1000) + 7 * 24 * 60 * 60
+                    updateForm({ name: 'openingTime', input: oneWeekFromNow.toString() })
+                  },
+                },
+              ]}
+            />
+          
           </div>
-          {grantFormData.openingTime.value && (
-            <div className={styles.openingTimePreview}>
-              openingTime:{' '}
-              {new Date(parseInt(grantFormData.openingTime.value) * 1000).toLocaleString()}
-            </div>
-          )}
           {grantFormData.openingTime.message && (
             <div className={styles.error}>{grantFormData.openingTime.message}</div>
           )}
