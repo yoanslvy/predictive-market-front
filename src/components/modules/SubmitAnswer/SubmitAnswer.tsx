@@ -113,17 +113,6 @@ export const SubmitAnswer: FC<SubmitAnswerProps> = ({ grant, className, isopenin
 
   const error = answerWriteError || answerReceiptError
 
-  if (grant.resolved) {
-    return (
-      <div className="mb-6">
-        <div className="flex items-center space-x-3 mb-4">
-          <div className="flex-shrink-0 w-3 h-3 bg-[#00e068] rounded-full"></div>
-          <h3 className="text-lg font-semibold text-[#80838f]">Grant is resolved</h3>
-        </div>
-      </div>
-    )
-  }
-
   return (
     <Card title="Submit Answer" className={clsx(styles.container, className)} type="shade">
       <div className={styles.header}>
@@ -160,12 +149,6 @@ export const SubmitAnswer: FC<SubmitAnswerProps> = ({ grant, className, isopenin
         </div>
 
         <div className={styles.section}>
-          <Heading className={styles.title} size="xxs">
-            Current Bond Amount: {formatEther(BigInt(grant.bond)).toString()} ETH
-          </Heading>
-        </div>
-
-        <div className={styles.section}>
           <Input
             title="Max Previous Bond (ETH)"
             placeholder="0.0"
@@ -177,6 +160,12 @@ export const SubmitAnswer: FC<SubmitAnswerProps> = ({ grant, className, isopenin
           {SubmitAnswerData.maxPrevious.message && (
             <div className={styles.error}>{SubmitAnswerData.maxPrevious.message}</div>
           )}
+        </div>
+
+        <div className={styles.section}>
+          <Heading className={styles.title} size="md">
+            Current Bond Amount: {formatEther(BigInt(grant.bond)).toString()} ETH
+          </Heading>
         </div>
 
         {error && (

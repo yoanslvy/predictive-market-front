@@ -1,16 +1,14 @@
 'use client'
 
 import { FC, useState, useEffect } from 'react'
-import clsx from 'clsx'
-import {
-  useAccount,
-  useWriteContract,
-  useWaitForTransactionReceipt,
-  useReadContract,
-} from 'wagmi'
 
-import { simpleGrantManagerAbi } from '@/src/app/contract/SimpleGrantManager'
+import clsx from 'clsx'
+
+import { useAccount, useWriteContract, useWaitForTransactionReceipt, useReadContract } from 'wagmi'
+
 import { conditionalTokenAbi } from '@/src/app/contract/ConditionalToken'
+import { simpleGrantManagerAbi } from '@/src/app/contract/SimpleGrantManager'
+
 import Button from '../Button'
 
 const GRANT_MANAGER_ADDRESS = '0x4F07b6daCcd6dF8D52efd32F22534304Cc0e1114' as const
@@ -121,8 +119,7 @@ export const RedeemGrant: FC<RedeemGrantProps> = ({ grant, className }) => {
     }
   }
 
-  const error =
-    answerWriteError || answerReceiptError || approvalWriteError || approvalReceiptError
+  const error = answerWriteError || answerReceiptError || approvalWriteError || approvalReceiptError
 
   return (
     <div
@@ -133,11 +130,9 @@ export const RedeemGrant: FC<RedeemGrantProps> = ({ grant, className }) => {
       <div className="mb-6">
         <div className="flex items-center space-x-3 mb-4">
           <div className="flex-shrink-0 w-3 h-3 bg-[#00e068] rounded-full"></div>
-          <h3 className="text-lg font-semibold text-[#80838f]">Redeem Grant</h3>
+          <h3 className="text-lg font-semibold text-[#80838f]">Redeem Grant Token</h3>
         </div>
-        <p className="text-sm text-[#80838f] opacity-80">
-          Redeem your YES tokens for collateral.
-        </p>
+        <p className="text-sm text-[#80838f] opacity-80">Redeem your YES tokens.</p>
       </div>
 
       <form className="space-y-6" onSubmit={(e) => e.preventDefault()}>
@@ -158,24 +153,16 @@ export const RedeemGrant: FC<RedeemGrantProps> = ({ grant, className }) => {
             {isApprovalConfirming && (
               <p className="text-sm text-[#ff9900]">⏳ Confirming approval...</p>
             )}
-            {isApprovalConfirmed && (
-              <p className="text-sm text-[#00e068]">✅ Approved!</p>
-            )}
+            {isApprovalConfirmed && <p className="text-sm text-[#00e068]">✅ Approved!</p>}
           </div>
         )}
 
         {/* Redeem feedback */}
         {answerHash && (
           <div className="bg-[#00e068]/10 border border-[#00e068]/30 rounded-lg p-4">
-            <p className="text-sm text-[#80838f] font-mono break-all">
-              Redeem tx: {answerHash}
-            </p>
-            {isAnswerConfirming && (
-              <p className="text-sm text-[#ff9900]">⏳ Confirming...</p>
-            )}
-            {isAnswerConfirmed && (
-              <p className="text-sm text-[#00e068]">✅ Redeemed!</p>
-            )}
+            <p className="text-sm text-[#80838f] font-mono break-all">Redeem tx: {answerHash}</p>
+            {isAnswerConfirming && <p className="text-sm text-[#ff9900]">⏳ Confirming...</p>}
+            {isAnswerConfirmed && <p className="text-sm text-[#00e068]">✅ Redeemed!</p>}
           </div>
         )}
 
@@ -186,10 +173,7 @@ export const RedeemGrant: FC<RedeemGrantProps> = ({ grant, className }) => {
               type="primary"
               onClick={handleApprove}
               disabled={
-                !isConnected ||
-                isApproving ||
-                isApprovalWritePending ||
-                isApprovalConfirming
+                !isConnected || isApproving || isApprovalWritePending || isApprovalConfirming
               }
               isPending={isApproving || isApprovalWritePending || isApprovalConfirming}
               className="min-w-[140px]">

@@ -78,17 +78,6 @@ export const ResolveForm: FC<ResolveFormProps> = ({ grant, className }) => {
 
   const error = answerWriteError || answerReceiptError
 
-  if (grant.resolved) {
-    return (
-      <div className="mb-6">
-        <div className="flex items-center space-x-3 mb-4">
-          <div className="flex-shrink-0 w-3 h-3 bg-[#00e068] rounded-full"></div>
-          <h3 className="text-lg font-semibold text-[#80838f]">Grant is resolved</h3>
-        </div>
-      </div>
-    )
-  }
-
   return (
     <div
       className={clsx(

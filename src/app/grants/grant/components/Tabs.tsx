@@ -86,9 +86,9 @@ export default async function GrantTab({
         prefetch: true,
         href: {
           pathname: `${pathname}`,
-          query: { service: 'redeem', grantId, question, bond, openingTime, resolved, minBond },
+          query: { service: 'overview', grantId, question, bond, openingTime, resolved, minBond },
         },
-        isActive: service === 'redeem',
+        isActive: service === 'overview',
       },
     ]
   } else if (isopeningTimePassed) {
@@ -120,11 +120,11 @@ export default async function GrantTab({
       {isopeningTimePassed && (
         <>
           <Tabs items={tabs} value={service as string | undefined} />
-          {(service === 'overview' || !service) && (
+          {(service === 'overview' || !service) && !resolved && (
             <SubmitAnswer grant={grant} isopeningTimePassed={isopeningTimePassed} />
           )}
           {service === 'resolve' && <ResolveForm grant={grant} />}
-          {service === 'redeem' && <RedeemGrant grant={grant} />}
+          {service === 'overview' && resolved && <RedeemGrant grant={grant} />}
         </>
       )}
     </>
