@@ -87,7 +87,7 @@ export default async function GrantLayout({
             </div>
           )}
           {isopeningTimePassed && <CurrentAnswer grantId={grantId} />}
-          {recipient && grantId && <YesTokenBalance grantId={grantId} />}
+          {grantId && <YesTokenBalance grantId={grantId} />}
         </div>
       </div>
       <Suspense>
