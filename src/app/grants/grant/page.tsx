@@ -2,6 +2,7 @@ import { Suspense } from 'react'
 
 import CurrentAnswer from './components/CurrentAnswer'
 import GrantTab from './components/Tabs'
+import YesTokenBalance from './components/YesTokenBalance'
 
 export const dynamic = 'force-dynamic'
 export const revalidate = false
@@ -17,6 +18,7 @@ export default async function GrantLayout({
     minBond?: string
     openingTime?: string
     resolved?: string
+    recipient?: string
   }
 }) {
   const grantId = searchParams.grantId as string
@@ -30,6 +32,7 @@ export default async function GrantLayout({
   const minBond = searchParams.minBond as string
   const openingTime = searchParams.openingTime as string
   const resolved = searchParams.resolved == 'true' ? true : false
+  const recipient = searchParams.recipient as string
 
   // Check if openingTime has passed
   const now = new Date()
@@ -40,7 +43,7 @@ export default async function GrantLayout({
     <>
       <div className="mb-8 bg-dark-base-800 rounded-2xl p-6 border border-dark-base-600 backdrop-blur-md shadow-md shadow-black/40">
         <div className="space-y-4">
-          <div className="flex items-start space-x-3">
+          {/*  <div className="flex items-start space-x-3">
             <div className="flex-shrink-0 w-2 h-2 bg-[#00e068] rounded-full mt-2"></div>
             <div>
               <span className="text-xs font-semibold text-[#00e068] uppercase tracking-wider">
@@ -48,7 +51,7 @@ export default async function GrantLayout({
               </span>
               <p className="text-base font-mono text-[#80838f] mt-1 break-all">{grantId}</p>
             </div>
-          </div>
+          </div> */}
           {question && (
             <div className="flex items-start space-x-3">
               <div className="flex-shrink-0 w-2 h-2 bg-[#27beff] rounded-full mt-2"></div>
@@ -72,24 +75,19 @@ export default async function GrantLayout({
                   className={`text-xs font-semibold uppercase tracking-wider ${
                     isopeningTimePassed ? 'text-[#ff4063]' : 'text-[#ff9900]'
                   }`}>
-                  opening time:
+                  Grant Status:
+                  {resolved && ' Resolved'}
+                  {!resolved && !isopeningTimePassed && ' Not open'}
+                  {!resolved && isopeningTimePassed && ' Open'}
                 </span>
                 <p className="text-base text-[#80838f] mt-1">
-                  {openingTimeDate ? openingTimeDate.toLocaleString() : openingTime}
+                  Opening time: {openingTimeDate ? openingTimeDate.toLocaleString() : openingTime}
                 </p>
-                {resolved && (
-                  <p className="text-sm text-[#ff4063] mt-1 font-medium">Grant resolved</p>
-                )}
-                {!resolved && !isopeningTimePassed && (
-                  <p className="text-sm text-[#ff4063] mt-1 font-medium">Grant not open yet</p>
-                )}
-                {!resolved && isopeningTimePassed && (
-                  <p className="text-sm mt-1 font-medium">Grant open</p>
-                )}
               </div>
             </div>
           )}
-          <CurrentAnswer grantId={grantId} />
+          {isopeningTimePassed && <CurrentAnswer grantId={grantId} />}
+          {recipient && grantId && <YesTokenBalance grantId={grantId} />}
         </div>
       </div>
       <Suspense>

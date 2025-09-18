@@ -1,5 +1,7 @@
 'use client'
 
+import { CalendarDateTime } from '@internationalized/date'
+
 import { FC, useState, useEffect } from 'react'
 
 import clsx from 'clsx'
@@ -13,13 +15,11 @@ import { useGrantFormStore } from '@/src/stores/grants/useGrantFormStore'
 
 import Button from '../Button'
 import Card from '../Card'
+import DateTimePicker from '../DateTimePicker'
 import Input from '../Input'
 import styles from './GrantForm.module.scss'
-import DateTimePicker from '../DateTimePicker'
-import { CalendarDateTime } from '@internationalized/date'
 
 const GRANT_MANAGER_ADDRESS = '0x4F07b6daCcd6dF8D52efd32F22534304Cc0e1114' as const
-
 
 interface GrantFormProps {
   className?: string
@@ -130,21 +130,21 @@ export const GrantForm: FC<GrantFormProps> = ({ className }) => {
 
   const handleSubmit = async () => {
     if (!isConnected || isSubmitting) return
-  
+
     try {
       setIsSubmitting(true)
-  
+
       // default: 1 day from now
       const defaultOpeningTime = Math.floor(Date.now() / 1000) + 60 * 60
       const openingTime = grantFormData.openingTime.value
         ? parseInt(grantFormData.openingTime.value)
         : defaultOpeningTime
-  
+
       const amount = parseUnits(grantFormData.amount.value, 18)
       const minBond = parseUnits(grantFormData.minBond.value, 18)
 
       console.log({ openingTime, amount, minBond })
-  
+
       writeGrantContract({
         address: GRANT_MANAGER_ADDRESS,
         abi: simpleGrantManagerAbi,
@@ -239,7 +239,7 @@ export const GrantForm: FC<GrantFormProps> = ({ className }) => {
 
         <div className={styles.section}>
           <div className={styles.openingTimeContainer}>
-                {/*
+            {/*
            <Input
               title="Grant Opening Time (Unix Timestamp)"
               placeholder="1735689600"
@@ -260,19 +260,19 @@ export const GrantForm: FC<GrantFormProps> = ({ className }) => {
             <DateTimePicker
               title="Grant Opening Time (UTC)"
               type="datetime"
-             value={
-              grantFormData.openingTime.value
-                ? new CalendarDateTime(
-                    new Date(parseInt(grantFormData.openingTime.value) * 1000).getUTCFullYear(),
-                    new Date(parseInt(grantFormData.openingTime.value) * 1000).getUTCMonth() + 1,
-                    new Date(parseInt(grantFormData.openingTime.value) * 1000).getUTCDate(),
-                    new Date(parseInt(grantFormData.openingTime.value) * 1000).getUTCHours(),
-                    new Date(parseInt(grantFormData.openingTime.value) * 1000).getUTCMinutes(),
-                    new Date(parseInt(grantFormData.openingTime.value) * 1000).getUTCSeconds()
-                  )
-                : undefined
-            }
-             onValueChange={(value: Date | null) => {
+              value={
+                grantFormData.openingTime.value
+                  ? new CalendarDateTime(
+                      new Date(parseInt(grantFormData.openingTime.value) * 1000).getUTCFullYear(),
+                      new Date(parseInt(grantFormData.openingTime.value) * 1000).getUTCMonth() + 1,
+                      new Date(parseInt(grantFormData.openingTime.value) * 1000).getUTCDate(),
+                      new Date(parseInt(grantFormData.openingTime.value) * 1000).getUTCHours(),
+                      new Date(parseInt(grantFormData.openingTime.value) * 1000).getUTCMinutes(),
+                      new Date(parseInt(grantFormData.openingTime.value) * 1000).getUTCSeconds()
+                    )
+                  : undefined
+              }
+              onValueChange={(value: Date | null) => {
                 updateForm({
                   name: 'openingTime',
                   input: value ? Math.floor(value.getTime() / 1000).toString() : '',
@@ -288,7 +288,6 @@ export const GrantForm: FC<GrantFormProps> = ({ className }) => {
                 },
               ]}
             />
-          
           </div>
           {grantFormData.openingTime.message && (
             <div className={styles.error}>{grantFormData.openingTime.message}</div>
@@ -297,7 +296,7 @@ export const GrantForm: FC<GrantFormProps> = ({ className }) => {
 
         <div className={styles.section}>
           <Input
-            title="Minimum Bond"
+            title="Grant Minimum Bond"
             placeholder="0.0"
             type="number"
             value={grantFormData.minBond.value}

@@ -4,7 +4,7 @@ import { FC, useState, useEffect } from 'react'
 
 import clsx from 'clsx'
 
-import { parseUnits } from 'viem'
+import { formatEther, parseEther, parseUnits } from 'viem'
 
 import { useAccount, useWriteContract, useWaitForTransactionReceipt, useReadContract } from 'wagmi'
 
@@ -13,6 +13,7 @@ import { useSubmitAnswerStore } from '@/src/stores/grants/useSubmitAnswerStore'
 
 import Button from '../Button'
 import Card from '../Card'
+import Heading from '../Heading'
 import Input from '../Input'
 import styles from './SubmitAnswer.module.scss'
 
@@ -39,7 +40,6 @@ export const SubmitAnswer: FC<SubmitAnswerProps> = ({ grant, className, isopenin
   const { address, isConnected } = useAccount()
   const [isSubmitting, setIsSubmitting] = useState(false)
   const [isApproving, setIsApproving] = useState(false)
-
 
   const { SubmitAnswerData, updateForm, updateBooleans, clearForm, isFormValid } =
     useSubmitAnswerStore()
@@ -80,9 +80,7 @@ export const SubmitAnswer: FC<SubmitAnswerProps> = ({ grant, className, isopenin
       const answer = BigInt(SubmitAnswerData.answer.value)
       const maxPrevious = parseUnits(SubmitAnswerData.maxPrevious.value, 18)
       const bondAmount = BigInt(grant.bond)
-      const minBondAmount = BigInt(grant.minBond ) 
-
-
+      const minBondAmount = BigInt(grant.minBond)
 
       writeAnswerContract({
         address: GRANT_MANAGER_ADDRESS,
@@ -159,6 +157,12 @@ export const SubmitAnswer: FC<SubmitAnswerProps> = ({ grant, className, isopenin
           {SubmitAnswerData.answer.message && (
             <div className={styles.error}>{SubmitAnswerData.answer.message}</div>
           )}
+        </div>
+
+        <div className={styles.section}>
+          <Heading className={styles.title} size="xxs">
+            Current Bond Amount: {formatEther(BigInt(grant.bond)).toString()} ETH
+          </Heading>
         </div>
 
         <div className={styles.section}>

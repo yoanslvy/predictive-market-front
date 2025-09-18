@@ -72,9 +72,9 @@ export const getGrantBestAnswer = async (grantId: string) => {
     const answer = await contract.read.getGrantQuestionBestAnswer([grantId as Hex])
 
 
-    if (answer == "0x0000000000000000000000000000000000000000000000000000000000000000") return "NO"
+    if (answer == "0x0000000000000000000000000000000000000000000000000000000000000000") return "No"
 
-    return "YES"
+    return "Yes"
 
 
 }

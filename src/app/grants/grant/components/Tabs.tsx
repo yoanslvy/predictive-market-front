@@ -44,7 +44,9 @@ export default async function GrantTab({
     minBond,
   }
 
-  const tabs: TabProps[] = [
+  let tabs: TabProps[] = []
+
+  /*  const tabs: TabProps[] = [
     {
       caption: 'Submit Answer',
       value: 'submitAnswer',
@@ -74,16 +76,57 @@ export default async function GrantTab({
       },
       isActive: service === 'redeem',
     },
-  ]
+  ] */
+
+  if (resolved) {
+    tabs = [
+      {
+        caption: 'Redeem Grant',
+        value: 'redeemGrant',
+        prefetch: true,
+        href: {
+          pathname: `${pathname}`,
+          query: { service: 'redeem', grantId, question, bond, openingTime, resolved, minBond },
+        },
+        isActive: service === 'redeem',
+      },
+    ]
+  } else if (isopeningTimePassed) {
+    tabs = [
+      {
+        caption: 'Submit Answer',
+        value: 'submitAnswer',
+        href: {
+          pathname: `${pathname}`,
+          query: { service: 'overview', grantId, question, bond, openingTime, resolved, minBond },
+        },
+        isActive: service == 'overview' || !service,
+      },
+      {
+        caption: 'Resolve Grant',
+        value: 'resolveGrant',
+        prefetch: true,
+        href: {
+          pathname: `${pathname}`,
+          query: { service: 'resolve', grantId, question, bond, openingTime, resolved, minBond },
+        },
+        isActive: service === 'resolve',
+      },
+    ]
+  }
 
   return (
     <>
-      <Tabs items={tabs} value={service as string | undefined} />
-      {(service === 'overview' || !service) && (
-        <SubmitAnswer grant={grant} isopeningTimePassed={isopeningTimePassed} />
+      {isopeningTimePassed && (
+        <>
+          <Tabs items={tabs} value={service as string | undefined} />
+          {(service === 'overview' || !service) && (
+            <SubmitAnswer grant={grant} isopeningTimePassed={isopeningTimePassed} />
+          )}
+          {service === 'resolve' && <ResolveForm grant={grant} />}
+          {service === 'redeem' && <RedeemGrant grant={grant} />}
+        </>
       )}
-      {service === 'resolve' && <ResolveForm grant={grant} />}
-      {service === 'redeem' && <RedeemGrant grant={grant} />}
     </>
   )
 }
