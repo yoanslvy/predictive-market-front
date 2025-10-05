@@ -7,20 +7,11 @@ import clsx from 'clsx'
 import { useAccount, useWriteContract, useWaitForTransactionReceipt } from 'wagmi'
 
 import { simpleGrantManagerAbi } from '@/src/app/contract/SimpleGrantManager'
+import { Grant } from '@/src/app/server/getAllGrants'
 
-import Button from '../Button'
+import { Button } from '../Button/Button'
 
 const GRANT_MANAGER_ADDRESS = '0x4F07b6daCcd6dF8D52efd32F22534304Cc0e1114' as const
-
-type Grant = {
-  id: string
-  question: string
-  bond: string
-  openingTime: string
-  answer?: string
-  maxPrevious?: string
-  resolved?: boolean
-}
 
 interface ResolveFormProps {
   grant: Grant
@@ -62,7 +53,7 @@ export const ResolveForm: FC<ResolveFormProps> = ({ grant, className }) => {
       setIsSubmitting(true)
 
       // Parse the values from the form
-      const grantId = grant.id as `0x${string}`
+      const grantId = grant.grantId as `0x${string}`
 
       writeResolveContract({
         address: GRANT_MANAGER_ADDRESS,
@@ -78,65 +69,65 @@ export const ResolveForm: FC<ResolveFormProps> = ({ grant, className }) => {
 
   const error = answerWriteError || answerReceiptError
 
-  return (
-    <div
-      className={clsx(
-        'bg-dark-base-800 rounded-2xl p-6 border border-dark-base-600 backdrop-blur-md shadow-md shadow-black/40',
-        className
-      )}>
-      <div className="mb-6">
-        <div className="flex items-center space-x-3 mb-4">
-          <div className="flex-shrink-0 w-3 h-3 bg-[#00e068] rounded-full"></div>
-          <h3 className="text-lg font-semibold text-[#80838f]">Resolve Grant</h3>
-        </div>
-        <p className="text-sm text-[#80838f] opacity-80">
-          Resolve a grant question by triggering the resolution process.
-        </p>
-      </div>
+  const DetailCard = ({ label, children }: { label?: string; children: React.ReactNode }) => (
+    <div className="bg-[#252831] rounded-lg p-3 border border-[#30333C] flex flex-col gap-2">
+      {label && (
+        <span className="text-[#757A8B] text-xs uppercase tracking-wide font-medium">{label}</span>
+      )}
+      <div>{children}</div>
+    </div>
+  )
 
-      <form className="space-y-6" onSubmit={(e) => e.preventDefault()}>
+  return (
+    <div className={clsx('w-full rounded-xl bg-[#17181C] px-6 py-4', className)}>
+      <form onSubmit={(e) => e.preventDefault()} className="space-y-4">
+        <DetailCard label="Condition">
+          <p className="text-white text-md font-medium leading-relaxed">{grant.question}</p>
+        </DetailCard>
+
+        <DetailCard label="RESOLVED TO">
+          <p className="text-[#757A8B] text-sm">
+            Resolve this grant question by triggering the resolution process.
+          </p>
+        </DetailCard>
+
         {error && (
-          <div className="bg-[#ff4063]/10 border border-[#ff4063]/30 rounded-lg p-4">
-            <div className="flex items-center space-x-2">
-              <div className="w-2 h-2 bg-[#ff4063] rounded-full"></div>
-              <span className="text-sm font-medium text-[#ff4063]">Error</span>
+          <div className="bg-[#ff4063]/10 border border-[#ff4063]/20 rounded p-2">
+            <div className="text-[#ff4063] text-xs">
+              Error: {error.message || 'Transaction failed'}
             </div>
-            <p className="text-sm text-[#80838f] mt-2">{error.message || 'Transaction failed'}</p>
           </div>
         )}
 
         {answerHash && (
-          <div className="bg-[#00e068]/10 border border-[#00e068]/30 rounded-lg p-4">
-            <div className="flex items-center space-x-2">
-              <div className="w-2 h-2 bg-[#00e068] rounded-full"></div>
-              <span className="text-sm font-medium text-[#00e068]">Transaction Submitted</span>
+          <div className="bg-[#01EB5A]/10 border border-[#01EB5A]/20 rounded p-2">
+            <div className="text-[#01EB5A] text-xs">
+              <div>Tx: {answerHash.slice(0, 10)}...</div>
+              {isAnswerConfirming && <div>Confirming...</div>}
+              {isAnswerConfirmed && <div>Confirmed!</div>}
             </div>
-            <p className="text-sm text-[#80838f] mt-2 font-mono break-all">{answerHash}</p>
-            {isAnswerConfirming && (
-              <p className="text-sm text-[#ff9900] mt-1">⏳ Confirming transaction...</p>
-            )}
-            {isAnswerConfirmed && (
-              <p className="text-sm text-[#00e068] mt-1">✅ Transaction confirmed!</p>
-            )}
           </div>
         )}
 
-        <div className="flex justify-end">
-          <Button
-            type="primary"
-            onClick={handleSubmit}
-            disabled={!isConnected || isSubmitting}
-            isPending={isAnswerWritePending || isAnswerConfirming || isSubmitting}
-            className="min-w-[140px]">
-            {!isConnected
-              ? 'Connect Wallet'
-              : isAnswerWritePending
-                ? 'Submitting...'
-                : isAnswerConfirming
-                  ? 'Confirming...'
-                  : 'Resolve Grant'}
-          </Button>
-        </div>
+        <Button
+          buttonType="button"
+          type="action"
+          onClick={handleSubmit}
+          disabled={!isConnected || isSubmitting}
+          className={clsx(
+            'w-full px-4 py-2 rounded text-sm font-semibold transition-all duration-200',
+            !isConnected || isSubmitting || isAnswerWritePending || isAnswerConfirming
+              ? 'bg-[#2C2F3A] text-[#757A8B] cursor-not-allowed'
+              : 'bg-[#01EB5A] text-[#17181C] hover:bg-[#01EB5A]/90'
+          )}>
+          {!isConnected
+            ? 'Connect Wallet'
+            : isAnswerWritePending
+              ? 'Submitting...'
+              : isAnswerConfirming
+                ? 'Confirming...'
+                : 'Resolve Grant'}
+        </Button>
       </form>
     </div>
   )

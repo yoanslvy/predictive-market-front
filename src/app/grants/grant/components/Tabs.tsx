@@ -119,7 +119,7 @@ export default async function GrantTab({
     <>
       {isopeningTimePassed && (
         <>
-          <Tabs items={tabs} value={service as string | undefined} />
+          {/* <Tabs items={tabs} value={service as string | undefined} /> */}
           {(service === 'overview' || !service) && !resolved && (
             <SubmitAnswer grant={grant} isopeningTimePassed={isopeningTimePassed} />
           )}

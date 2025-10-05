@@ -31,7 +31,7 @@ export default async function ExploreLayout({ children }: { children: React.Reac
         title="Explore"
         tools={
           <Button
-            href="/grants/manage/grants"
+            href="/grants/create"
             caption="New Grant"
             type="primary"
             isAccent

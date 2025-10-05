@@ -13,25 +13,19 @@ const nextConfig = {
       {
         source: '/',
         destination:
-          process.env.NEXT_PUBLIC_IS_SAFE === 'true'
-            ? '/grants/manage/grants'
-            : '/grants/explore/latest',
+          process.env.NEXT_PUBLIC_IS_SAFE === 'true' ? '/grants/create' : '/grants/explore/latest',
         permanent: true,
       },
       {
         source: '/amm/:path*', // Match all routes under `/amm`
         destination:
-          process.env.NEXT_PUBLIC_IS_SAFE === 'true'
-            ? '/grants/manage/grants'
-            : '/grants/explore/latest',
+          process.env.NEXT_PUBLIC_IS_SAFE === 'true' ? '/grants/create' : '/grants/explore/latest',
         permanent: true, // Set false for a 307 Temporary Redirect, true for 308 Permanent Redirect
       },
       {
         source: '/chain/:path*', // Match all routes under `/amm`
         destination:
-          process.env.NEXT_PUBLIC_IS_SAFE === 'true'
-            ? '/grants/manage/grants'
-            : '/grants/explore/latest',
+          process.env.NEXT_PUBLIC_IS_SAFE === 'true' ? '/grants/create' : '/grants/explore/latest',
         permanent: true, // Set false for a 307 Temporary Redirect, true for 308 Permanent Redirect
       },
     ]

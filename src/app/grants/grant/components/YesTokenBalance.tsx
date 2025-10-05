@@ -30,16 +30,12 @@ export default function YesTokenBalance({ grantId }: { grantId: string }) {
   })
 
   return (
-    <div className="flex items-start space-x-3">
-      <div className="flex-shrink-0 w-2 h-2 bg-[#00e068] rounded-full mt-2"></div>
-      <div>
-        <span className="text-xs font-semibold text-[#00e068] uppercase tracking-wider">
-          Your Yes Token Balance
-        </span>
-        <p className="text-base font-mono text-[#80838f] mt-1 break-all">
-          {balance ? formatEther(balance) : '0'}
-        </p>
-      </div>
+    <div className="flex items-center justify-between">
+      <span className="text-[#757A8B] text-xs uppercase tracking-wide font-medium">
+        YES TOKEN BALANCE
+      </span>
+
+      <div className="text-[#01EB5A] text-sm font-mono">{balance ? formatEther(balance) : '0'}</div>
     </div>
   )
 }

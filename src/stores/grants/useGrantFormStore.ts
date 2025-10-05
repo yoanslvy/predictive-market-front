@@ -9,7 +9,7 @@ interface StringValue {
 }
 
 interface GrantFormData {
-    question: StringValue
+    condition: StringValue
     collateralToken: StringValue
     amount: StringValue
     recipient: StringValue
@@ -33,7 +33,7 @@ const InitValue: StringValue = {
 }
 
 const createInitialState = (): GrantFormData => ({
-    question: { ...InitValue },
+    condition: { ...InitValue },
     collateralToken: { ...InitValue },
     amount: { ...InitValue },
     recipient: { ...InitValue },
@@ -52,12 +52,12 @@ export const useGrantFormStore = create<GrantFormState>()(
                 let sanitisedInput = input
 
                 switch (name) {
-                    case 'question':
-                        state.grantFormData.question.value = input
-                        state.grantFormData.question.message =
-                            input.length === 0 ? 'Question is required' :
-                                input.length < 10 ? 'Question must be at least 10 characters' :
-                                    input.length > 500 ? 'Question must be less than 500 characters' : ''
+                    case 'condition':
+                        state.grantFormData.condition.value = input
+                        state.grantFormData.condition.message =
+                            input.length === 0 ? 'condition is required' :
+                                input.length < 10 ? 'condition must be at least 10 characters' :
+                                    input.length > 500 ? 'condition must be less than 500 characters' : ''
                         break
 
                     case 'collateralToken':
@@ -127,9 +127,10 @@ export const useGrantFormStore = create<GrantFormState>()(
 
         isFormValid: () => {
             const { grantFormData } = get()
+            console.log('grantFormData', grantFormData)
             return (
-                grantFormData.question.value.length > 0 &&
-                grantFormData.question.message === '' &&
+                grantFormData.condition.value.length > 0 &&
+                grantFormData.condition.message === '' &&
                 grantFormData.collateralToken.value.length > 0 &&
                 grantFormData.collateralToken.message === '' &&
                 grantFormData.amount.value.length > 0 &&
@@ -139,8 +140,7 @@ export const useGrantFormStore = create<GrantFormState>()(
                 grantFormData.openingTime.value.length > 0 &&
                 grantFormData.openingTime.message === '' &&
                 grantFormData.minBond.value.length > 0 &&
-                grantFormData.minBond.message === '' &&
-                grantFormData.hasAcceptedTerms
+                grantFormData.minBond.message === ''
             )
         }
     }))

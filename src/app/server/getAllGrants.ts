@@ -4,6 +4,20 @@ import { simpleGrantManagerAbi } from '../contract/SimpleGrantManager'
 
 export const singleManagerAddress = '0x4F07b6daCcd6dF8D52efd32F22534304Cc0e1114'
 
+export type Grant = {
+    grantId: string
+    collateralToken: string
+    conditionId: string
+    questionId: string
+    amount: string
+    recipient: string
+    resolved: string
+    question: string
+    deadline: string
+    bond: bigint
+    minBond: bigint
+}
+
 export const getAllGrants = async () => {
     let publicClient = createPublicClient({
         chain: sepolia,
@@ -22,7 +36,7 @@ export const getAllGrants = async () => {
 }
 
 
-export const getGrant = async (grantId: string) => {
+export const getGrant = async (grantId: string): Promise<Grant> => {
     let publicClient = createPublicClient({
         chain: sepolia,
         transport: http(),

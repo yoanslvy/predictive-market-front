@@ -75,7 +75,10 @@
     "wagmi": "^2.14.11",
     "zod": "^3.24.1",
     "zod-validation-error": "^3.4.1",
-    "zustand": "^4.4.2"
+    "zustand": "^4.4.2",
+    "@mantine/core": "^8.2.5",
+    "@mantine/dates": "^8.2.5",
+    "@mantine/hooks": "^8.2.5"
   },
   "devDependencies": {
     "@graphprotocol/client-cli": "3.0.0",

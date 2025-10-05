@@ -111,43 +111,15 @@ export default async function TokenTableServer({
         }}
         isLoading={false}
         columns={[
-          /*    {
-            title: 'Grant ID',
-            render: ({ data }) => (
-              <>
-                <div className="justify-between items-center flex w-fit">
-                  <Tag className="ml-3" type={'comment'}>
-                    {shortenEthAddress(data.grantId)}
-                  </Tag>
-                </div>
-              </>
-            ),
-          }, */
           {
-            title: 'Question',
+            title: 'Grant Condition',
             render: ({ data }) => <Tag type={'info'}>{data.question}</Tag>,
           },
           {
-            title: 'Grant Opening time',
+            title: 'Opening time',
             render: ({ data }) =>
               !!data?.resolved ? 'Resolved' : timeDifference(Number(data.deadline) * 1000),
           },
-
-          /*    {
-            title: 'Locked %',
-            type: 'number',
-            render: ({ data }) => (
-              <Progress
-                value={data.lockedPercent}
-                max={100}
-                min={0}
-                low={30}
-                optimum={90}
-                high={64}
-                block
-              />
-            ),
-          }, */
 
           /*    {
             render: ({ data }) => (

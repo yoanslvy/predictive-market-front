@@ -1,0 +1,41 @@
+.container {
+  display: flex;
+  gap: 8px;
+  align-items: center;
+  justify-content: center;
+  // position: sticky;
+  // bottom: 16px;
+
+  @media (max-width: 960px) {
+    //  bottom: 80px;
+  }
+}
+
+.list {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+  display: flex;
+  gap: 8px;
+  align-items: center;
+}
+
+.link {
+  composes: container from '@components/modules/Button/Button.module.scss';
+  composes: sm from '@components/modules/Button/Button.module.scss';
+
+  box-shadow: 0 0 2px var(--color-bg-80);
+
+  &.disabled {
+    visibility: hidden;
+    pointer-events: none;
+  }
+
+  &.active {
+    background: rgba(var(--color-primary) / 1);
+    color: var(--color-dark);
+  }
+}
+
+.skip {
+}

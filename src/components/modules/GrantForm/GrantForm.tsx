@@ -2,15 +2,11 @@
 
 import { CalendarDateTime } from '@internationalized/date'
 
-import { FC, useState, useEffect } from 'react'
+import { FC } from 'react'
 
 import clsx from 'clsx'
 
-import { parseUnits, formatUnits, erc20Abi } from 'viem'
-
-import { useAccount, useWriteContract, useWaitForTransactionReceipt, useReadContract } from 'wagmi'
-
-import { simpleGrantManagerAbi } from '@/src/app/contract/SimpleGrantManager'
+import { useGrant } from '@/src/hooks/useGrant'
 import { useGrantFormStore } from '@/src/stores/grants/useGrantFormStore'
 
 import Button from '../Button'
@@ -19,152 +15,55 @@ import DateTimePicker from '../DateTimePicker'
 import Input from '../Input'
 import styles from './GrantForm.module.scss'
 
-const GRANT_MANAGER_ADDRESS = '0x4F07b6daCcd6dF8D52efd32F22534304Cc0e1114' as const
-
 interface GrantFormProps {
   className?: string
 }
 
 export const GrantForm: FC<GrantFormProps> = ({ className }) => {
-  const { address, isConnected } = useAccount()
-  const [isSubmitting, setIsSubmitting] = useState(false)
-  const [isApproving, setIsApproving] = useState(false)
+  const { grantFormData, updateForm, clearForm, isFormValid } = useGrantFormStore()
 
-  const { grantFormData, updateForm, updateBooleans, clearForm, isFormValid } = useGrantFormStore()
-
-  // Check current allowance
-  const { data: currentAllowance, refetch: refetchAllowance } = useReadContract({
-    address: grantFormData.collateralToken.value as `0x${string}`,
-    abi: erc20Abi,
-    functionName: 'allowance',
-    args: [address as `0x${string}`, GRANT_MANAGER_ADDRESS],
-    query: {
-      enabled: !!(
-        address &&
-        grantFormData.collateralToken.value &&
-        grantFormData.collateralToken.value.startsWith('0x')
-      ),
-    },
-  })
-
-  // Contract write for grant creation
   const {
-    writeContract: writeGrantContract,
-    data: grantHash,
-    isPending: isGrantWritePending,
-    error: grantWriteError,
-  } = useWriteContract()
-
-  // Contract write for token approval
-  const {
-    writeContract: writeApprovalContract,
-    data: approvalHash,
-    isPending: isApprovalWritePending,
-    error: approvalWriteError,
-  } = useWriteContract()
-
-  // Wait for grant transaction
-  const {
-    isLoading: isGrantConfirming,
-    isSuccess: isGrantConfirmed,
-    error: grantReceiptError,
-  } = useWaitForTransactionReceipt({
-    hash: grantHash,
-  })
-
-  // Wait for approval transaction
-  const {
-    isLoading: isApprovalConfirming,
-    isSuccess: isApprovalConfirmed,
-    error: approvalReceiptError,
-  } = useWaitForTransactionReceipt({
-    hash: approvalHash,
-  })
-
-  // Reset form on successful grant creation
-  useEffect(() => {
-    if (isGrantConfirmed) {
-      clearForm()
-      setIsSubmitting(false)
-    }
-  }, [isGrantConfirmed, clearForm])
-
-  // Refetch allowance after approval is confirmed
-  useEffect(() => {
-    if (isApprovalConfirmed) {
-      setIsApproving(false)
-      refetchAllowance()
-    }
-  }, [isApprovalConfirmed, refetchAllowance])
-
-  // Check if approval is needed
-  const needsApproval = () => {
-    if (!currentAllowance || !grantFormData.amount.value) return true
-
-    try {
-      const requiredAmount = parseUnits(grantFormData.amount.value, 18)
-      return currentAllowance < requiredAmount
-    } catch {
-      return false
-    }
-  }
+    createGrantFromForm,
+    approve,
+    status,
+    isConnected,
+    needsApproval,
+    formattedAllowance,
+    grantHash,
+    approvalHash,
+    isGrantConfirmed,
+    isApprovalConfirmed,
+    error,
+    reset,
+  } = useGrant()
 
   const handleApprove = async () => {
-    if (!isConnected || !grantFormData.collateralToken.value || !grantFormData.amount.value) return
+    if (!grantFormData.collateralToken.value || !grantFormData.amount.value) return
 
     try {
-      setIsApproving(true)
-      const amount = parseUnits(grantFormData.amount.value, 18)
-
-      writeApprovalContract({
-        address: grantFormData.collateralToken.value as `0x${string}`,
-        abi: erc20Abi,
-        functionName: 'approve',
-        args: [GRANT_MANAGER_ADDRESS, amount],
-      })
+      await approve(
+        grantFormData.collateralToken.value as `0x${string}`,
+        grantFormData.amount.value
+      )
     } catch (error) {
       console.error('Error approving token:', error)
-      setIsApproving(false)
     }
   }
 
   const handleSubmit = async () => {
-    if (!isConnected || isSubmitting) return
+    if (!isConnected || status === 'creating' || status === 'approving') return
 
     try {
-      setIsSubmitting(true)
-
-      // default: 1 day from now
-      const defaultOpeningTime = Math.floor(Date.now() / 1000) + 60 * 60
-      const openingTime = grantFormData.openingTime.value
-        ? parseInt(grantFormData.openingTime.value)
-        : defaultOpeningTime
-
-      const amount = parseUnits(grantFormData.amount.value, 18)
-      const minBond = parseUnits(grantFormData.minBond.value, 18)
-
-      console.log({ openingTime, amount, minBond })
-
-      writeGrantContract({
-        address: GRANT_MANAGER_ADDRESS,
-        abi: simpleGrantManagerAbi,
-        functionName: 'createGrant',
-        args: [
-          grantFormData.question.value,
-          grantFormData.collateralToken.value as `0x${string}`,
-          amount,
-          grantFormData.recipient.value as `0x${string}`,
-          openingTime,
-          1n,
-        ],
-      })
+      await createGrantFromForm()
     } catch (error) {
       console.error('Error creating grant:', error)
-      setIsSubmitting(false)
     }
   }
 
-  const error = grantWriteError || grantReceiptError || approvalWriteError || approvalReceiptError
+  const handleClear = () => {
+    clearForm()
+    reset()
+  }
 
   return (
     <Card title="Create Grant" className={clsx(styles.container, className)} type="shade">
@@ -180,12 +79,12 @@ export const GrantForm: FC<GrantFormProps> = ({ className }) => {
           <Input
             title="Question"
             placeholder="What condition must be met for this grant to be released?"
-            value={grantFormData.question.value}
+            value={grantFormData.condition.value}
             onValueChange={(value) => updateForm({ name: 'question', input: value })}
             className={styles.input}
           />
-          {grantFormData.question.message && (
-            <div className={styles.error}>{grantFormData.question.message}</div>
+          {grantFormData.condition.message && (
+            <div className={styles.error}>{grantFormData.condition.message}</div>
           )}
         </div>
 
@@ -216,9 +115,9 @@ export const GrantForm: FC<GrantFormProps> = ({ className }) => {
           )}
 
           {/* Show current allowance info */}
-          {currentAllowance !== undefined && grantFormData.collateralToken.value && (
+          {formattedAllowance && grantFormData.collateralToken.value && (
             <div className={styles.allowanceInfo}>
-              Current allowance: {formatUnits(currentAllowance, 18)} tokens
+              Current allowance: {formattedAllowance} tokens
               {needsApproval() && <span className={styles.approvalNeeded}> - Approval needed</span>}
             </div>
           )}
@@ -308,14 +207,12 @@ export const GrantForm: FC<GrantFormProps> = ({ className }) => {
           )}
         </div>
 
-        {error && (
-          <div className={styles.error}>Error: {error.message || 'Transaction failed'}</div>
-        )}
+        {error && <div className={styles.error}>Error: {error}</div>}
 
         {approvalHash && (
           <div className={styles.success}>
             Approval transaction: {approvalHash}
-            {isApprovalConfirming && <span> - Confirming...</span>}
+            {status === 'approving' && <span> - Confirming...</span>}
             {isApprovalConfirmed && <span> - Approved!</span>}
           </div>
         )}
@@ -323,13 +220,13 @@ export const GrantForm: FC<GrantFormProps> = ({ className }) => {
         {grantHash && (
           <div className={styles.success}>
             Grant transaction: {grantHash}
-            {isGrantConfirming && <span> - Confirming...</span>}
+            {status === 'creating' && <span> - Confirming...</span>}
             {isGrantConfirmed && <span> - Confirmed!</span>}
           </div>
         )}
 
         <div className={styles.actions}>
-          <Button type="secondary" onClick={clearForm} disabled={isSubmitting || isApproving}>
+          <Button type="secondary" onClick={handleClear} disabled={status !== 'idle'}>
             Clear
           </Button>
 
@@ -338,36 +235,26 @@ export const GrantForm: FC<GrantFormProps> = ({ className }) => {
             <Button
               type="primary"
               onClick={handleApprove}
-              disabled={
-                !isConnected || isApproving || isApprovalWritePending || isApprovalConfirming
-              }
-              isPending={isApprovalWritePending || isApprovalConfirming || isApproving}
+              disabled={!isConnected || status === 'approving'}
+              isPending={status === 'approving'}
               className={styles.approveButton}>
-              {isApprovalWritePending
-                ? 'Approving...'
-                : isApprovalConfirming
-                  ? 'Confirming Approval...'
-                  : 'Approve Token'}
+              {status === 'approving' ? 'Approving...' : 'Approve Token'}
             </Button>
           )}
           {!needsApproval() && (
             <Button
               type="primary"
               onClick={handleSubmit}
-              disabled={
-                !isConnected || !isFormValid() || isSubmitting || needsApproval() || isApproving
-              }
-              isPending={isGrantWritePending || isGrantConfirming || isSubmitting}
+              disabled={!isConnected || !isFormValid() || status === 'creating' || needsApproval()}
+              isPending={status === 'creating'}
               className={styles.submitButton}>
               {!isConnected
                 ? 'Connect Wallet'
                 : needsApproval()
                   ? 'Approve Token First'
-                  : isGrantWritePending
-                    ? 'Submitting...'
-                    : isGrantConfirming
-                      ? 'Confirming...'
-                      : 'Create Grant'}
+                  : status === 'creating'
+                    ? 'Creating Grant...'
+                    : 'Create Grant'}
             </Button>
           )}
         </div>
