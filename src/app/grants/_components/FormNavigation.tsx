@@ -1,13 +1,13 @@
-import { NavigationButton } from "./NavigationButton";
+import { NavigationButton } from './NavigationButton'
 
 type FormNavigationProps = {
-  canGoNext: boolean;
-  onPrevious: () => void;
-  onNext: () => void;
-  canShowPreviousButton: boolean;
-  canShowNextButton: boolean;
-  canSkipStep: boolean;
-};
+  canGoNext: boolean
+  onPrevious: () => void
+  onNext: () => void
+  canShowPreviousButton: boolean
+  canShowNextButton: boolean
+  canSkipStep: boolean
+}
 
 export function FormNavigation({
   canGoNext,
@@ -19,9 +19,7 @@ export function FormNavigation({
 }: FormNavigationProps) {
   return (
     <div className="mt-[2em] flex w-full items-center justify-center gap-[1rem] flex-wrap pb-[2em]">
-      {canShowPreviousButton && (
-        <NavigationButton direction="previous" onClick={onPrevious} />
-      )}
+      {canShowPreviousButton && <NavigationButton direction="previous" onClick={onPrevious} />}
 
       {canShowNextButton && (
         <NavigationButton
@@ -32,5 +30,5 @@ export function FormNavigation({
         />
       )}
     </div>
-  );
+  )
 }

@@ -2,9 +2,9 @@
 
 import { useEffect, useState } from 'react'
 
-import { FormNavigation } from '@/src/app/vesting-v2/create/_steps/_components/FormNavigation'
 import { useGrant } from '@/src/hooks/useGrant'
 
+import { FormNavigation } from '../../_components/FormNavigation'
 import { FormContent } from './FormContent'
 import { GrantConditions } from './GrantConditions'
 import { GrantRewards } from './GrantRewards'

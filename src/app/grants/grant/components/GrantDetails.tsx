@@ -7,11 +7,11 @@ import { formatUnits } from 'viem'
 
 import { useAccount } from 'wagmi'
 
-import { CalendarWithGreenDays } from '@/src/app/vesting-v2/_svg/CalendarWIthGreenDays'
-import { ThreeGreenArrows } from '@/src/app/vesting-v2/_svg/ThreeGreenArrows'
 import { ChainsData } from '@/src/components/modules/ChainAsset/constants'
 import Etherscan from '@/src/images/apps/etherscan.svg'
 
+import { CalendarWithGreenDays } from '../../_svg/CalendarWIthGreenDays'
+import { ThreeGreenArrows } from '../../_svg/ThreeGreenArrows'
 import { Grants } from '../../explore/latest/_modules/tokenTable/data'
 
 export const truncate = (fullStr: string, strLen: number, separator: string) => {

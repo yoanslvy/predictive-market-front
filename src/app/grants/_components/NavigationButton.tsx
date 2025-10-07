@@ -1,5 +1,5 @@
-import { Btn } from '../../../_components/Btn'
-import { ArrowIcon } from '../../../_svg/ArrowIcon'
+import { ArrowIcon } from '../_svg/ArrowIcon'
+import { Btn } from './Btn'
 
 type NavigationButtonProps = {
   direction: 'previous' | 'next'

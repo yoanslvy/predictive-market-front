@@ -1,7 +1,7 @@
 import type { Dispatch, ReactNode, SetStateAction } from 'react'
 
-import { Steps } from '@/src/app/vesting-v2/create/_steps/_components/Steps'
-import { Title } from '@/src/app/vesting-v2/create/_steps/_components/Title'
+import { Steps } from '../../_components/Steps'
+import { Title } from '../../_components/Title'
 
 export function FormContent<T extends { id: number; title: string; name: string }>({
   activeStepId,
