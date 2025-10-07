@@ -6,9 +6,8 @@ import Table from '@modules/Table'
 import Tag from '@modules/Tag'
 import Value from '@modules/Value'
 
-import { getAllGrants, getGrant } from '@/src/app/server/getAllGrants'
+import { getGrant } from '@/src/app/server/getAllGrants'
 import Pagination from '@/src/components/modules/Pagination'
-import Etherscan from '@/src/images/apps/etherscan.svg'
 import { getAllGrantsDatasByChainFetcherCached } from '@/src/server/fetchers/getAllGrants'
 
 import EtherscanLink from '../../../_components/CollateralToken'
@@ -40,6 +39,14 @@ export type Grants = {
   }
   creator: {
     walletAddress: string
+  }
+  collateralToken: {
+    tokenAddress: string
+    name: string
+    symbol: string
+    id: string
+    chainId: number
+    decimals: number
   }
 }
 
@@ -127,8 +134,6 @@ export default async function TokenTableServer({
 
   const allGrantsId = await getAllGrantsDatasByChainFetcherCached({ chain: '11155111' })
 
-  console.log('grantss', allGrantsId)
-
   const grants = (await Promise.all(
     allGrantsId.conditional_grants.map(async (grant) => {
       const grantData = await getGrant(grant.grantId)
@@ -153,13 +158,6 @@ export default async function TokenTableServer({
             render: ({ data }) =>
               !!data?.resolved ? 'Resolved' : timeDifference(Number(data.deadline) * 1000),
           },
-
-          /*    {
-            render: ({ data }) => (
-              <Value value={Number(data.lockedPercent).toFixed()} suffix="%" size="sm" />
-            ),
-          }, 
-           */
 
           {
             title: 'Reward token',

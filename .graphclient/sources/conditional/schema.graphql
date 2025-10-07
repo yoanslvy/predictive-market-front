@@ -15,6 +15,9 @@ type Query {
   conditional_wallets(where: conditional_WalletWhereInput, orderBy: [conditional_WalletOrderByInput!], offset: Int, limit: Int): [conditional_Wallet!]!
   conditional_walletById(id: String!): conditional_Wallet
   conditional_walletsConnection(orderBy: [conditional_WalletOrderByInput!]!, after: String, first: Int, where: conditional_WalletWhereInput): conditional_WalletsConnection!
+  conditional_tokens(where: conditional_TokenWhereInput, orderBy: [conditional_TokenOrderByInput!], offset: Int, limit: Int): [conditional_Token!]!
+  conditional_tokenById(id: String!): conditional_Token
+  conditional_tokensConnection(orderBy: [conditional_TokenOrderByInput!]!, after: String, first: Int, where: conditional_TokenWhereInput): conditional_TokensConnection!
   conditional_squidStatus: conditional_SquidStatus
 }
 
@@ -28,11 +31,16 @@ type conditional_Grant {
   recipientId: String!
   recipient: conditional_Wallet!
   amount: BigInt!
+  amountD: Float!
+  question: String!
   questionId: String!
   conditionId: String!
   txnHash: String!
   resolved: Boolean!
   success: Boolean
+  collateralTokenId: String!
+  collateralToken: conditional_Token!
+  deadline: BigInt!
   """creation block """
   creationBlockNumber: BigInt!
   """creation timestamp """
@@ -172,6 +180,32 @@ input conditional_GrantWhereInput {
   amount_lte: BigInt
   amount_in: [BigInt!]
   amount_not_in: [BigInt!]
+  amountD_isNull: Boolean
+  amountD_eq: Float
+  amountD_not_eq: Float
+  amountD_gt: Float
+  amountD_gte: Float
+  amountD_lt: Float
+  amountD_lte: Float
+  amountD_in: [Float!]
+  amountD_not_in: [Float!]
+  question_isNull: Boolean
+  question_eq: String
+  question_not_eq: String
+  question_gt: String
+  question_gte: String
+  question_lt: String
+  question_lte: String
+  question_in: [String!]
+  question_not_in: [String!]
+  question_contains: String
+  question_not_contains: String
+  question_containsInsensitive: String
+  question_not_containsInsensitive: String
+  question_startsWith: String
+  question_not_startsWith: String
+  question_endsWith: String
+  question_not_endsWith: String
   questionId_isNull: Boolean
   questionId_eq: String
   questionId_not_eq: String
@@ -229,6 +263,34 @@ input conditional_GrantWhereInput {
   success_isNull: Boolean
   success_eq: Boolean
   success_not_eq: Boolean
+  collateralTokenId_isNull: Boolean
+  collateralTokenId_eq: String
+  collateralTokenId_not_eq: String
+  collateralTokenId_gt: String
+  collateralTokenId_gte: String
+  collateralTokenId_lt: String
+  collateralTokenId_lte: String
+  collateralTokenId_in: [String!]
+  collateralTokenId_not_in: [String!]
+  collateralTokenId_contains: String
+  collateralTokenId_not_contains: String
+  collateralTokenId_containsInsensitive: String
+  collateralTokenId_not_containsInsensitive: String
+  collateralTokenId_startsWith: String
+  collateralTokenId_not_startsWith: String
+  collateralTokenId_endsWith: String
+  collateralTokenId_not_endsWith: String
+  collateralToken_isNull: Boolean
+  collateralToken: conditional_TokenWhereInput
+  deadline_isNull: Boolean
+  deadline_eq: BigInt
+  deadline_not_eq: BigInt
+  deadline_gt: BigInt
+  deadline_gte: BigInt
+  deadline_lt: BigInt
+  deadline_lte: BigInt
+  deadline_in: [BigInt!]
+  deadline_not_in: [BigInt!]
   creationBlockNumber_isNull: Boolean
   creationBlockNumber_eq: BigInt
   creationBlockNumber_not_eq: BigInt
@@ -686,6 +748,97 @@ input conditional_AnswerWhereInput {
   OR: [conditional_AnswerWhereInput!]
 }
 
+input conditional_TokenWhereInput {
+  id_isNull: Boolean
+  id_eq: String
+  id_not_eq: String
+  id_gt: String
+  id_gte: String
+  id_lt: String
+  id_lte: String
+  id_in: [String!]
+  id_not_in: [String!]
+  id_contains: String
+  id_not_contains: String
+  id_containsInsensitive: String
+  id_not_containsInsensitive: String
+  id_startsWith: String
+  id_not_startsWith: String
+  id_endsWith: String
+  id_not_endsWith: String
+  name_isNull: Boolean
+  name_eq: String
+  name_not_eq: String
+  name_gt: String
+  name_gte: String
+  name_lt: String
+  name_lte: String
+  name_in: [String!]
+  name_not_in: [String!]
+  name_contains: String
+  name_not_contains: String
+  name_containsInsensitive: String
+  name_not_containsInsensitive: String
+  name_startsWith: String
+  name_not_startsWith: String
+  name_endsWith: String
+  name_not_endsWith: String
+  symbol_isNull: Boolean
+  symbol_eq: String
+  symbol_not_eq: String
+  symbol_gt: String
+  symbol_gte: String
+  symbol_lt: String
+  symbol_lte: String
+  symbol_in: [String!]
+  symbol_not_in: [String!]
+  symbol_contains: String
+  symbol_not_contains: String
+  symbol_containsInsensitive: String
+  symbol_not_containsInsensitive: String
+  symbol_startsWith: String
+  symbol_not_startsWith: String
+  symbol_endsWith: String
+  symbol_not_endsWith: String
+  decimals_isNull: Boolean
+  decimals_eq: Int
+  decimals_not_eq: Int
+  decimals_gt: Int
+  decimals_gte: Int
+  decimals_lt: Int
+  decimals_lte: Int
+  decimals_in: [Int!]
+  decimals_not_in: [Int!]
+  chainId_isNull: Boolean
+  chainId_eq: Int
+  chainId_not_eq: Int
+  chainId_gt: Int
+  chainId_gte: Int
+  chainId_lt: Int
+  chainId_lte: Int
+  chainId_in: [Int!]
+  chainId_not_in: [Int!]
+  tokenAddress_isNull: Boolean
+  tokenAddress_eq: String
+  tokenAddress_not_eq: String
+  tokenAddress_gt: String
+  tokenAddress_gte: String
+  tokenAddress_lt: String
+  tokenAddress_lte: String
+  tokenAddress_in: [String!]
+  tokenAddress_not_in: [String!]
+  tokenAddress_contains: String
+  tokenAddress_not_contains: String
+  tokenAddress_containsInsensitive: String
+  tokenAddress_not_containsInsensitive: String
+  tokenAddress_startsWith: String
+  tokenAddress_not_startsWith: String
+  tokenAddress_endsWith: String
+  tokenAddress_not_endsWith: String
+  AND: [conditional_TokenWhereInput!]
+  OR: [conditional_TokenWhereInput!]
+}
+
 enum conditional_GrantOrderByInput {
   id_ASC
   id_DESC
@@ -855,6 +1008,18 @@ enum conditional_GrantOrderByInput {
   amount_ASC_NULLS_LAST
   amount_DESC_NULLS_FIRST
   amount_DESC_NULLS_LAST
+  amountD_ASC
+  amountD_DESC
+  amountD_ASC_NULLS_FIRST
+  amountD_ASC_NULLS_LAST
+  amountD_DESC_NULLS_FIRST
+  amountD_DESC_NULLS_LAST
+  question_ASC
+  question_DESC
+  question_ASC_NULLS_FIRST
+  question_ASC_NULLS_LAST
+  question_DESC_NULLS_FIRST
+  question_DESC_NULLS_LAST
   questionId_ASC
   questionId_DESC
   questionId_ASC_NULLS_FIRST
@@ -885,6 +1050,54 @@ enum conditional_GrantOrderByInput {
   success_ASC_NULLS_LAST
   success_DESC_NULLS_FIRST
   success_DESC_NULLS_LAST
+  collateralTokenId_ASC
+  collateralTokenId_DESC
+  collateralTokenId_ASC_NULLS_FIRST
+  collateralTokenId_ASC_NULLS_LAST
+  collateralTokenId_DESC_NULLS_FIRST
+  collateralTokenId_DESC_NULLS_LAST
+  collateralToken_id_ASC
+  collateralToken_id_DESC
+  collateralToken_id_ASC_NULLS_FIRST
+  collateralToken_id_ASC_NULLS_LAST
+  collateralToken_id_DESC_NULLS_FIRST
+  collateralToken_id_DESC_NULLS_LAST
+  collateralToken_name_ASC
+  collateralToken_name_DESC
+  collateralToken_name_ASC_NULLS_FIRST
+  collateralToken_name_ASC_NULLS_LAST
+  collateralToken_name_DESC_NULLS_FIRST
+  collateralToken_name_DESC_NULLS_LAST
+  collateralToken_symbol_ASC
+  collateralToken_symbol_DESC
+  collateralToken_symbol_ASC_NULLS_FIRST
+  collateralToken_symbol_ASC_NULLS_LAST
+  collateralToken_symbol_DESC_NULLS_FIRST
+  collateralToken_symbol_DESC_NULLS_LAST
+  collateralToken_decimals_ASC
+  collateralToken_decimals_DESC
+  collateralToken_decimals_ASC_NULLS_FIRST
+  collateralToken_decimals_ASC_NULLS_LAST
+  collateralToken_decimals_DESC_NULLS_FIRST
+  collateralToken_decimals_DESC_NULLS_LAST
+  collateralToken_chainId_ASC
+  collateralToken_chainId_DESC
+  collateralToken_chainId_ASC_NULLS_FIRST
+  collateralToken_chainId_ASC_NULLS_LAST
+  collateralToken_chainId_DESC_NULLS_FIRST
+  collateralToken_chainId_DESC_NULLS_LAST
+  collateralToken_tokenAddress_ASC
+  collateralToken_tokenAddress_DESC
+  collateralToken_tokenAddress_ASC_NULLS_FIRST
+  collateralToken_tokenAddress_ASC_NULLS_LAST
+  collateralToken_tokenAddress_DESC_NULLS_FIRST
+  collateralToken_tokenAddress_DESC_NULLS_LAST
+  deadline_ASC
+  deadline_DESC
+  deadline_ASC_NULLS_FIRST
+  deadline_ASC_NULLS_LAST
+  deadline_DESC_NULLS_FIRST
+  deadline_DESC_NULLS_LAST
   creationBlockNumber_ASC
   creationBlockNumber_DESC
   creationBlockNumber_ASC_NULLS_FIRST
@@ -1113,6 +1326,15 @@ enum conditional_AnswerOrderByInput {
   chainId_DESC_NULLS_LAST
 }
 
+type conditional_Token {
+  id: String!
+  name: String!
+  symbol: String!
+  decimals: Int!
+  chainId: Int!
+  tokenAddress: String!
+}
+
 type conditional_GrantsConnection {
   edges: [conditional_GrantEdge!]!
   pageInfo: conditional_PageInfo!
@@ -1299,6 +1521,56 @@ type conditional_WalletsConnection {
 
 type conditional_WalletEdge {
   node: conditional_Wallet!
+  cursor: String!
+}
+
+enum conditional_TokenOrderByInput {
+  id_ASC
+  id_DESC
+  id_ASC_NULLS_FIRST
+  id_ASC_NULLS_LAST
+  id_DESC_NULLS_FIRST
+  id_DESC_NULLS_LAST
+  name_ASC
+  name_DESC
+  name_ASC_NULLS_FIRST
+  name_ASC_NULLS_LAST
+  name_DESC_NULLS_FIRST
+  name_DESC_NULLS_LAST
+  symbol_ASC
+  symbol_DESC
+  symbol_ASC_NULLS_FIRST
+  symbol_ASC_NULLS_LAST
+  symbol_DESC_NULLS_FIRST
+  symbol_DESC_NULLS_LAST
+  decimals_ASC
+  decimals_DESC
+  decimals_ASC_NULLS_FIRST
+  decimals_ASC_NULLS_LAST
+  decimals_DESC_NULLS_FIRST
+  decimals_DESC_NULLS_LAST
+  chainId_ASC
+  chainId_DESC
+  chainId_ASC_NULLS_FIRST
+  chainId_ASC_NULLS_LAST
+  chainId_DESC_NULLS_FIRST
+  chainId_DESC_NULLS_LAST
+  tokenAddress_ASC
+  tokenAddress_DESC
+  tokenAddress_ASC_NULLS_FIRST
+  tokenAddress_ASC_NULLS_LAST
+  tokenAddress_DESC_NULLS_FIRST
+  tokenAddress_DESC_NULLS_LAST
+}
+
+type conditional_TokensConnection {
+  edges: [conditional_TokenEdge!]!
+  pageInfo: conditional_PageInfo!
+  totalCount: Int!
+}
+
+type conditional_TokenEdge {
+  node: conditional_Token!
   cursor: String!
 }
 

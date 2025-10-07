@@ -10,6 +10,14 @@ query getAllGrants($chainId: Int!) {
     txnHash
     resolved
     success
+    collateralToken {
+      name
+      symbol
+      tokenAddress
+      id
+      chainId
+      decimals
+    }
     questionEntity {
       question
       minBond
@@ -17,6 +25,9 @@ query getAllGrants($chainId: Int!) {
       openingTs
       nonce
       timeout
+      answers {
+        bond
+      }
     }
     recipient {
       walletAddress

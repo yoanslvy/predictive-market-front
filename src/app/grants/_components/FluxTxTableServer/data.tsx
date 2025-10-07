@@ -74,7 +74,14 @@ type Props = {
     creationTimestamp: string
     txnHash: string
     amount: string
-    token: string
+    token: {
+      tokenAddress: string
+      name: string
+      symbol: string
+      id: string
+      chainId: number
+      decimals: number
+    }
   }
 }
 
@@ -162,24 +169,7 @@ export default async function FluxTxTableServer({
                 />
               ),
           },
-          // {
-          //   title: 'Pre-value',
-          //   render: ({ data }) =>
-          //     'preValue' in data && data.preValue ? (
-          //       <Value value={formatAmount(Number(data.preValue))} size="sm" />
-          //     ) : 'from' in data && data.from ? (
-          //       <Value value={data.from} size="sm" />
-          //     ) : null,
-          // },
-          // {
-          //   title: 'Post-value',
-          //   render: ({ data }) =>
-          //     'postValue' in data && data.postValue ? (
-          //       <Value value={formatAmount(Number(data.postValue))} size="sm" />
-          //     ) : 'to' in data && data.to ? (
-          //       <Value value={data.to} size="sm" />
-          //     ) : null,
-          // },
+
           {
             title: 'Token',
             render: ({ data }) => {
@@ -187,13 +177,13 @@ export default async function FluxTxTableServer({
                 <Link
                   target="_blank"
                   rel="noopener noreferrer"
-                  href={'/'}
+                  href={`https://sepolia.etherscan.io/address/${data.token?.tokenAddress}`}
                   className="flex items-center gap-x-[0.5rem]">
                   <TokenAsset
-                    chainId={1}
-                    address={data.token!}
-                    name={'Token'}
-                    symbol={'TKN'}
+                    chainId={11155111}
+                    address={data.token?.tokenAddress!}
+                    name={data.token?.name!}
+                    symbol={data.token?.symbol!}
                     size="xs"
                   />
                 </Link>

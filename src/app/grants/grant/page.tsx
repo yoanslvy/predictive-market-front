@@ -35,11 +35,13 @@ export default async function GrantLayout({
   const isOpeningTimePassed = openingTimeDate ? openingTimeDate < now : false
   const resolved = grantData.resolved
 
+  const collateralToken = grantData.collateralToken
+
   const creationTx = {
     creationTimestamp: grantData.creationTimestamp.toString(),
     txnHash: grantData.txnHash,
     amount: grantData.amount.toString(),
-    token: '0x5dfcfc9693f98e4deb942657d51a6bc0fce02036',
+    token: collateralToken,
   }
 
   return (

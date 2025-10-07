@@ -18,7 +18,14 @@ type Props = {
     creationTimestamp: string
     txnHash: string
     amount: string
-    token: string
+    token: {
+      tokenAddress: string
+      name: string
+      symbol: string
+      id: string
+      chainId: number
+      decimals: number
+    }
   }
 }
 

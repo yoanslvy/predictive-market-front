@@ -13,6 +13,14 @@ query getGrantById($id: String!) {
     resolved
     recipientId
     questionId
+    collateralToken {
+      name
+      symbol
+      tokenAddress
+      id
+      chainId
+      decimals
+    }
     questionEntity {
       question
       minBond
@@ -20,6 +28,9 @@ query getGrantById($id: String!) {
       openingTs
       nonce
       timeout
+      answers {
+        bond
+      }
     }
     recipient {
       walletAddress

@@ -11,7 +11,7 @@ import { Grant } from '@/src/app/server/getAllGrants'
 
 import { Button } from '../Button/Button'
 
-const GRANT_MANAGER_ADDRESS = '0x4F07b6daCcd6dF8D52efd32F22534304Cc0e1114' as const
+const GRANT_MANAGER_ADDRESS = '0x0Ea58737FA363Fcd31e84DA2eCa54e55F0701309' as const
 
 interface ResolveFormProps {
   grant: Grant

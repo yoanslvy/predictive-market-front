@@ -32,6 +32,9 @@ export type Query = {
   conditional_wallets: Array<conditional_Wallet>;
   conditional_walletById?: Maybe<conditional_Wallet>;
   conditional_walletsConnection: conditional_WalletsConnection;
+  conditional_tokens: Array<conditional_Token>;
+  conditional_tokenById?: Maybe<conditional_Token>;
+  conditional_tokensConnection: conditional_TokensConnection;
   conditional_squidStatus?: Maybe<conditional_SquidStatus>;
 };
 
@@ -119,6 +122,27 @@ export type Queryconditional_walletsConnectionArgs = {
   where?: InputMaybe<conditional_WalletWhereInput>;
 };
 
+
+export type Queryconditional_tokensArgs = {
+  where?: InputMaybe<conditional_TokenWhereInput>;
+  orderBy?: InputMaybe<Array<conditional_TokenOrderByInput>>;
+  offset?: InputMaybe<Scalars['Int']>;
+  limit?: InputMaybe<Scalars['Int']>;
+};
+
+
+export type Queryconditional_tokenByIdArgs = {
+  id: Scalars['String'];
+};
+
+
+export type Queryconditional_tokensConnectionArgs = {
+  orderBy: Array<conditional_TokenOrderByInput>;
+  after?: InputMaybe<Scalars['String']>;
+  first?: InputMaybe<Scalars['Int']>;
+  where?: InputMaybe<conditional_TokenWhereInput>;
+};
+
 export type conditional_Grant = {
   id: Scalars['String'];
   grantId: Scalars['String'];
@@ -129,11 +153,16 @@ export type conditional_Grant = {
   recipientId: Scalars['String'];
   recipient: conditional_Wallet;
   amount: Scalars['BigInt'];
+  amountD: Scalars['Float'];
+  question: Scalars['String'];
   questionId: Scalars['String'];
   conditionId: Scalars['String'];
   txnHash: Scalars['String'];
   resolved: Scalars['Boolean'];
   success?: Maybe<Scalars['Boolean']>;
+  collateralTokenId: Scalars['String'];
+  collateralToken: conditional_Token;
+  deadline: Scalars['BigInt'];
   /** creation block  */
   creationBlockNumber: Scalars['BigInt'];
   /** creation timestamp  */
@@ -297,6 +326,32 @@ export type conditional_GrantWhereInput = {
   amount_lte?: InputMaybe<Scalars['BigInt']>;
   amount_in?: InputMaybe<Array<Scalars['BigInt']>>;
   amount_not_in?: InputMaybe<Array<Scalars['BigInt']>>;
+  amountD_isNull?: InputMaybe<Scalars['Boolean']>;
+  amountD_eq?: InputMaybe<Scalars['Float']>;
+  amountD_not_eq?: InputMaybe<Scalars['Float']>;
+  amountD_gt?: InputMaybe<Scalars['Float']>;
+  amountD_gte?: InputMaybe<Scalars['Float']>;
+  amountD_lt?: InputMaybe<Scalars['Float']>;
+  amountD_lte?: InputMaybe<Scalars['Float']>;
+  amountD_in?: InputMaybe<Array<Scalars['Float']>>;
+  amountD_not_in?: InputMaybe<Array<Scalars['Float']>>;
+  question_isNull?: InputMaybe<Scalars['Boolean']>;
+  question_eq?: InputMaybe<Scalars['String']>;
+  question_not_eq?: InputMaybe<Scalars['String']>;
+  question_gt?: InputMaybe<Scalars['String']>;
+  question_gte?: InputMaybe<Scalars['String']>;
+  question_lt?: InputMaybe<Scalars['String']>;
+  question_lte?: InputMaybe<Scalars['String']>;
+  question_in?: InputMaybe<Array<Scalars['String']>>;
+  question_not_in?: InputMaybe<Array<Scalars['String']>>;
+  question_contains?: InputMaybe<Scalars['String']>;
+  question_not_contains?: InputMaybe<Scalars['String']>;
+  question_containsInsensitive?: InputMaybe<Scalars['String']>;
+  question_not_containsInsensitive?: InputMaybe<Scalars['String']>;
+  question_startsWith?: InputMaybe<Scalars['String']>;
+  question_not_startsWith?: InputMaybe<Scalars['String']>;
+  question_endsWith?: InputMaybe<Scalars['String']>;
+  question_not_endsWith?: InputMaybe<Scalars['String']>;
   questionId_isNull?: InputMaybe<Scalars['Boolean']>;
   questionId_eq?: InputMaybe<Scalars['String']>;
   questionId_not_eq?: InputMaybe<Scalars['String']>;
@@ -354,6 +409,34 @@ export type conditional_GrantWhereInput = {
   success_isNull?: InputMaybe<Scalars['Boolean']>;
   success_eq?: InputMaybe<Scalars['Boolean']>;
   success_not_eq?: InputMaybe<Scalars['Boolean']>;
+  collateralTokenId_isNull?: InputMaybe<Scalars['Boolean']>;
+  collateralTokenId_eq?: InputMaybe<Scalars['String']>;
+  collateralTokenId_not_eq?: InputMaybe<Scalars['String']>;
+  collateralTokenId_gt?: InputMaybe<Scalars['String']>;
+  collateralTokenId_gte?: InputMaybe<Scalars['String']>;
+  collateralTokenId_lt?: InputMaybe<Scalars['String']>;
+  collateralTokenId_lte?: InputMaybe<Scalars['String']>;
+  collateralTokenId_in?: InputMaybe<Array<Scalars['String']>>;
+  collateralTokenId_not_in?: InputMaybe<Array<Scalars['String']>>;
+  collateralTokenId_contains?: InputMaybe<Scalars['String']>;
+  collateralTokenId_not_contains?: InputMaybe<Scalars['String']>;
+  collateralTokenId_containsInsensitive?: InputMaybe<Scalars['String']>;
+  collateralTokenId_not_containsInsensitive?: InputMaybe<Scalars['String']>;
+  collateralTokenId_startsWith?: InputMaybe<Scalars['String']>;
+  collateralTokenId_not_startsWith?: InputMaybe<Scalars['String']>;
+  collateralTokenId_endsWith?: InputMaybe<Scalars['String']>;
+  collateralTokenId_not_endsWith?: InputMaybe<Scalars['String']>;
+  collateralToken_isNull?: InputMaybe<Scalars['Boolean']>;
+  collateralToken?: InputMaybe<conditional_TokenWhereInput>;
+  deadline_isNull?: InputMaybe<Scalars['Boolean']>;
+  deadline_eq?: InputMaybe<Scalars['BigInt']>;
+  deadline_not_eq?: InputMaybe<Scalars['BigInt']>;
+  deadline_gt?: InputMaybe<Scalars['BigInt']>;
+  deadline_gte?: InputMaybe<Scalars['BigInt']>;
+  deadline_lt?: InputMaybe<Scalars['BigInt']>;
+  deadline_lte?: InputMaybe<Scalars['BigInt']>;
+  deadline_in?: InputMaybe<Array<Scalars['BigInt']>>;
+  deadline_not_in?: InputMaybe<Array<Scalars['BigInt']>>;
   creationBlockNumber_isNull?: InputMaybe<Scalars['Boolean']>;
   creationBlockNumber_eq?: InputMaybe<Scalars['BigInt']>;
   creationBlockNumber_not_eq?: InputMaybe<Scalars['BigInt']>;
@@ -808,6 +891,97 @@ export type conditional_AnswerWhereInput = {
   OR?: InputMaybe<Array<conditional_AnswerWhereInput>>;
 };
 
+export type conditional_TokenWhereInput = {
+  id_isNull?: InputMaybe<Scalars['Boolean']>;
+  id_eq?: InputMaybe<Scalars['String']>;
+  id_not_eq?: InputMaybe<Scalars['String']>;
+  id_gt?: InputMaybe<Scalars['String']>;
+  id_gte?: InputMaybe<Scalars['String']>;
+  id_lt?: InputMaybe<Scalars['String']>;
+  id_lte?: InputMaybe<Scalars['String']>;
+  id_in?: InputMaybe<Array<Scalars['String']>>;
+  id_not_in?: InputMaybe<Array<Scalars['String']>>;
+  id_contains?: InputMaybe<Scalars['String']>;
+  id_not_contains?: InputMaybe<Scalars['String']>;
+  id_containsInsensitive?: InputMaybe<Scalars['String']>;
+  id_not_containsInsensitive?: InputMaybe<Scalars['String']>;
+  id_startsWith?: InputMaybe<Scalars['String']>;
+  id_not_startsWith?: InputMaybe<Scalars['String']>;
+  id_endsWith?: InputMaybe<Scalars['String']>;
+  id_not_endsWith?: InputMaybe<Scalars['String']>;
+  name_isNull?: InputMaybe<Scalars['Boolean']>;
+  name_eq?: InputMaybe<Scalars['String']>;
+  name_not_eq?: InputMaybe<Scalars['String']>;
+  name_gt?: InputMaybe<Scalars['String']>;
+  name_gte?: InputMaybe<Scalars['String']>;
+  name_lt?: InputMaybe<Scalars['String']>;
+  name_lte?: InputMaybe<Scalars['String']>;
+  name_in?: InputMaybe<Array<Scalars['String']>>;
+  name_not_in?: InputMaybe<Array<Scalars['String']>>;
+  name_contains?: InputMaybe<Scalars['String']>;
+  name_not_contains?: InputMaybe<Scalars['String']>;
+  name_containsInsensitive?: InputMaybe<Scalars['String']>;
+  name_not_containsInsensitive?: InputMaybe<Scalars['String']>;
+  name_startsWith?: InputMaybe<Scalars['String']>;
+  name_not_startsWith?: InputMaybe<Scalars['String']>;
+  name_endsWith?: InputMaybe<Scalars['String']>;
+  name_not_endsWith?: InputMaybe<Scalars['String']>;
+  symbol_isNull?: InputMaybe<Scalars['Boolean']>;
+  symbol_eq?: InputMaybe<Scalars['String']>;
+  symbol_not_eq?: InputMaybe<Scalars['String']>;
+  symbol_gt?: InputMaybe<Scalars['String']>;
+  symbol_gte?: InputMaybe<Scalars['String']>;
+  symbol_lt?: InputMaybe<Scalars['String']>;
+  symbol_lte?: InputMaybe<Scalars['String']>;
+  symbol_in?: InputMaybe<Array<Scalars['String']>>;
+  symbol_not_in?: InputMaybe<Array<Scalars['String']>>;
+  symbol_contains?: InputMaybe<Scalars['String']>;
+  symbol_not_contains?: InputMaybe<Scalars['String']>;
+  symbol_containsInsensitive?: InputMaybe<Scalars['String']>;
+  symbol_not_containsInsensitive?: InputMaybe<Scalars['String']>;
+  symbol_startsWith?: InputMaybe<Scalars['String']>;
+  symbol_not_startsWith?: InputMaybe<Scalars['String']>;
+  symbol_endsWith?: InputMaybe<Scalars['String']>;
+  symbol_not_endsWith?: InputMaybe<Scalars['String']>;
+  decimals_isNull?: InputMaybe<Scalars['Boolean']>;
+  decimals_eq?: InputMaybe<Scalars['Int']>;
+  decimals_not_eq?: InputMaybe<Scalars['Int']>;
+  decimals_gt?: InputMaybe<Scalars['Int']>;
+  decimals_gte?: InputMaybe<Scalars['Int']>;
+  decimals_lt?: InputMaybe<Scalars['Int']>;
+  decimals_lte?: InputMaybe<Scalars['Int']>;
+  decimals_in?: InputMaybe<Array<Scalars['Int']>>;
+  decimals_not_in?: InputMaybe<Array<Scalars['Int']>>;
+  chainId_isNull?: InputMaybe<Scalars['Boolean']>;
+  chainId_eq?: InputMaybe<Scalars['Int']>;
+  chainId_not_eq?: InputMaybe<Scalars['Int']>;
+  chainId_gt?: InputMaybe<Scalars['Int']>;
+  chainId_gte?: InputMaybe<Scalars['Int']>;
+  chainId_lt?: InputMaybe<Scalars['Int']>;
+  chainId_lte?: InputMaybe<Scalars['Int']>;
+  chainId_in?: InputMaybe<Array<Scalars['Int']>>;
+  chainId_not_in?: InputMaybe<Array<Scalars['Int']>>;
+  tokenAddress_isNull?: InputMaybe<Scalars['Boolean']>;
+  tokenAddress_eq?: InputMaybe<Scalars['String']>;
+  tokenAddress_not_eq?: InputMaybe<Scalars['String']>;
+  tokenAddress_gt?: InputMaybe<Scalars['String']>;
+  tokenAddress_gte?: InputMaybe<Scalars['String']>;
+  tokenAddress_lt?: InputMaybe<Scalars['String']>;
+  tokenAddress_lte?: InputMaybe<Scalars['String']>;
+  tokenAddress_in?: InputMaybe<Array<Scalars['String']>>;
+  tokenAddress_not_in?: InputMaybe<Array<Scalars['String']>>;
+  tokenAddress_contains?: InputMaybe<Scalars['String']>;
+  tokenAddress_not_contains?: InputMaybe<Scalars['String']>;
+  tokenAddress_containsInsensitive?: InputMaybe<Scalars['String']>;
+  tokenAddress_not_containsInsensitive?: InputMaybe<Scalars['String']>;
+  tokenAddress_startsWith?: InputMaybe<Scalars['String']>;
+  tokenAddress_not_startsWith?: InputMaybe<Scalars['String']>;
+  tokenAddress_endsWith?: InputMaybe<Scalars['String']>;
+  tokenAddress_not_endsWith?: InputMaybe<Scalars['String']>;
+  AND?: InputMaybe<Array<conditional_TokenWhereInput>>;
+  OR?: InputMaybe<Array<conditional_TokenWhereInput>>;
+};
+
 export type conditional_GrantOrderByInput =
   | 'id_ASC'
   | 'id_DESC'
@@ -977,6 +1151,18 @@ export type conditional_GrantOrderByInput =
   | 'amount_ASC_NULLS_LAST'
   | 'amount_DESC_NULLS_FIRST'
   | 'amount_DESC_NULLS_LAST'
+  | 'amountD_ASC'
+  | 'amountD_DESC'
+  | 'amountD_ASC_NULLS_FIRST'
+  | 'amountD_ASC_NULLS_LAST'
+  | 'amountD_DESC_NULLS_FIRST'
+  | 'amountD_DESC_NULLS_LAST'
+  | 'question_ASC'
+  | 'question_DESC'
+  | 'question_ASC_NULLS_FIRST'
+  | 'question_ASC_NULLS_LAST'
+  | 'question_DESC_NULLS_FIRST'
+  | 'question_DESC_NULLS_LAST'
   | 'questionId_ASC'
   | 'questionId_DESC'
   | 'questionId_ASC_NULLS_FIRST'
@@ -1007,6 +1193,54 @@ export type conditional_GrantOrderByInput =
   | 'success_ASC_NULLS_LAST'
   | 'success_DESC_NULLS_FIRST'
   | 'success_DESC_NULLS_LAST'
+  | 'collateralTokenId_ASC'
+  | 'collateralTokenId_DESC'
+  | 'collateralTokenId_ASC_NULLS_FIRST'
+  | 'collateralTokenId_ASC_NULLS_LAST'
+  | 'collateralTokenId_DESC_NULLS_FIRST'
+  | 'collateralTokenId_DESC_NULLS_LAST'
+  | 'collateralToken_id_ASC'
+  | 'collateralToken_id_DESC'
+  | 'collateralToken_id_ASC_NULLS_FIRST'
+  | 'collateralToken_id_ASC_NULLS_LAST'
+  | 'collateralToken_id_DESC_NULLS_FIRST'
+  | 'collateralToken_id_DESC_NULLS_LAST'
+  | 'collateralToken_name_ASC'
+  | 'collateralToken_name_DESC'
+  | 'collateralToken_name_ASC_NULLS_FIRST'
+  | 'collateralToken_name_ASC_NULLS_LAST'
+  | 'collateralToken_name_DESC_NULLS_FIRST'
+  | 'collateralToken_name_DESC_NULLS_LAST'
+  | 'collateralToken_symbol_ASC'
+  | 'collateralToken_symbol_DESC'
+  | 'collateralToken_symbol_ASC_NULLS_FIRST'
+  | 'collateralToken_symbol_ASC_NULLS_LAST'
+  | 'collateralToken_symbol_DESC_NULLS_FIRST'
+  | 'collateralToken_symbol_DESC_NULLS_LAST'
+  | 'collateralToken_decimals_ASC'
+  | 'collateralToken_decimals_DESC'
+  | 'collateralToken_decimals_ASC_NULLS_FIRST'
+  | 'collateralToken_decimals_ASC_NULLS_LAST'
+  | 'collateralToken_decimals_DESC_NULLS_FIRST'
+  | 'collateralToken_decimals_DESC_NULLS_LAST'
+  | 'collateralToken_chainId_ASC'
+  | 'collateralToken_chainId_DESC'
+  | 'collateralToken_chainId_ASC_NULLS_FIRST'
+  | 'collateralToken_chainId_ASC_NULLS_LAST'
+  | 'collateralToken_chainId_DESC_NULLS_FIRST'
+  | 'collateralToken_chainId_DESC_NULLS_LAST'
+  | 'collateralToken_tokenAddress_ASC'
+  | 'collateralToken_tokenAddress_DESC'
+  | 'collateralToken_tokenAddress_ASC_NULLS_FIRST'
+  | 'collateralToken_tokenAddress_ASC_NULLS_LAST'
+  | 'collateralToken_tokenAddress_DESC_NULLS_FIRST'
+  | 'collateralToken_tokenAddress_DESC_NULLS_LAST'
+  | 'deadline_ASC'
+  | 'deadline_DESC'
+  | 'deadline_ASC_NULLS_FIRST'
+  | 'deadline_ASC_NULLS_LAST'
+  | 'deadline_DESC_NULLS_FIRST'
+  | 'deadline_DESC_NULLS_LAST'
   | 'creationBlockNumber_ASC'
   | 'creationBlockNumber_DESC'
   | 'creationBlockNumber_ASC_NULLS_FIRST'
@@ -1233,6 +1467,15 @@ export type conditional_AnswerOrderByInput =
   | 'chainId_DESC_NULLS_FIRST'
   | 'chainId_DESC_NULLS_LAST';
 
+export type conditional_Token = {
+  id: Scalars['String'];
+  name: Scalars['String'];
+  symbol: Scalars['String'];
+  decimals: Scalars['Int'];
+  chainId: Scalars['Int'];
+  tokenAddress: Scalars['String'];
+};
+
 export type conditional_GrantsConnection = {
   edges: Array<conditional_GrantEdge>;
   pageInfo: conditional_PageInfo;
@@ -1420,6 +1663,55 @@ export type conditional_WalletEdge = {
   cursor: Scalars['String'];
 };
 
+export type conditional_TokenOrderByInput =
+  | 'id_ASC'
+  | 'id_DESC'
+  | 'id_ASC_NULLS_FIRST'
+  | 'id_ASC_NULLS_LAST'
+  | 'id_DESC_NULLS_FIRST'
+  | 'id_DESC_NULLS_LAST'
+  | 'name_ASC'
+  | 'name_DESC'
+  | 'name_ASC_NULLS_FIRST'
+  | 'name_ASC_NULLS_LAST'
+  | 'name_DESC_NULLS_FIRST'
+  | 'name_DESC_NULLS_LAST'
+  | 'symbol_ASC'
+  | 'symbol_DESC'
+  | 'symbol_ASC_NULLS_FIRST'
+  | 'symbol_ASC_NULLS_LAST'
+  | 'symbol_DESC_NULLS_FIRST'
+  | 'symbol_DESC_NULLS_LAST'
+  | 'decimals_ASC'
+  | 'decimals_DESC'
+  | 'decimals_ASC_NULLS_FIRST'
+  | 'decimals_ASC_NULLS_LAST'
+  | 'decimals_DESC_NULLS_FIRST'
+  | 'decimals_DESC_NULLS_LAST'
+  | 'chainId_ASC'
+  | 'chainId_DESC'
+  | 'chainId_ASC_NULLS_FIRST'
+  | 'chainId_ASC_NULLS_LAST'
+  | 'chainId_DESC_NULLS_FIRST'
+  | 'chainId_DESC_NULLS_LAST'
+  | 'tokenAddress_ASC'
+  | 'tokenAddress_DESC'
+  | 'tokenAddress_ASC_NULLS_FIRST'
+  | 'tokenAddress_ASC_NULLS_LAST'
+  | 'tokenAddress_DESC_NULLS_FIRST'
+  | 'tokenAddress_DESC_NULLS_LAST';
+
+export type conditional_TokensConnection = {
+  edges: Array<conditional_TokenEdge>;
+  pageInfo: conditional_PageInfo;
+  totalCount: Scalars['Int'];
+};
+
+export type conditional_TokenEdge = {
+  node: conditional_Token;
+  cursor: Scalars['String'];
+};
+
 export type conditional_SquidStatus = {
   /** The height of the last processed block */
   height?: Maybe<Scalars['Int']>;
@@ -1456,6 +1748,12 @@ export type conditional_SquidStatus = {
   conditional_walletById: InContextSdkMethod<Query['conditional_walletById'], Queryconditional_walletByIdArgs, MeshContext>,
   /** null **/
   conditional_walletsConnection: InContextSdkMethod<Query['conditional_walletsConnection'], Queryconditional_walletsConnectionArgs, MeshContext>,
+  /** null **/
+  conditional_tokens: InContextSdkMethod<Query['conditional_tokens'], Queryconditional_tokensArgs, MeshContext>,
+  /** null **/
+  conditional_tokenById: InContextSdkMethod<Query['conditional_tokenById'], Queryconditional_tokenByIdArgs, MeshContext>,
+  /** null **/
+  conditional_tokensConnection: InContextSdkMethod<Query['conditional_tokensConnection'], Queryconditional_tokensConnectionArgs, MeshContext>,
   /** null **/
   conditional_squidStatus: InContextSdkMethod<Query['conditional_squidStatus'], {}, MeshContext>
   };
