@@ -207,9 +207,10 @@ export function useGrant() {
                     openingTime,
                     minBondBN,
                 ],
+                value: minBondBN
             })
 
-            clearForm()
+            //clearForm()
 
         } catch (error) {
             const message = error instanceof Error ? error.message : 'Unknown error'

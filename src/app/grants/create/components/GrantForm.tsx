@@ -105,22 +105,20 @@ export function GrantForm({ wallet, chainId }: { wallet: string; chainId: number
       // Check if we already approved or don't need approval
       if (hasApproved) {
         // Approval already done, create grant now
-        void createGrantFromForm()
+        await createGrantFromForm()
         return
       }
 
       // Check if we need approval first
       const needsApprove = await needsApproval()
+
+      console.log('needsApprove', needsApprove)
       if (needsApprove) {
-        // Only do approval, don't create grant yet
         await approve()
-        await createGrantFromForm()
-        return
-      } else {
-        // No approval needed, create grant directly
-        void createGrantFromForm()
-        return
       }
+
+      await createGrantFromForm()
+      return
     } else {
       // Not the last step, just move to next step
       setActiveStepId(activeStepId + 1)
