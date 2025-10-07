@@ -43,6 +43,7 @@ export default async function GrantLayout({
     amount: grantData.amount.toString(),
     token: collateralToken,
   }
+  const question = grantData.questionEntity.question.slice(0, -10)
 
   return (
     <div>
@@ -53,9 +54,7 @@ export default async function GrantLayout({
         <div className="xl:col-span-1 xl:row-span-1">
           {resolved ? (
             <DetailCard label="Condition">
-              <p className="text-white text-md font-medium leading-relaxed">
-                {grantData.questionEntity.question}
-              </p>
+              <p className="text-white text-md font-medium leading-relaxed">{question}</p>
               <span className="text-[#757A8B] text-xs uppercase tracking-wide font-medium">
                 Resolved to {answerStatus}
               </span>
@@ -68,9 +67,7 @@ export default async function GrantLayout({
             />
           ) : (
             <DetailCard label="Condition">
-              <p className="text-white text-md font-medium leading-relaxed">
-                {grantData.questionEntity.question}
-              </p>
+              <p className="text-white text-md font-medium leading-relaxed">{question}</p>
             </DetailCard>
           )}
         </div>

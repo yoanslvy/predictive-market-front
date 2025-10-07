@@ -78,8 +78,6 @@ export const SubmitAnswer: FC<SubmitAnswerProps> = ({
       const bondAmount = BigInt(grant.questionEntity.minBond)
       const minBondAmount = BigInt(grant.questionEntity.minBond)
 
-      console.log({ grantId, answer, maxPrevious, bondAmount, minBondAmount })
-
       writeAnswerContract({
         address: GRANT_MANAGER_ADDRESS,
         abi: simpleGrantManagerAbi,
@@ -125,14 +123,13 @@ export const SubmitAnswer: FC<SubmitAnswerProps> = ({
       <form onSubmit={(e) => e.preventDefault()} className="space-y-4">
         <DetailCard label="Condition">
           <p className="text-white text-md font-medium leading-relaxed">
-            {grant.questionEntity.question}
+            {grant.questionEntity.question.slice(0, -10)}
           </p>
         </DetailCard>
         <DetailCard label="Your Answer">
           <div className="flex items-center justify-between mb-3">
             <div className="text-[#757A8B] text-xs">
-              Current Allocation Threshold:{' '}
-              {formatEther(BigInt(grant.questionEntity.minBond)).toString()} ETH
+              Current Allocation Threshold: {grant.questionEntity.minBond} ETH
             </div>
           </div>
 
