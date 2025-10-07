@@ -7,11 +7,12 @@ import { formatUnits } from 'viem'
 
 import { useAccount } from 'wagmi'
 
-import { Grant } from '@/src/app/server/getAllGrants'
 import { CalendarWithGreenDays } from '@/src/app/vesting-v2/_svg/CalendarWIthGreenDays'
 import { ThreeGreenArrows } from '@/src/app/vesting-v2/_svg/ThreeGreenArrows'
 import { ChainsData } from '@/src/components/modules/ChainAsset/constants'
 import Etherscan from '@/src/images/apps/etherscan.svg'
+
+import { Grants } from '../../explore/latest/_modules/tokenTable/data'
 
 export const truncate = (fullStr: string, strLen: number, separator: string) => {
   if (fullStr.length <= strLen) return fullStr
@@ -33,24 +34,18 @@ export const DetailCard = ({ label, children }: { label: string; children: React
   </div>
 )
 
-export function GrantDetails({ grant, resolved }: { grant: Grant; resolved: boolean }) {
+export function GrantDetails({ grant, resolved }: { grant: Grants; resolved: boolean }) {
   const { address: wallet } = useAccount()
 
-  const {
-    grantId,
-    recipient,
-    bond,
-    minBond,
-    question,
-    amount,
-    collateralToken,
-    conditionId,
-    questionId,
-    deadline,
-  } = grant
+  const { grantId, amount, questionEntity, recipient, creator, txnHash, creationTimestamp } = grant
+
+  const collateralToken = '0x5dfcfc9693f98e4deb942657d51a6bc0fce02036'
 
   const now = new Date()
-  const openingTimeDate = deadline ? new Date(Number(deadline) * 1000) : null
+  const creationTimeDate = creationTimestamp ? new Date(Number(creationTimestamp)) : null
+  const openingTimeDate = questionEntity.openingTs
+    ? new Date(Number(questionEntity.openingTs))
+    : null
   const isOpeningTimePassed = openingTimeDate ? openingTimeDate < now : false
 
   const status = resolved ? 'Resolved' : isOpeningTimePassed ? 'Open' : 'Not Open'
@@ -69,27 +64,33 @@ export function GrantDetails({ grant, resolved }: { grant: Grant; resolved: bool
         </DetailCard>
 
         {recipient && (
-          <DetailCard label="Grant recipient">
+          <DetailCard label="Grant creator">
             <Link
               target="_blank"
               rel="noopener noreferrer"
-              href={`https://sepolia.etherscan.io/address/${recipient}`}
+              href={`https://sepolia.etherscan.io/address/${creator.walletAddress}`}
               className="flex items-center gap-x-[0.5rem]">
               <Etherscan className="size-[1.4em]" />
-              <span className="text-[#F0F2FB] underline">{truncate(recipient, 14, '...')}</span>
+              <span className="text-[#F0F2FB] underline">
+                {truncate(creator.walletAddress, 14, '...')}
+              </span>
             </Link>
           </DetailCard>
         )}
 
-        {bond.toString() && (
+        {questionEntity.minBond.toString() && (
           <DetailCard label="Current Bond">
-            <span className="text-sm font-semibold text-white">{bond.toString()} ETH</span>
+            <span className="text-sm font-semibold text-white">
+              {questionEntity.minBond.toString()} ETH
+            </span>
           </DetailCard>
         )}
 
-        {minBond.toString() && (
+        {questionEntity.minBond.toString() && (
           <DetailCard label="Minimum Bond">
-            <span className="text-sm font-semibold text-white">{minBond.toString()} ETH</span>
+            <span className="text-sm font-semibold text-white">
+              {questionEntity.minBond.toString()} ETH
+            </span>
           </DetailCard>
         )}
 
@@ -137,7 +138,7 @@ export function GrantDetails({ grant, resolved }: { grant: Grant; resolved: bool
               <div className="flex items-center gap-x-[0.6rem]">
                 <CalendarWithGreenDays />
                 <span className="text-sm font-semibold text-white">
-                  {openingTimeDate ? openingTimeDate.toLocaleString() : 'Not set'}
+                  {creationTimeDate ? creationTimeDate.toLocaleString() : 'Not set'}
                 </span>
               </div>
             </DetailCard>
@@ -225,10 +226,12 @@ export function GrantDetails({ grant, resolved }: { grant: Grant; resolved: bool
             <Link
               target="_blank"
               rel="noopener noreferrer"
-              href={`https://sepolia.etherscan.io/address/${recipient}`}
+              href={`https://sepolia.etherscan.io/address/${recipient.walletAddress}`}
               className="flex items-center gap-x-[0.5rem]">
               <Etherscan className="size-[1.4em]" />
-              <span className="text-[#F0F2FB] underline">{truncate(recipient, 14, '...')}</span>
+              <span className="text-[#F0F2FB] underline">
+                {truncate(recipient.walletAddress, 14, '...')}
+              </span>
             </Link>
           </DetailCard>
 

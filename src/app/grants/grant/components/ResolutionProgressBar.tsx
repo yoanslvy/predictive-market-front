@@ -15,8 +15,8 @@ export default function ResolutionProgressBar({
 }: ResolutionProgressBarProps) {
   // Determine current step based on grant status
   const now = new Date()
-  const openingTimeDate = openingTime ? new Date(Number(openingTime) * 1000) : null
-  const creationDateDate = creationDate ? new Date(Number(creationDate) * 1000) : null
+  const openingTimeDate = openingTime ? new Date(Number(openingTime)) : null
+  const creationDateDate = creationDate ? new Date(Number(creationDate)) : null
   const isOpeningTimePassed = openingTimeDate ? openingTimeDate < now : false
 
   const steps = [

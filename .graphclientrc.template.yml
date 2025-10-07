@@ -1,0 +1,19 @@
+sources:
+  - name: conditional
+    handler:
+      graphql:
+        endpoint: {{{endpointContextConditional}}}
+    transforms:
+      - prefix:
+          mode: wrap
+          value: conditional_
+          includeRootOperations: true
+
+additionalResolvers:
+  - ./resolvers.ts
+
+documents:
+  - './src/server/interfaces/graphql/**/*.graphql'
+
+codegen:
+  contextType: 'MeshContext & { chainName: string }'

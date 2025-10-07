@@ -1,0 +1,28 @@
+query getAllGrants($chainId: Int!) {
+  conditional_grants(where: { chainId_eq: $chainId }) {
+    amount
+    chainId
+    conditionId
+    creationBlockNumber
+    creationTimestamp
+    grantId
+    id
+    txnHash
+    resolved
+    success
+    questionEntity {
+      question
+      minBond
+      contentHash
+      openingTs
+      nonce
+      timeout
+    }
+    recipient {
+      walletAddress
+    }
+    creator {
+      walletAddress
+    }
+  }
+}

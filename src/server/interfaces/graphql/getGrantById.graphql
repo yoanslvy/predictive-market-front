@@ -1,0 +1,31 @@
+query getGrantById($id: String!) {
+  conditional_grants(where: { grantId_eq: $id }) {
+    amount
+    chainId
+    conditionId
+    creationBlockNumber
+    creationTimestamp
+    creatorId
+    grantId
+    id
+    txnHash
+    success
+    resolved
+    recipientId
+    questionId
+    questionEntity {
+      question
+      minBond
+      contentHash
+      openingTs
+      nonce
+      timeout
+    }
+    recipient {
+      walletAddress
+    }
+    creator {
+      walletAddress
+    }
+  }
+}

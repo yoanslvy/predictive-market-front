@@ -9,15 +9,47 @@ import Table from '@modules/Table'
 import TokenAsset from '@modules/TokenAsset'
 import Value from '@modules/Value'
 
-import { Forbidden } from '@/src/app/vesting-v2/_svg/Forbidden'
-import { Payout } from '@/src/app/vesting-v2/_svg/Payout'
-import { Transfer } from '@/src/app/vesting-v2/_svg/Transfer'
-import { Withdrawal } from '@/src/app/vesting-v2/_svg/Withdrawal'
-import { dateFormatter, paginate } from '@/src/app/vesting-v2/_utils/utils'
 import Pagination from '@/src/components/modules/Pagination'
 import Etherscan from '@/src/images/apps/etherscan.svg'
 
+import { Forbidden } from '../../_svg/Forbidden'
+import { Payout } from '../../_svg/Payout'
+import { Transfer } from '../../_svg/Transfer'
+import { Withdrawal } from '../../_svg/Withdrawal'
 import TokenTableError from './error'
+
+export function dateFormatter(date: Date, yearAsTwoDigit = false, includeTime = true): string {
+  const timeStr = includeTime
+    ? ` @ ${date.getHours().toString().padStart(2, '0')}:${date
+        .getMinutes()
+        .toString()
+        .padStart(2, '0')}`
+    : ''
+
+  if (yearAsTwoDigit) {
+    const d = date
+      .toLocaleDateString('en-GB', {
+        year: 'numeric',
+        month: 'short',
+        day: '2-digit',
+      })
+      .split(' ')
+    return `${d[0]} ${d[1]} ${d[2].slice(2)}${timeStr}`
+  }
+
+  const dateStr = date.toLocaleDateString('en-GB', {
+    day: '2-digit',
+    month: 'short',
+    year: 'numeric',
+  })
+
+  return `${dateStr}${timeStr}`
+}
+
+export function paginate<T>(items: T[], pageNumber: number, pageSize: number): T[] {
+  const startIndex = (pageNumber - 1) * pageSize
+  return items.slice(startIndex, startIndex + pageSize)
+}
 
 export const truncate = (fullStr: string, strLen: number, separator: string) => {
   if (fullStr.length <= strLen) return fullStr

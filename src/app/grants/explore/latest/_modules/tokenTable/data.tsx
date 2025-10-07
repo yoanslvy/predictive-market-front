@@ -9,8 +9,39 @@ import Value from '@modules/Value'
 import { getAllGrants, getGrant } from '@/src/app/server/getAllGrants'
 import Pagination from '@/src/components/modules/Pagination'
 import Etherscan from '@/src/images/apps/etherscan.svg'
+import { getAllGrantsDatasByChainFetcherCached } from '@/src/server/fetchers/getAllGrants'
 
 import EtherscanLink from '../../../_components/CollateralToken'
+
+export type Grants = {
+  amount: string
+  chainId: number
+  conditionId: string
+  creationBlockNumber: number
+  creationTimestamp: number
+  creatorId: string
+  grantId: string
+  id: string
+  txnHash: string
+  success: boolean
+  resolved: boolean
+  recipientId: string
+  questionId: string
+  questionEntity: {
+    question: string
+    minBond: string
+    contentHash: string
+    openingTs: number
+    nonce: string
+    timeout: number
+  }
+  recipient: {
+    walletAddress: string
+  }
+  creator: {
+    walletAddress: string
+  }
+}
 
 export const shortenEthAddress = (address: string, startLength?: number, endLength?: number) =>
   `${address?.substring(0, startLength || 5)}...${address?.substring(38 - (endLength || 1))}`
@@ -94,11 +125,13 @@ export default async function TokenTableServer({
 }) {
   // Pass search params from parent here, in no params then load default (page 1)
 
-  const allGrantsId = (await getAllGrants()) as string[]
+  const allGrantsId = await getAllGrantsDatasByChainFetcherCached({ chain: '11155111' })
+
+  console.log('grantss', allGrantsId)
 
   const grants = (await Promise.all(
-    allGrantsId.map(async (grantId) => {
-      const grantData = await getGrant(grantId)
+    allGrantsId.conditional_grants.map(async (grant) => {
+      const grantData = await getGrant(grant.grantId)
       return grantData as Grant
     })
   )) as Grant[]

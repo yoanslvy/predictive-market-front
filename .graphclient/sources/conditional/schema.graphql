@@ -1,0 +1,1314 @@
+schema {
+  query: Query
+}
+
+type Query {
+  conditional_grants(where: conditional_GrantWhereInput, orderBy: [conditional_GrantOrderByInput!], offset: Int, limit: Int): [conditional_Grant!]!
+  conditional_grantById(id: String!): conditional_Grant
+  conditional_grantsConnection(orderBy: [conditional_GrantOrderByInput!]!, after: String, first: Int, where: conditional_GrantWhereInput): conditional_GrantsConnection!
+  conditional_questions(where: conditional_QuestionWhereInput, orderBy: [conditional_QuestionOrderByInput!], offset: Int, limit: Int): [conditional_Question!]!
+  conditional_questionById(id: String!): conditional_Question
+  conditional_questionsConnection(orderBy: [conditional_QuestionOrderByInput!]!, after: String, first: Int, where: conditional_QuestionWhereInput): conditional_QuestionsConnection!
+  conditional_answers(where: conditional_AnswerWhereInput, orderBy: [conditional_AnswerOrderByInput!], offset: Int, limit: Int): [conditional_Answer!]!
+  conditional_answerById(id: String!): conditional_Answer
+  conditional_answersConnection(orderBy: [conditional_AnswerOrderByInput!]!, after: String, first: Int, where: conditional_AnswerWhereInput): conditional_AnswersConnection!
+  conditional_wallets(where: conditional_WalletWhereInput, orderBy: [conditional_WalletOrderByInput!], offset: Int, limit: Int): [conditional_Wallet!]!
+  conditional_walletById(id: String!): conditional_Wallet
+  conditional_walletsConnection(orderBy: [conditional_WalletOrderByInput!]!, after: String, first: Int, where: conditional_WalletWhereInput): conditional_WalletsConnection!
+  conditional_squidStatus: conditional_SquidStatus
+}
+
+type conditional_Grant {
+  id: String!
+  grantId: String!
+  questionEntityId: String!
+  questionEntity: conditional_Question!
+  creatorId: String!
+  creator: conditional_Wallet!
+  recipientId: String!
+  recipient: conditional_Wallet!
+  amount: BigInt!
+  questionId: String!
+  conditionId: String!
+  txnHash: String!
+  resolved: Boolean!
+  success: Boolean
+  """creation block """
+  creationBlockNumber: BigInt!
+  """creation timestamp """
+  creationTimestamp: BigInt!
+  chainId: Int!
+}
+
+type conditional_Question {
+  id: String!
+  questionId: String!
+  userId: String!
+  user: conditional_Wallet!
+  templateId: BigInt!
+  question: String!
+  contentHash: String!
+  arbitrator: String!
+  timeout: Int!
+  openingTs: BigInt!
+  minBond: BigInt!
+  nonce: BigInt!
+  created: BigInt!
+  txnHash: String!
+  """creation block"""
+  creationBlockNumber: BigInt!
+  """creation timestamp"""
+  creationTimestamp: BigInt!
+  chainId: Int!
+  answers(where: conditional_AnswerWhereInput, orderBy: [conditional_AnswerOrderByInput!], offset: Int, limit: Int): [conditional_Answer!]!
+}
+
+type conditional_Wallet {
+  id: String!
+  walletAddress: String!
+  chainId: Int!
+  grantsRecipient(where: conditional_GrantWhereInput, orderBy: [conditional_GrantOrderByInput!], offset: Int, limit: Int): [conditional_Grant!]!
+  grantsCreator(where: conditional_GrantWhereInput, orderBy: [conditional_GrantOrderByInput!], offset: Int, limit: Int): [conditional_Grant!]!
+}
+
+input conditional_GrantWhereInput {
+  id_isNull: Boolean
+  id_eq: String
+  id_not_eq: String
+  id_gt: String
+  id_gte: String
+  id_lt: String
+  id_lte: String
+  id_in: [String!]
+  id_not_in: [String!]
+  id_contains: String
+  id_not_contains: String
+  id_containsInsensitive: String
+  id_not_containsInsensitive: String
+  id_startsWith: String
+  id_not_startsWith: String
+  id_endsWith: String
+  id_not_endsWith: String
+  grantId_isNull: Boolean
+  grantId_eq: String
+  grantId_not_eq: String
+  grantId_gt: String
+  grantId_gte: String
+  grantId_lt: String
+  grantId_lte: String
+  grantId_in: [String!]
+  grantId_not_in: [String!]
+  grantId_contains: String
+  grantId_not_contains: String
+  grantId_containsInsensitive: String
+  grantId_not_containsInsensitive: String
+  grantId_startsWith: String
+  grantId_not_startsWith: String
+  grantId_endsWith: String
+  grantId_not_endsWith: String
+  questionEntityId_isNull: Boolean
+  questionEntityId_eq: String
+  questionEntityId_not_eq: String
+  questionEntityId_gt: String
+  questionEntityId_gte: String
+  questionEntityId_lt: String
+  questionEntityId_lte: String
+  questionEntityId_in: [String!]
+  questionEntityId_not_in: [String!]
+  questionEntityId_contains: String
+  questionEntityId_not_contains: String
+  questionEntityId_containsInsensitive: String
+  questionEntityId_not_containsInsensitive: String
+  questionEntityId_startsWith: String
+  questionEntityId_not_startsWith: String
+  questionEntityId_endsWith: String
+  questionEntityId_not_endsWith: String
+  questionEntity_isNull: Boolean
+  questionEntity: conditional_QuestionWhereInput
+  creatorId_isNull: Boolean
+  creatorId_eq: String
+  creatorId_not_eq: String
+  creatorId_gt: String
+  creatorId_gte: String
+  creatorId_lt: String
+  creatorId_lte: String
+  creatorId_in: [String!]
+  creatorId_not_in: [String!]
+  creatorId_contains: String
+  creatorId_not_contains: String
+  creatorId_containsInsensitive: String
+  creatorId_not_containsInsensitive: String
+  creatorId_startsWith: String
+  creatorId_not_startsWith: String
+  creatorId_endsWith: String
+  creatorId_not_endsWith: String
+  creator_isNull: Boolean
+  creator: conditional_WalletWhereInput
+  recipientId_isNull: Boolean
+  recipientId_eq: String
+  recipientId_not_eq: String
+  recipientId_gt: String
+  recipientId_gte: String
+  recipientId_lt: String
+  recipientId_lte: String
+  recipientId_in: [String!]
+  recipientId_not_in: [String!]
+  recipientId_contains: String
+  recipientId_not_contains: String
+  recipientId_containsInsensitive: String
+  recipientId_not_containsInsensitive: String
+  recipientId_startsWith: String
+  recipientId_not_startsWith: String
+  recipientId_endsWith: String
+  recipientId_not_endsWith: String
+  recipient_isNull: Boolean
+  recipient: conditional_WalletWhereInput
+  amount_isNull: Boolean
+  amount_eq: BigInt
+  amount_not_eq: BigInt
+  amount_gt: BigInt
+  amount_gte: BigInt
+  amount_lt: BigInt
+  amount_lte: BigInt
+  amount_in: [BigInt!]
+  amount_not_in: [BigInt!]
+  questionId_isNull: Boolean
+  questionId_eq: String
+  questionId_not_eq: String
+  questionId_gt: String
+  questionId_gte: String
+  questionId_lt: String
+  questionId_lte: String
+  questionId_in: [String!]
+  questionId_not_in: [String!]
+  questionId_contains: String
+  questionId_not_contains: String
+  questionId_containsInsensitive: String
+  questionId_not_containsInsensitive: String
+  questionId_startsWith: String
+  questionId_not_startsWith: String
+  questionId_endsWith: String
+  questionId_not_endsWith: String
+  conditionId_isNull: Boolean
+  conditionId_eq: String
+  conditionId_not_eq: String
+  conditionId_gt: String
+  conditionId_gte: String
+  conditionId_lt: String
+  conditionId_lte: String
+  conditionId_in: [String!]
+  conditionId_not_in: [String!]
+  conditionId_contains: String
+  conditionId_not_contains: String
+  conditionId_containsInsensitive: String
+  conditionId_not_containsInsensitive: String
+  conditionId_startsWith: String
+  conditionId_not_startsWith: String
+  conditionId_endsWith: String
+  conditionId_not_endsWith: String
+  txnHash_isNull: Boolean
+  txnHash_eq: String
+  txnHash_not_eq: String
+  txnHash_gt: String
+  txnHash_gte: String
+  txnHash_lt: String
+  txnHash_lte: String
+  txnHash_in: [String!]
+  txnHash_not_in: [String!]
+  txnHash_contains: String
+  txnHash_not_contains: String
+  txnHash_containsInsensitive: String
+  txnHash_not_containsInsensitive: String
+  txnHash_startsWith: String
+  txnHash_not_startsWith: String
+  txnHash_endsWith: String
+  txnHash_not_endsWith: String
+  resolved_isNull: Boolean
+  resolved_eq: Boolean
+  resolved_not_eq: Boolean
+  success_isNull: Boolean
+  success_eq: Boolean
+  success_not_eq: Boolean
+  creationBlockNumber_isNull: Boolean
+  creationBlockNumber_eq: BigInt
+  creationBlockNumber_not_eq: BigInt
+  creationBlockNumber_gt: BigInt
+  creationBlockNumber_gte: BigInt
+  creationBlockNumber_lt: BigInt
+  creationBlockNumber_lte: BigInt
+  creationBlockNumber_in: [BigInt!]
+  creationBlockNumber_not_in: [BigInt!]
+  creationTimestamp_isNull: Boolean
+  creationTimestamp_eq: BigInt
+  creationTimestamp_not_eq: BigInt
+  creationTimestamp_gt: BigInt
+  creationTimestamp_gte: BigInt
+  creationTimestamp_lt: BigInt
+  creationTimestamp_lte: BigInt
+  creationTimestamp_in: [BigInt!]
+  creationTimestamp_not_in: [BigInt!]
+  chainId_isNull: Boolean
+  chainId_eq: Int
+  chainId_not_eq: Int
+  chainId_gt: Int
+  chainId_gte: Int
+  chainId_lt: Int
+  chainId_lte: Int
+  chainId_in: [Int!]
+  chainId_not_in: [Int!]
+  AND: [conditional_GrantWhereInput!]
+  OR: [conditional_GrantWhereInput!]
+}
+
+input conditional_QuestionWhereInput {
+  id_isNull: Boolean
+  id_eq: String
+  id_not_eq: String
+  id_gt: String
+  id_gte: String
+  id_lt: String
+  id_lte: String
+  id_in: [String!]
+  id_not_in: [String!]
+  id_contains: String
+  id_not_contains: String
+  id_containsInsensitive: String
+  id_not_containsInsensitive: String
+  id_startsWith: String
+  id_not_startsWith: String
+  id_endsWith: String
+  id_not_endsWith: String
+  questionId_isNull: Boolean
+  questionId_eq: String
+  questionId_not_eq: String
+  questionId_gt: String
+  questionId_gte: String
+  questionId_lt: String
+  questionId_lte: String
+  questionId_in: [String!]
+  questionId_not_in: [String!]
+  questionId_contains: String
+  questionId_not_contains: String
+  questionId_containsInsensitive: String
+  questionId_not_containsInsensitive: String
+  questionId_startsWith: String
+  questionId_not_startsWith: String
+  questionId_endsWith: String
+  questionId_not_endsWith: String
+  userId_isNull: Boolean
+  userId_eq: String
+  userId_not_eq: String
+  userId_gt: String
+  userId_gte: String
+  userId_lt: String
+  userId_lte: String
+  userId_in: [String!]
+  userId_not_in: [String!]
+  userId_contains: String
+  userId_not_contains: String
+  userId_containsInsensitive: String
+  userId_not_containsInsensitive: String
+  userId_startsWith: String
+  userId_not_startsWith: String
+  userId_endsWith: String
+  userId_not_endsWith: String
+  user_isNull: Boolean
+  user: conditional_WalletWhereInput
+  templateId_isNull: Boolean
+  templateId_eq: BigInt
+  templateId_not_eq: BigInt
+  templateId_gt: BigInt
+  templateId_gte: BigInt
+  templateId_lt: BigInt
+  templateId_lte: BigInt
+  templateId_in: [BigInt!]
+  templateId_not_in: [BigInt!]
+  question_isNull: Boolean
+  question_eq: String
+  question_not_eq: String
+  question_gt: String
+  question_gte: String
+  question_lt: String
+  question_lte: String
+  question_in: [String!]
+  question_not_in: [String!]
+  question_contains: String
+  question_not_contains: String
+  question_containsInsensitive: String
+  question_not_containsInsensitive: String
+  question_startsWith: String
+  question_not_startsWith: String
+  question_endsWith: String
+  question_not_endsWith: String
+  contentHash_isNull: Boolean
+  contentHash_eq: String
+  contentHash_not_eq: String
+  contentHash_gt: String
+  contentHash_gte: String
+  contentHash_lt: String
+  contentHash_lte: String
+  contentHash_in: [String!]
+  contentHash_not_in: [String!]
+  contentHash_contains: String
+  contentHash_not_contains: String
+  contentHash_containsInsensitive: String
+  contentHash_not_containsInsensitive: String
+  contentHash_startsWith: String
+  contentHash_not_startsWith: String
+  contentHash_endsWith: String
+  contentHash_not_endsWith: String
+  arbitrator_isNull: Boolean
+  arbitrator_eq: String
+  arbitrator_not_eq: String
+  arbitrator_gt: String
+  arbitrator_gte: String
+  arbitrator_lt: String
+  arbitrator_lte: String
+  arbitrator_in: [String!]
+  arbitrator_not_in: [String!]
+  arbitrator_contains: String
+  arbitrator_not_contains: String
+  arbitrator_containsInsensitive: String
+  arbitrator_not_containsInsensitive: String
+  arbitrator_startsWith: String
+  arbitrator_not_startsWith: String
+  arbitrator_endsWith: String
+  arbitrator_not_endsWith: String
+  timeout_isNull: Boolean
+  timeout_eq: Int
+  timeout_not_eq: Int
+  timeout_gt: Int
+  timeout_gte: Int
+  timeout_lt: Int
+  timeout_lte: Int
+  timeout_in: [Int!]
+  timeout_not_in: [Int!]
+  openingTs_isNull: Boolean
+  openingTs_eq: BigInt
+  openingTs_not_eq: BigInt
+  openingTs_gt: BigInt
+  openingTs_gte: BigInt
+  openingTs_lt: BigInt
+  openingTs_lte: BigInt
+  openingTs_in: [BigInt!]
+  openingTs_not_in: [BigInt!]
+  minBond_isNull: Boolean
+  minBond_eq: BigInt
+  minBond_not_eq: BigInt
+  minBond_gt: BigInt
+  minBond_gte: BigInt
+  minBond_lt: BigInt
+  minBond_lte: BigInt
+  minBond_in: [BigInt!]
+  minBond_not_in: [BigInt!]
+  nonce_isNull: Boolean
+  nonce_eq: BigInt
+  nonce_not_eq: BigInt
+  nonce_gt: BigInt
+  nonce_gte: BigInt
+  nonce_lt: BigInt
+  nonce_lte: BigInt
+  nonce_in: [BigInt!]
+  nonce_not_in: [BigInt!]
+  created_isNull: Boolean
+  created_eq: BigInt
+  created_not_eq: BigInt
+  created_gt: BigInt
+  created_gte: BigInt
+  created_lt: BigInt
+  created_lte: BigInt
+  created_in: [BigInt!]
+  created_not_in: [BigInt!]
+  txnHash_isNull: Boolean
+  txnHash_eq: String
+  txnHash_not_eq: String
+  txnHash_gt: String
+  txnHash_gte: String
+  txnHash_lt: String
+  txnHash_lte: String
+  txnHash_in: [String!]
+  txnHash_not_in: [String!]
+  txnHash_contains: String
+  txnHash_not_contains: String
+  txnHash_containsInsensitive: String
+  txnHash_not_containsInsensitive: String
+  txnHash_startsWith: String
+  txnHash_not_startsWith: String
+  txnHash_endsWith: String
+  txnHash_not_endsWith: String
+  creationBlockNumber_isNull: Boolean
+  creationBlockNumber_eq: BigInt
+  creationBlockNumber_not_eq: BigInt
+  creationBlockNumber_gt: BigInt
+  creationBlockNumber_gte: BigInt
+  creationBlockNumber_lt: BigInt
+  creationBlockNumber_lte: BigInt
+  creationBlockNumber_in: [BigInt!]
+  creationBlockNumber_not_in: [BigInt!]
+  creationTimestamp_isNull: Boolean
+  creationTimestamp_eq: BigInt
+  creationTimestamp_not_eq: BigInt
+  creationTimestamp_gt: BigInt
+  creationTimestamp_gte: BigInt
+  creationTimestamp_lt: BigInt
+  creationTimestamp_lte: BigInt
+  creationTimestamp_in: [BigInt!]
+  creationTimestamp_not_in: [BigInt!]
+  chainId_isNull: Boolean
+  chainId_eq: Int
+  chainId_not_eq: Int
+  chainId_gt: Int
+  chainId_gte: Int
+  chainId_lt: Int
+  chainId_lte: Int
+  chainId_in: [Int!]
+  chainId_not_in: [Int!]
+  answers_every: conditional_AnswerWhereInput
+  answers_some: conditional_AnswerWhereInput
+  answers_none: conditional_AnswerWhereInput
+  AND: [conditional_QuestionWhereInput!]
+  OR: [conditional_QuestionWhereInput!]
+}
+
+input conditional_WalletWhereInput {
+  id_isNull: Boolean
+  id_eq: String
+  id_not_eq: String
+  id_gt: String
+  id_gte: String
+  id_lt: String
+  id_lte: String
+  id_in: [String!]
+  id_not_in: [String!]
+  id_contains: String
+  id_not_contains: String
+  id_containsInsensitive: String
+  id_not_containsInsensitive: String
+  id_startsWith: String
+  id_not_startsWith: String
+  id_endsWith: String
+  id_not_endsWith: String
+  walletAddress_isNull: Boolean
+  walletAddress_eq: String
+  walletAddress_not_eq: String
+  walletAddress_gt: String
+  walletAddress_gte: String
+  walletAddress_lt: String
+  walletAddress_lte: String
+  walletAddress_in: [String!]
+  walletAddress_not_in: [String!]
+  walletAddress_contains: String
+  walletAddress_not_contains: String
+  walletAddress_containsInsensitive: String
+  walletAddress_not_containsInsensitive: String
+  walletAddress_startsWith: String
+  walletAddress_not_startsWith: String
+  walletAddress_endsWith: String
+  walletAddress_not_endsWith: String
+  chainId_isNull: Boolean
+  chainId_eq: Int
+  chainId_not_eq: Int
+  chainId_gt: Int
+  chainId_gte: Int
+  chainId_lt: Int
+  chainId_lte: Int
+  chainId_in: [Int!]
+  chainId_not_in: [Int!]
+  grantsRecipient_every: conditional_GrantWhereInput
+  grantsRecipient_some: conditional_GrantWhereInput
+  grantsRecipient_none: conditional_GrantWhereInput
+  grantsCreator_every: conditional_GrantWhereInput
+  grantsCreator_some: conditional_GrantWhereInput
+  grantsCreator_none: conditional_GrantWhereInput
+  AND: [conditional_WalletWhereInput!]
+  OR: [conditional_WalletWhereInput!]
+}
+
+"""Big number integer"""
+scalar BigInt
+
+input conditional_AnswerWhereInput {
+  id_isNull: Boolean
+  id_eq: String
+  id_not_eq: String
+  id_gt: String
+  id_gte: String
+  id_lt: String
+  id_lte: String
+  id_in: [String!]
+  id_not_in: [String!]
+  id_contains: String
+  id_not_contains: String
+  id_containsInsensitive: String
+  id_not_containsInsensitive: String
+  id_startsWith: String
+  id_not_startsWith: String
+  id_endsWith: String
+  id_not_endsWith: String
+  answer_isNull: Boolean
+  answer_eq: String
+  answer_not_eq: String
+  answer_gt: String
+  answer_gte: String
+  answer_lt: String
+  answer_lte: String
+  answer_in: [String!]
+  answer_not_in: [String!]
+  answer_contains: String
+  answer_not_contains: String
+  answer_containsInsensitive: String
+  answer_not_containsInsensitive: String
+  answer_startsWith: String
+  answer_not_startsWith: String
+  answer_endsWith: String
+  answer_not_endsWith: String
+  questionId_isNull: Boolean
+  questionId_eq: String
+  questionId_not_eq: String
+  questionId_gt: String
+  questionId_gte: String
+  questionId_lt: String
+  questionId_lte: String
+  questionId_in: [String!]
+  questionId_not_in: [String!]
+  questionId_contains: String
+  questionId_not_contains: String
+  questionId_containsInsensitive: String
+  questionId_not_containsInsensitive: String
+  questionId_startsWith: String
+  questionId_not_startsWith: String
+  questionId_endsWith: String
+  questionId_not_endsWith: String
+  question_isNull: Boolean
+  question: conditional_QuestionWhereInput
+  historyHash_isNull: Boolean
+  historyHash_eq: String
+  historyHash_not_eq: String
+  historyHash_gt: String
+  historyHash_gte: String
+  historyHash_lt: String
+  historyHash_lte: String
+  historyHash_in: [String!]
+  historyHash_not_in: [String!]
+  historyHash_contains: String
+  historyHash_not_contains: String
+  historyHash_containsInsensitive: String
+  historyHash_not_containsInsensitive: String
+  historyHash_startsWith: String
+  historyHash_not_startsWith: String
+  historyHash_endsWith: String
+  historyHash_not_endsWith: String
+  userId_isNull: Boolean
+  userId_eq: String
+  userId_not_eq: String
+  userId_gt: String
+  userId_gte: String
+  userId_lt: String
+  userId_lte: String
+  userId_in: [String!]
+  userId_not_in: [String!]
+  userId_contains: String
+  userId_not_contains: String
+  userId_containsInsensitive: String
+  userId_not_containsInsensitive: String
+  userId_startsWith: String
+  userId_not_startsWith: String
+  userId_endsWith: String
+  userId_not_endsWith: String
+  user_isNull: Boolean
+  user: conditional_WalletWhereInput
+  bond_isNull: Boolean
+  bond_eq: BigInt
+  bond_not_eq: BigInt
+  bond_gt: BigInt
+  bond_gte: BigInt
+  bond_lt: BigInt
+  bond_lte: BigInt
+  bond_in: [BigInt!]
+  bond_not_in: [BigInt!]
+  ts_isNull: Boolean
+  ts_eq: BigInt
+  ts_not_eq: BigInt
+  ts_gt: BigInt
+  ts_gte: BigInt
+  ts_lt: BigInt
+  ts_lte: BigInt
+  ts_in: [BigInt!]
+  ts_not_in: [BigInt!]
+  isCommitment_isNull: Boolean
+  isCommitment_eq: Boolean
+  isCommitment_not_eq: Boolean
+  txnHash_isNull: Boolean
+  txnHash_eq: String
+  txnHash_not_eq: String
+  txnHash_gt: String
+  txnHash_gte: String
+  txnHash_lt: String
+  txnHash_lte: String
+  txnHash_in: [String!]
+  txnHash_not_in: [String!]
+  txnHash_contains: String
+  txnHash_not_contains: String
+  txnHash_containsInsensitive: String
+  txnHash_not_containsInsensitive: String
+  txnHash_startsWith: String
+  txnHash_not_startsWith: String
+  txnHash_endsWith: String
+  txnHash_not_endsWith: String
+  creationBlockNumber_isNull: Boolean
+  creationBlockNumber_eq: BigInt
+  creationBlockNumber_not_eq: BigInt
+  creationBlockNumber_gt: BigInt
+  creationBlockNumber_gte: BigInt
+  creationBlockNumber_lt: BigInt
+  creationBlockNumber_lte: BigInt
+  creationBlockNumber_in: [BigInt!]
+  creationBlockNumber_not_in: [BigInt!]
+  creationTimestamp_isNull: Boolean
+  creationTimestamp_eq: BigInt
+  creationTimestamp_not_eq: BigInt
+  creationTimestamp_gt: BigInt
+  creationTimestamp_gte: BigInt
+  creationTimestamp_lt: BigInt
+  creationTimestamp_lte: BigInt
+  creationTimestamp_in: [BigInt!]
+  creationTimestamp_not_in: [BigInt!]
+  chainId_isNull: Boolean
+  chainId_eq: Int
+  chainId_not_eq: Int
+  chainId_gt: Int
+  chainId_gte: Int
+  chainId_lt: Int
+  chainId_lte: Int
+  chainId_in: [Int!]
+  chainId_not_in: [Int!]
+  AND: [conditional_AnswerWhereInput!]
+  OR: [conditional_AnswerWhereInput!]
+}
+
+enum conditional_GrantOrderByInput {
+  id_ASC
+  id_DESC
+  id_ASC_NULLS_FIRST
+  id_ASC_NULLS_LAST
+  id_DESC_NULLS_FIRST
+  id_DESC_NULLS_LAST
+  grantId_ASC
+  grantId_DESC
+  grantId_ASC_NULLS_FIRST
+  grantId_ASC_NULLS_LAST
+  grantId_DESC_NULLS_FIRST
+  grantId_DESC_NULLS_LAST
+  questionEntityId_ASC
+  questionEntityId_DESC
+  questionEntityId_ASC_NULLS_FIRST
+  questionEntityId_ASC_NULLS_LAST
+  questionEntityId_DESC_NULLS_FIRST
+  questionEntityId_DESC_NULLS_LAST
+  questionEntity_id_ASC
+  questionEntity_id_DESC
+  questionEntity_id_ASC_NULLS_FIRST
+  questionEntity_id_ASC_NULLS_LAST
+  questionEntity_id_DESC_NULLS_FIRST
+  questionEntity_id_DESC_NULLS_LAST
+  questionEntity_questionId_ASC
+  questionEntity_questionId_DESC
+  questionEntity_questionId_ASC_NULLS_FIRST
+  questionEntity_questionId_ASC_NULLS_LAST
+  questionEntity_questionId_DESC_NULLS_FIRST
+  questionEntity_questionId_DESC_NULLS_LAST
+  questionEntity_userId_ASC
+  questionEntity_userId_DESC
+  questionEntity_userId_ASC_NULLS_FIRST
+  questionEntity_userId_ASC_NULLS_LAST
+  questionEntity_userId_DESC_NULLS_FIRST
+  questionEntity_userId_DESC_NULLS_LAST
+  questionEntity_templateId_ASC
+  questionEntity_templateId_DESC
+  questionEntity_templateId_ASC_NULLS_FIRST
+  questionEntity_templateId_ASC_NULLS_LAST
+  questionEntity_templateId_DESC_NULLS_FIRST
+  questionEntity_templateId_DESC_NULLS_LAST
+  questionEntity_question_ASC
+  questionEntity_question_DESC
+  questionEntity_question_ASC_NULLS_FIRST
+  questionEntity_question_ASC_NULLS_LAST
+  questionEntity_question_DESC_NULLS_FIRST
+  questionEntity_question_DESC_NULLS_LAST
+  questionEntity_contentHash_ASC
+  questionEntity_contentHash_DESC
+  questionEntity_contentHash_ASC_NULLS_FIRST
+  questionEntity_contentHash_ASC_NULLS_LAST
+  questionEntity_contentHash_DESC_NULLS_FIRST
+  questionEntity_contentHash_DESC_NULLS_LAST
+  questionEntity_arbitrator_ASC
+  questionEntity_arbitrator_DESC
+  questionEntity_arbitrator_ASC_NULLS_FIRST
+  questionEntity_arbitrator_ASC_NULLS_LAST
+  questionEntity_arbitrator_DESC_NULLS_FIRST
+  questionEntity_arbitrator_DESC_NULLS_LAST
+  questionEntity_timeout_ASC
+  questionEntity_timeout_DESC
+  questionEntity_timeout_ASC_NULLS_FIRST
+  questionEntity_timeout_ASC_NULLS_LAST
+  questionEntity_timeout_DESC_NULLS_FIRST
+  questionEntity_timeout_DESC_NULLS_LAST
+  questionEntity_openingTs_ASC
+  questionEntity_openingTs_DESC
+  questionEntity_openingTs_ASC_NULLS_FIRST
+  questionEntity_openingTs_ASC_NULLS_LAST
+  questionEntity_openingTs_DESC_NULLS_FIRST
+  questionEntity_openingTs_DESC_NULLS_LAST
+  questionEntity_minBond_ASC
+  questionEntity_minBond_DESC
+  questionEntity_minBond_ASC_NULLS_FIRST
+  questionEntity_minBond_ASC_NULLS_LAST
+  questionEntity_minBond_DESC_NULLS_FIRST
+  questionEntity_minBond_DESC_NULLS_LAST
+  questionEntity_nonce_ASC
+  questionEntity_nonce_DESC
+  questionEntity_nonce_ASC_NULLS_FIRST
+  questionEntity_nonce_ASC_NULLS_LAST
+  questionEntity_nonce_DESC_NULLS_FIRST
+  questionEntity_nonce_DESC_NULLS_LAST
+  questionEntity_created_ASC
+  questionEntity_created_DESC
+  questionEntity_created_ASC_NULLS_FIRST
+  questionEntity_created_ASC_NULLS_LAST
+  questionEntity_created_DESC_NULLS_FIRST
+  questionEntity_created_DESC_NULLS_LAST
+  questionEntity_txnHash_ASC
+  questionEntity_txnHash_DESC
+  questionEntity_txnHash_ASC_NULLS_FIRST
+  questionEntity_txnHash_ASC_NULLS_LAST
+  questionEntity_txnHash_DESC_NULLS_FIRST
+  questionEntity_txnHash_DESC_NULLS_LAST
+  questionEntity_creationBlockNumber_ASC
+  questionEntity_creationBlockNumber_DESC
+  questionEntity_creationBlockNumber_ASC_NULLS_FIRST
+  questionEntity_creationBlockNumber_ASC_NULLS_LAST
+  questionEntity_creationBlockNumber_DESC_NULLS_FIRST
+  questionEntity_creationBlockNumber_DESC_NULLS_LAST
+  questionEntity_creationTimestamp_ASC
+  questionEntity_creationTimestamp_DESC
+  questionEntity_creationTimestamp_ASC_NULLS_FIRST
+  questionEntity_creationTimestamp_ASC_NULLS_LAST
+  questionEntity_creationTimestamp_DESC_NULLS_FIRST
+  questionEntity_creationTimestamp_DESC_NULLS_LAST
+  questionEntity_chainId_ASC
+  questionEntity_chainId_DESC
+  questionEntity_chainId_ASC_NULLS_FIRST
+  questionEntity_chainId_ASC_NULLS_LAST
+  questionEntity_chainId_DESC_NULLS_FIRST
+  questionEntity_chainId_DESC_NULLS_LAST
+  creatorId_ASC
+  creatorId_DESC
+  creatorId_ASC_NULLS_FIRST
+  creatorId_ASC_NULLS_LAST
+  creatorId_DESC_NULLS_FIRST
+  creatorId_DESC_NULLS_LAST
+  creator_id_ASC
+  creator_id_DESC
+  creator_id_ASC_NULLS_FIRST
+  creator_id_ASC_NULLS_LAST
+  creator_id_DESC_NULLS_FIRST
+  creator_id_DESC_NULLS_LAST
+  creator_walletAddress_ASC
+  creator_walletAddress_DESC
+  creator_walletAddress_ASC_NULLS_FIRST
+  creator_walletAddress_ASC_NULLS_LAST
+  creator_walletAddress_DESC_NULLS_FIRST
+  creator_walletAddress_DESC_NULLS_LAST
+  creator_chainId_ASC
+  creator_chainId_DESC
+  creator_chainId_ASC_NULLS_FIRST
+  creator_chainId_ASC_NULLS_LAST
+  creator_chainId_DESC_NULLS_FIRST
+  creator_chainId_DESC_NULLS_LAST
+  recipientId_ASC
+  recipientId_DESC
+  recipientId_ASC_NULLS_FIRST
+  recipientId_ASC_NULLS_LAST
+  recipientId_DESC_NULLS_FIRST
+  recipientId_DESC_NULLS_LAST
+  recipient_id_ASC
+  recipient_id_DESC
+  recipient_id_ASC_NULLS_FIRST
+  recipient_id_ASC_NULLS_LAST
+  recipient_id_DESC_NULLS_FIRST
+  recipient_id_DESC_NULLS_LAST
+  recipient_walletAddress_ASC
+  recipient_walletAddress_DESC
+  recipient_walletAddress_ASC_NULLS_FIRST
+  recipient_walletAddress_ASC_NULLS_LAST
+  recipient_walletAddress_DESC_NULLS_FIRST
+  recipient_walletAddress_DESC_NULLS_LAST
+  recipient_chainId_ASC
+  recipient_chainId_DESC
+  recipient_chainId_ASC_NULLS_FIRST
+  recipient_chainId_ASC_NULLS_LAST
+  recipient_chainId_DESC_NULLS_FIRST
+  recipient_chainId_DESC_NULLS_LAST
+  amount_ASC
+  amount_DESC
+  amount_ASC_NULLS_FIRST
+  amount_ASC_NULLS_LAST
+  amount_DESC_NULLS_FIRST
+  amount_DESC_NULLS_LAST
+  questionId_ASC
+  questionId_DESC
+  questionId_ASC_NULLS_FIRST
+  questionId_ASC_NULLS_LAST
+  questionId_DESC_NULLS_FIRST
+  questionId_DESC_NULLS_LAST
+  conditionId_ASC
+  conditionId_DESC
+  conditionId_ASC_NULLS_FIRST
+  conditionId_ASC_NULLS_LAST
+  conditionId_DESC_NULLS_FIRST
+  conditionId_DESC_NULLS_LAST
+  txnHash_ASC
+  txnHash_DESC
+  txnHash_ASC_NULLS_FIRST
+  txnHash_ASC_NULLS_LAST
+  txnHash_DESC_NULLS_FIRST
+  txnHash_DESC_NULLS_LAST
+  resolved_ASC
+  resolved_DESC
+  resolved_ASC_NULLS_FIRST
+  resolved_ASC_NULLS_LAST
+  resolved_DESC_NULLS_FIRST
+  resolved_DESC_NULLS_LAST
+  success_ASC
+  success_DESC
+  success_ASC_NULLS_FIRST
+  success_ASC_NULLS_LAST
+  success_DESC_NULLS_FIRST
+  success_DESC_NULLS_LAST
+  creationBlockNumber_ASC
+  creationBlockNumber_DESC
+  creationBlockNumber_ASC_NULLS_FIRST
+  creationBlockNumber_ASC_NULLS_LAST
+  creationBlockNumber_DESC_NULLS_FIRST
+  creationBlockNumber_DESC_NULLS_LAST
+  creationTimestamp_ASC
+  creationTimestamp_DESC
+  creationTimestamp_ASC_NULLS_FIRST
+  creationTimestamp_ASC_NULLS_LAST
+  creationTimestamp_DESC_NULLS_FIRST
+  creationTimestamp_DESC_NULLS_LAST
+  chainId_ASC
+  chainId_DESC
+  chainId_ASC_NULLS_FIRST
+  chainId_ASC_NULLS_LAST
+  chainId_DESC_NULLS_FIRST
+  chainId_DESC_NULLS_LAST
+}
+
+type conditional_Answer {
+  id: String!
+  answer: String!
+  questionId: String!
+  question: conditional_Question!
+  historyHash: String!
+  userId: String!
+  user: conditional_Wallet!
+  bond: BigInt!
+  ts: BigInt!
+  isCommitment: Boolean!
+  txnHash: String!
+  """creation block"""
+  creationBlockNumber: BigInt!
+  """creation timestamp"""
+  creationTimestamp: BigInt!
+  chainId: Int!
+}
+
+enum conditional_AnswerOrderByInput {
+  id_ASC
+  id_DESC
+  id_ASC_NULLS_FIRST
+  id_ASC_NULLS_LAST
+  id_DESC_NULLS_FIRST
+  id_DESC_NULLS_LAST
+  answer_ASC
+  answer_DESC
+  answer_ASC_NULLS_FIRST
+  answer_ASC_NULLS_LAST
+  answer_DESC_NULLS_FIRST
+  answer_DESC_NULLS_LAST
+  questionId_ASC
+  questionId_DESC
+  questionId_ASC_NULLS_FIRST
+  questionId_ASC_NULLS_LAST
+  questionId_DESC_NULLS_FIRST
+  questionId_DESC_NULLS_LAST
+  question_id_ASC
+  question_id_DESC
+  question_id_ASC_NULLS_FIRST
+  question_id_ASC_NULLS_LAST
+  question_id_DESC_NULLS_FIRST
+  question_id_DESC_NULLS_LAST
+  question_questionId_ASC
+  question_questionId_DESC
+  question_questionId_ASC_NULLS_FIRST
+  question_questionId_ASC_NULLS_LAST
+  question_questionId_DESC_NULLS_FIRST
+  question_questionId_DESC_NULLS_LAST
+  question_userId_ASC
+  question_userId_DESC
+  question_userId_ASC_NULLS_FIRST
+  question_userId_ASC_NULLS_LAST
+  question_userId_DESC_NULLS_FIRST
+  question_userId_DESC_NULLS_LAST
+  question_templateId_ASC
+  question_templateId_DESC
+  question_templateId_ASC_NULLS_FIRST
+  question_templateId_ASC_NULLS_LAST
+  question_templateId_DESC_NULLS_FIRST
+  question_templateId_DESC_NULLS_LAST
+  question_question_ASC
+  question_question_DESC
+  question_question_ASC_NULLS_FIRST
+  question_question_ASC_NULLS_LAST
+  question_question_DESC_NULLS_FIRST
+  question_question_DESC_NULLS_LAST
+  question_contentHash_ASC
+  question_contentHash_DESC
+  question_contentHash_ASC_NULLS_FIRST
+  question_contentHash_ASC_NULLS_LAST
+  question_contentHash_DESC_NULLS_FIRST
+  question_contentHash_DESC_NULLS_LAST
+  question_arbitrator_ASC
+  question_arbitrator_DESC
+  question_arbitrator_ASC_NULLS_FIRST
+  question_arbitrator_ASC_NULLS_LAST
+  question_arbitrator_DESC_NULLS_FIRST
+  question_arbitrator_DESC_NULLS_LAST
+  question_timeout_ASC
+  question_timeout_DESC
+  question_timeout_ASC_NULLS_FIRST
+  question_timeout_ASC_NULLS_LAST
+  question_timeout_DESC_NULLS_FIRST
+  question_timeout_DESC_NULLS_LAST
+  question_openingTs_ASC
+  question_openingTs_DESC
+  question_openingTs_ASC_NULLS_FIRST
+  question_openingTs_ASC_NULLS_LAST
+  question_openingTs_DESC_NULLS_FIRST
+  question_openingTs_DESC_NULLS_LAST
+  question_minBond_ASC
+  question_minBond_DESC
+  question_minBond_ASC_NULLS_FIRST
+  question_minBond_ASC_NULLS_LAST
+  question_minBond_DESC_NULLS_FIRST
+  question_minBond_DESC_NULLS_LAST
+  question_nonce_ASC
+  question_nonce_DESC
+  question_nonce_ASC_NULLS_FIRST
+  question_nonce_ASC_NULLS_LAST
+  question_nonce_DESC_NULLS_FIRST
+  question_nonce_DESC_NULLS_LAST
+  question_created_ASC
+  question_created_DESC
+  question_created_ASC_NULLS_FIRST
+  question_created_ASC_NULLS_LAST
+  question_created_DESC_NULLS_FIRST
+  question_created_DESC_NULLS_LAST
+  question_txnHash_ASC
+  question_txnHash_DESC
+  question_txnHash_ASC_NULLS_FIRST
+  question_txnHash_ASC_NULLS_LAST
+  question_txnHash_DESC_NULLS_FIRST
+  question_txnHash_DESC_NULLS_LAST
+  question_creationBlockNumber_ASC
+  question_creationBlockNumber_DESC
+  question_creationBlockNumber_ASC_NULLS_FIRST
+  question_creationBlockNumber_ASC_NULLS_LAST
+  question_creationBlockNumber_DESC_NULLS_FIRST
+  question_creationBlockNumber_DESC_NULLS_LAST
+  question_creationTimestamp_ASC
+  question_creationTimestamp_DESC
+  question_creationTimestamp_ASC_NULLS_FIRST
+  question_creationTimestamp_ASC_NULLS_LAST
+  question_creationTimestamp_DESC_NULLS_FIRST
+  question_creationTimestamp_DESC_NULLS_LAST
+  question_chainId_ASC
+  question_chainId_DESC
+  question_chainId_ASC_NULLS_FIRST
+  question_chainId_ASC_NULLS_LAST
+  question_chainId_DESC_NULLS_FIRST
+  question_chainId_DESC_NULLS_LAST
+  historyHash_ASC
+  historyHash_DESC
+  historyHash_ASC_NULLS_FIRST
+  historyHash_ASC_NULLS_LAST
+  historyHash_DESC_NULLS_FIRST
+  historyHash_DESC_NULLS_LAST
+  userId_ASC
+  userId_DESC
+  userId_ASC_NULLS_FIRST
+  userId_ASC_NULLS_LAST
+  userId_DESC_NULLS_FIRST
+  userId_DESC_NULLS_LAST
+  user_id_ASC
+  user_id_DESC
+  user_id_ASC_NULLS_FIRST
+  user_id_ASC_NULLS_LAST
+  user_id_DESC_NULLS_FIRST
+  user_id_DESC_NULLS_LAST
+  user_walletAddress_ASC
+  user_walletAddress_DESC
+  user_walletAddress_ASC_NULLS_FIRST
+  user_walletAddress_ASC_NULLS_LAST
+  user_walletAddress_DESC_NULLS_FIRST
+  user_walletAddress_DESC_NULLS_LAST
+  user_chainId_ASC
+  user_chainId_DESC
+  user_chainId_ASC_NULLS_FIRST
+  user_chainId_ASC_NULLS_LAST
+  user_chainId_DESC_NULLS_FIRST
+  user_chainId_DESC_NULLS_LAST
+  bond_ASC
+  bond_DESC
+  bond_ASC_NULLS_FIRST
+  bond_ASC_NULLS_LAST
+  bond_DESC_NULLS_FIRST
+  bond_DESC_NULLS_LAST
+  ts_ASC
+  ts_DESC
+  ts_ASC_NULLS_FIRST
+  ts_ASC_NULLS_LAST
+  ts_DESC_NULLS_FIRST
+  ts_DESC_NULLS_LAST
+  isCommitment_ASC
+  isCommitment_DESC
+  isCommitment_ASC_NULLS_FIRST
+  isCommitment_ASC_NULLS_LAST
+  isCommitment_DESC_NULLS_FIRST
+  isCommitment_DESC_NULLS_LAST
+  txnHash_ASC
+  txnHash_DESC
+  txnHash_ASC_NULLS_FIRST
+  txnHash_ASC_NULLS_LAST
+  txnHash_DESC_NULLS_FIRST
+  txnHash_DESC_NULLS_LAST
+  creationBlockNumber_ASC
+  creationBlockNumber_DESC
+  creationBlockNumber_ASC_NULLS_FIRST
+  creationBlockNumber_ASC_NULLS_LAST
+  creationBlockNumber_DESC_NULLS_FIRST
+  creationBlockNumber_DESC_NULLS_LAST
+  creationTimestamp_ASC
+  creationTimestamp_DESC
+  creationTimestamp_ASC_NULLS_FIRST
+  creationTimestamp_ASC_NULLS_LAST
+  creationTimestamp_DESC_NULLS_FIRST
+  creationTimestamp_DESC_NULLS_LAST
+  chainId_ASC
+  chainId_DESC
+  chainId_ASC_NULLS_FIRST
+  chainId_ASC_NULLS_LAST
+  chainId_DESC_NULLS_FIRST
+  chainId_DESC_NULLS_LAST
+}
+
+type conditional_GrantsConnection {
+  edges: [conditional_GrantEdge!]!
+  pageInfo: conditional_PageInfo!
+  totalCount: Int!
+}
+
+type conditional_GrantEdge {
+  node: conditional_Grant!
+  cursor: String!
+}
+
+type conditional_PageInfo {
+  hasNextPage: Boolean!
+  hasPreviousPage: Boolean!
+  startCursor: String!
+  endCursor: String!
+}
+
+enum conditional_QuestionOrderByInput {
+  id_ASC
+  id_DESC
+  id_ASC_NULLS_FIRST
+  id_ASC_NULLS_LAST
+  id_DESC_NULLS_FIRST
+  id_DESC_NULLS_LAST
+  questionId_ASC
+  questionId_DESC
+  questionId_ASC_NULLS_FIRST
+  questionId_ASC_NULLS_LAST
+  questionId_DESC_NULLS_FIRST
+  questionId_DESC_NULLS_LAST
+  userId_ASC
+  userId_DESC
+  userId_ASC_NULLS_FIRST
+  userId_ASC_NULLS_LAST
+  userId_DESC_NULLS_FIRST
+  userId_DESC_NULLS_LAST
+  user_id_ASC
+  user_id_DESC
+  user_id_ASC_NULLS_FIRST
+  user_id_ASC_NULLS_LAST
+  user_id_DESC_NULLS_FIRST
+  user_id_DESC_NULLS_LAST
+  user_walletAddress_ASC
+  user_walletAddress_DESC
+  user_walletAddress_ASC_NULLS_FIRST
+  user_walletAddress_ASC_NULLS_LAST
+  user_walletAddress_DESC_NULLS_FIRST
+  user_walletAddress_DESC_NULLS_LAST
+  user_chainId_ASC
+  user_chainId_DESC
+  user_chainId_ASC_NULLS_FIRST
+  user_chainId_ASC_NULLS_LAST
+  user_chainId_DESC_NULLS_FIRST
+  user_chainId_DESC_NULLS_LAST
+  templateId_ASC
+  templateId_DESC
+  templateId_ASC_NULLS_FIRST
+  templateId_ASC_NULLS_LAST
+  templateId_DESC_NULLS_FIRST
+  templateId_DESC_NULLS_LAST
+  question_ASC
+  question_DESC
+  question_ASC_NULLS_FIRST
+  question_ASC_NULLS_LAST
+  question_DESC_NULLS_FIRST
+  question_DESC_NULLS_LAST
+  contentHash_ASC
+  contentHash_DESC
+  contentHash_ASC_NULLS_FIRST
+  contentHash_ASC_NULLS_LAST
+  contentHash_DESC_NULLS_FIRST
+  contentHash_DESC_NULLS_LAST
+  arbitrator_ASC
+  arbitrator_DESC
+  arbitrator_ASC_NULLS_FIRST
+  arbitrator_ASC_NULLS_LAST
+  arbitrator_DESC_NULLS_FIRST
+  arbitrator_DESC_NULLS_LAST
+  timeout_ASC
+  timeout_DESC
+  timeout_ASC_NULLS_FIRST
+  timeout_ASC_NULLS_LAST
+  timeout_DESC_NULLS_FIRST
+  timeout_DESC_NULLS_LAST
+  openingTs_ASC
+  openingTs_DESC
+  openingTs_ASC_NULLS_FIRST
+  openingTs_ASC_NULLS_LAST
+  openingTs_DESC_NULLS_FIRST
+  openingTs_DESC_NULLS_LAST
+  minBond_ASC
+  minBond_DESC
+  minBond_ASC_NULLS_FIRST
+  minBond_ASC_NULLS_LAST
+  minBond_DESC_NULLS_FIRST
+  minBond_DESC_NULLS_LAST
+  nonce_ASC
+  nonce_DESC
+  nonce_ASC_NULLS_FIRST
+  nonce_ASC_NULLS_LAST
+  nonce_DESC_NULLS_FIRST
+  nonce_DESC_NULLS_LAST
+  created_ASC
+  created_DESC
+  created_ASC_NULLS_FIRST
+  created_ASC_NULLS_LAST
+  created_DESC_NULLS_FIRST
+  created_DESC_NULLS_LAST
+  txnHash_ASC
+  txnHash_DESC
+  txnHash_ASC_NULLS_FIRST
+  txnHash_ASC_NULLS_LAST
+  txnHash_DESC_NULLS_FIRST
+  txnHash_DESC_NULLS_LAST
+  creationBlockNumber_ASC
+  creationBlockNumber_DESC
+  creationBlockNumber_ASC_NULLS_FIRST
+  creationBlockNumber_ASC_NULLS_LAST
+  creationBlockNumber_DESC_NULLS_FIRST
+  creationBlockNumber_DESC_NULLS_LAST
+  creationTimestamp_ASC
+  creationTimestamp_DESC
+  creationTimestamp_ASC_NULLS_FIRST
+  creationTimestamp_ASC_NULLS_LAST
+  creationTimestamp_DESC_NULLS_FIRST
+  creationTimestamp_DESC_NULLS_LAST
+  chainId_ASC
+  chainId_DESC
+  chainId_ASC_NULLS_FIRST
+  chainId_ASC_NULLS_LAST
+  chainId_DESC_NULLS_FIRST
+  chainId_DESC_NULLS_LAST
+}
+
+type conditional_QuestionsConnection {
+  edges: [conditional_QuestionEdge!]!
+  pageInfo: conditional_PageInfo!
+  totalCount: Int!
+}
+
+type conditional_QuestionEdge {
+  node: conditional_Question!
+  cursor: String!
+}
+
+type conditional_AnswersConnection {
+  edges: [conditional_AnswerEdge!]!
+  pageInfo: conditional_PageInfo!
+  totalCount: Int!
+}
+
+type conditional_AnswerEdge {
+  node: conditional_Answer!
+  cursor: String!
+}
+
+enum conditional_WalletOrderByInput {
+  id_ASC
+  id_DESC
+  id_ASC_NULLS_FIRST
+  id_ASC_NULLS_LAST
+  id_DESC_NULLS_FIRST
+  id_DESC_NULLS_LAST
+  walletAddress_ASC
+  walletAddress_DESC
+  walletAddress_ASC_NULLS_FIRST
+  walletAddress_ASC_NULLS_LAST
+  walletAddress_DESC_NULLS_FIRST
+  walletAddress_DESC_NULLS_LAST
+  chainId_ASC
+  chainId_DESC
+  chainId_ASC_NULLS_FIRST
+  chainId_ASC_NULLS_LAST
+  chainId_DESC_NULLS_FIRST
+  chainId_DESC_NULLS_LAST
+}
+
+type conditional_WalletsConnection {
+  edges: [conditional_WalletEdge!]!
+  pageInfo: conditional_PageInfo!
+  totalCount: Int!
+}
+
+type conditional_WalletEdge {
+  node: conditional_Wallet!
+  cursor: String!
+}
+
+type conditional_SquidStatus {
+  """The height of the last processed block"""
+  height: Int
+  """The hash of the last processed block"""
+  hash: String
+  """The height of the last processed finalized block"""
+  finalizedHeight: Int
+  """The hash of the last processed finalized block"""
+  finalizedHash: String
+}

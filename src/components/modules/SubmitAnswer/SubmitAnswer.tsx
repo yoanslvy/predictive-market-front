@@ -9,6 +9,7 @@ import { formatEther, parseEther, parseUnits } from 'viem'
 import { useAccount, useWriteContract, useWaitForTransactionReceipt, useReadContract } from 'wagmi'
 
 import { simpleGrantManagerAbi } from '@/src/app/contract/SimpleGrantManager'
+import { Grants } from '@/src/app/grants/explore/latest/_modules/tokenTable/data'
 import YesTokenBalance from '@/src/app/grants/grant/components/YesTokenBalance'
 import { Grant } from '@/src/app/server/getAllGrants'
 import { useSubmitAnswerStore } from '@/src/stores/grants/useSubmitAnswerStore'
@@ -18,7 +19,7 @@ import { Button } from '../Button/Button'
 const GRANT_MANAGER_ADDRESS = '0x4F07b6daCcd6dF8D52efd32F22534304Cc0e1114' as const
 
 interface SubmitAnswerProps {
-  grant: Grant
+  grant: Grants
   className?: string
   isopeningTimePassed: boolean
   answerStatus: string
@@ -74,8 +75,8 @@ export const SubmitAnswer: FC<SubmitAnswerProps> = ({
       const grantId = grant.grantId as `0x${string}`
       const answer = BigInt(SubmitAnswerData.answer.value)
       const maxPrevious = parseUnits(SubmitAnswerData.maxPrevious.value, 18)
-      const bondAmount = BigInt(grant.bond)
-      const minBondAmount = BigInt(grant.minBond)
+      const bondAmount = BigInt(grant.questionEntity.minBond)
+      const minBondAmount = BigInt(grant.questionEntity.minBond)
 
       console.log({ grantId, answer, maxPrevious, bondAmount, minBondAmount })
 
@@ -119,17 +120,19 @@ export const SubmitAnswer: FC<SubmitAnswerProps> = ({
     </div>
   )
 
-
   return (
     <div className={clsx('w-full rounded-xl bg-[#17181C] px-6 py-4', className)}>
       <form onSubmit={(e) => e.preventDefault()} className="space-y-4">
         <DetailCard label="Condition">
-          <p className="text-white text-md font-medium leading-relaxed">{grant.question}</p>
+          <p className="text-white text-md font-medium leading-relaxed">
+            {grant.questionEntity.question}
+          </p>
         </DetailCard>
         <DetailCard label="Your Answer">
           <div className="flex items-center justify-between mb-3">
             <div className="text-[#757A8B] text-xs">
-              Current Allocation Threshold: {formatEther(BigInt(grant.bond)).toString()} ETH
+              Current Allocation Threshold:{' '}
+              {formatEther(BigInt(grant.questionEntity.minBond)).toString()} ETH
             </div>
           </div>
 
@@ -204,13 +207,16 @@ export const SubmitAnswer: FC<SubmitAnswerProps> = ({
           buttonType="button"
           type="action"
           onClick={handleSubmit}
-          disabled={!isConnected || !isFormValid() || isSubmitting   || isAnswerWritePending || isAnswerConfirming}
+          disabled={
+            !isConnected ||
+            !isFormValid() ||
+            isSubmitting ||
+            isAnswerWritePending ||
+            isAnswerConfirming
+          }
           className={clsx(
             'w-full px-4 py-2 rounded text-sm font-semibold transition-all duration-200',
-            !isConnected ||
-              isSubmitting ||
-              isAnswerWritePending ||
-              isAnswerConfirming
+            !isConnected || isSubmitting || isAnswerWritePending || isAnswerConfirming
               ? 'bg-[#2C2F3A] text-[#757A8B] cursor-not-allowed'
               : 'bg-[#01EB5A] text-[#17181C] hover:bg-[#01EB5A]/90'
           )}>
