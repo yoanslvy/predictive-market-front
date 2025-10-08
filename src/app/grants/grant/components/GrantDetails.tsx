@@ -3,7 +3,7 @@
 import { Menu, Popover } from '@mantine/core'
 import Link from 'next/link'
 
-import { formatUnits } from 'viem'
+import { formatEther, formatUnits } from 'viem'
 
 import { useAccount } from 'wagmi'
 
@@ -79,17 +79,9 @@ export function GrantDetails({ grant, resolved }: { grant: Grants; resolved: boo
         )}
 
         {questionEntity.minBond.toString() && (
-          <DetailCard label="Current Bond">
-            <span className="text-sm font-semibold text-white">
-              {questionEntity.minBond.toString()} ETH
-            </span>
-          </DetailCard>
-        )}
-
-        {questionEntity.minBond.toString() && (
           <DetailCard label="Minimum Bond">
             <span className="text-sm font-semibold text-white">
-              {questionEntity.minBond.toString()} ETH
+              {formatEther(BigInt(questionEntity.minBond.toString()))} ETH
             </span>
           </DetailCard>
         )}

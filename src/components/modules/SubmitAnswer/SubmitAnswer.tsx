@@ -23,6 +23,7 @@ interface SubmitAnswerProps {
   className?: string
   isopeningTimePassed: boolean
   answerStatus: string
+  countdown?: string
 }
 
 export const SubmitAnswer: FC<SubmitAnswerProps> = ({
@@ -30,6 +31,7 @@ export const SubmitAnswer: FC<SubmitAnswerProps> = ({
   className,
   isopeningTimePassed,
   answerStatus,
+  countdown,
 }) => {
   const { address, isConnected } = useAccount()
   const [isSubmitting, setIsSubmitting] = useState(false)
@@ -125,11 +127,27 @@ export const SubmitAnswer: FC<SubmitAnswerProps> = ({
           <p className="text-white text-md font-medium leading-relaxed">
             {grant.questionEntity.question.slice(0, -10)}
           </p>
+          {countdown && (
+            <div className="flex items-center justify-between mt-3 pt-2 border-t border-[#30333C]">
+              <div className="flex items-center gap-2">
+                <div className="w-1.5 h-1.5 rounded-full bg-[#01EB5A] animate-pulse"></div>
+                <span className="text-white text-sm font-bold font-mono ">{countdown}</span>
+              </div>
+              <div className="text-[#757A8B] text-xs">
+                {status === 'Open'
+                  ? 'Until resolution'
+                  : status === 'Not Open'
+                    ? 'Until opening'
+                    : 'Closed'}
+              </div>
+            </div>
+          )}
         </DetailCard>
+
         <DetailCard label="Your Answer">
           <div className="flex items-center justify-between mb-3">
             <div className="text-[#757A8B] text-xs">
-              Current Allocation Threshold: {grant.questionEntity.minBond} ETH
+              Current Allocation Threshold: {formatEther(BigInt(grant.questionEntity.minBond))} ETH
             </div>
           </div>
 
@@ -189,7 +207,7 @@ export const SubmitAnswer: FC<SubmitAnswerProps> = ({
             </div>
           </div>
         )}
-
+        {/* 
         {answerHash && (
           <div className="bg-[#01EB5A]/10 border border-[#01EB5A]/20 rounded p-2">
             <div className="text-[#01EB5A] text-xs">
@@ -198,7 +216,7 @@ export const SubmitAnswer: FC<SubmitAnswerProps> = ({
               {isAnswerConfirmed && <div>Confirmed!</div>}
             </div>
           </div>
-        )}
+        )} */}
 
         <Button
           buttonType="button"

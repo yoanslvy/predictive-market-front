@@ -1,0 +1,6 @@
+query getAnswers($questionId: String!) {
+  conditional_answers(where: { questionId_eq: $questionId }) {
+    creationTimestamp
+    bond
+  }
+}

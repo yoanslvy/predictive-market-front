@@ -8,8 +8,12 @@ import {
     useReadContract
 } from 'wagmi'
 
+import {
+    waitForTransactionReceipt,
+} from '@wagmi/core'
 import { simpleGrantManagerAbi } from '@/src/app/contract/SimpleGrantManager'
 import { useGrantFormStore } from '@/src/stores/grants/useGrantFormStore'
+import { config } from '../app/(providers)/wagmiConfig'
 
 const GRANT_MANAGER_ADDRESS = '0x0Ea58737FA363Fcd31e84DA2eCa54e55F0701309' as const
 
@@ -23,7 +27,7 @@ export interface CreateGrantParams {
 }
 
 export function useGrant() {
-    const { address, isConnected } = useAccount()
+    const { address, isConnected, chainId } = useAccount()
     const [errorMsg, setErrorMsg] = useState<string | null>(null)
     const [isProcessing, setIsProcessing] = useState(false)
 
@@ -195,7 +199,9 @@ export function useGrant() {
             const amountBN = parseUnits(amount, 18)
             const minBondBN = parseUnits(minBond, 18)
 
-            writeGrantContract({
+            const writeCreateGrant = useWriteContract()
+
+            const hash = await writeCreateGrant.writeContractAsync({
                 address: GRANT_MANAGER_ADDRESS,
                 abi: simpleGrantManagerAbi,
                 functionName: 'createGrant',
@@ -210,7 +216,22 @@ export function useGrant() {
                 value: minBondBN
             })
 
-            //clearForm()
+            console.log('hash', hash)
+
+            const { status } = await waitForTransactionReceipt(config, {
+                hash: hash as `0x${string}`,
+                chainId: chainId as number,
+            })
+
+            if (status === 'reverted') {
+                throw new Error('Failed to create grant')
+            }
+
+            if (status !== 'success') {
+                throw new Error('Failed to create grant')
+            }
+
+            clearForm()
 
         } catch (error) {
             const message = error instanceof Error ? error.message : 'Unknown error'

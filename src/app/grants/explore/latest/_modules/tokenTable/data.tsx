@@ -12,6 +12,11 @@ import { getAllGrantsDatasByChainFetcherCached } from '@/src/server/fetchers/get
 
 import EtherscanLink from '../../../_components/CollateralToken'
 
+export type Answers = {
+  creationTimestamp: number
+  bond: string
+}
+
 export type Grants = {
   amount: string
   chainId: number
@@ -34,6 +39,7 @@ export type Grants = {
     nonce: string
     timeout: number
   }
+  answers: Answers[]
   recipient: {
     walletAddress: string
   }

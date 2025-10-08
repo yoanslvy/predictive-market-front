@@ -2209,6 +2209,12 @@ const merger = new(BareMerger as any)({
         },
         location: 'GetAllGrantsDocument.graphql'
       },{
+        document: GetAnswersDocument,
+        get rawSDL() {
+          return printWithCache(GetAnswersDocument);
+        },
+        location: 'GetAnswersDocument.graphql'
+      },{
         document: GetGrantByIdDocument,
         get rawSDL() {
           return printWithCache(GetGrantByIdDocument);
@@ -2265,6 +2271,13 @@ export type getAllGrantsQuery = { conditional_grants: Array<(
     ), recipient: Pick<conditional_Wallet, 'walletAddress'>, creator: Pick<conditional_Wallet, 'walletAddress'> }
   )> };
 
+export type getAnswersQueryVariables = Exact<{
+  questionId: Scalars['String'];
+}>;
+
+
+export type getAnswersQuery = { conditional_answers: Array<Pick<conditional_Answer, 'creationTimestamp' | 'bond'>> };
+
 export type getGrantByIdQueryVariables = Exact<{
   id: Scalars['String'];
 }>;
@@ -2320,6 +2333,14 @@ export const getAllGrantsDocument = gql`
   }
 }
     ` as unknown as DocumentNode<getAllGrantsQuery, getAllGrantsQueryVariables>;
+export const getAnswersDocument = gql`
+    query getAnswers($questionId: String!) {
+  conditional_answers(where: {questionId_eq: $questionId}) {
+    creationTimestamp
+    bond
+  }
+}
+    ` as unknown as DocumentNode<getAnswersQuery, getAnswersQueryVariables>;
 export const getGrantByIdDocument = gql`
     query getGrantById($id: String!) {
   conditional_grants(where: {grantId_eq: $id}) {
@@ -2367,11 +2388,15 @@ export const getGrantByIdDocument = gql`
 
 
 
+
 export type Requester<C = {}, E = unknown> = <R, V>(doc: DocumentNode, vars?: V, options?: C) => Promise<R> | AsyncIterable<R>
 export function getSdk<C, E>(requester: Requester<C, E>) {
   return {
     getAllGrants(variables: getAllGrantsQueryVariables, options?: C): Promise<getAllGrantsQuery> {
       return requester<getAllGrantsQuery, getAllGrantsQueryVariables>(getAllGrantsDocument, variables, options) as Promise<getAllGrantsQuery>;
+    },
+    getAnswers(variables: getAnswersQueryVariables, options?: C): Promise<getAnswersQuery> {
+      return requester<getAnswersQuery, getAnswersQueryVariables>(getAnswersDocument, variables, options) as Promise<getAnswersQuery>;
     },
     getGrantById(variables: getGrantByIdQueryVariables, options?: C): Promise<getGrantByIdQuery> {
       return requester<getGrantByIdQuery, getGrantByIdQueryVariables>(getGrantByIdDocument, variables, options) as Promise<getGrantByIdQuery>;

@@ -1,10 +1,11 @@
 import SubmitAnswer from '@/src/components/modules/SubmitAnswer'
+import { getAnswersByQuestionIdFetcherCached } from '@/src/server/fetchers/getAnswers'
 import { getGrantDatasByChainFetcherCached } from '@/src/server/fetchers/getGrantById'
 import { cn } from '@/src/src/utils'
 
 import { getGrantBestAnswer } from '../../server/getAllGrants'
 import FluxTransactionsTable from '../_components/FluxTxTableServer'
-import { Grants } from '../explore/latest/_modules/tokenTable/data'
+import { Answers, Grants } from '../explore/latest/_modules/tokenTable/data'
 import { DetailCard, GrantDetails } from './components/GrantDetails'
 import ResolutionProgressBar from './components/ResolutionProgressBar'
 
@@ -27,10 +28,38 @@ export default async function GrantLayout({
 
   const grant = await getGrantDatasByChainFetcherCached({ id: grantId, chain: '11155111' })
   const grantData = grant.conditional_grants[0] as unknown as Grants
+
+  const answer = await getAnswersByQuestionIdFetcherCached({
+    chainId: '11155111',
+    questionId: grantData.questionId,
+  })
+  const answerData = answer.conditional_answers as unknown as Answers[]
+  const filteredAnswer = answerData.sort(
+    (answerA, answerB) => Number(answerA.creationTimestamp) - Number(answerB.creationTimestamp)
+  )
   const answerStatus = await getGrantBestAnswer(grantId)
 
-  const openingTime = grantData.questionEntity.openingTs
   const now = new Date()
+
+  let countdown = undefined
+
+  if (filteredAnswer.length > 0) {
+    const firstAnswer = filteredAnswer[0]
+    const resolutionTime = new Date(Number(firstAnswer.creationTimestamp) + 24 * 60 * 60 * 1000) // +1 day
+    const countdownDiffMs = resolutionTime.getTime() - now.getTime()
+
+    if (countdownDiffMs <= 0) {
+      countdown = 'Countdown finished'
+    } else {
+      const hours = Math.floor(countdownDiffMs / (1000 * 60 * 60))
+      const minutes = Math.floor((countdownDiffMs / (1000 * 60)) % 60)
+      const seconds = Math.floor((countdownDiffMs / 1000) % 60)
+
+      countdown = `${hours}h ${minutes}m ${seconds}s`
+    }
+  }
+
+  const openingTime = grantData.questionEntity.openingTs
   const openingTimeDate = openingTime ? new Date(Number(openingTime)) : null
   const isOpeningTimePassed = openingTimeDate ? openingTimeDate < now : false
   const resolved = grantData.resolved
@@ -64,6 +93,7 @@ export default async function GrantLayout({
               grant={grantData}
               isopeningTimePassed={isOpeningTimePassed}
               answerStatus={answerStatus}
+              countdown={countdown}
             />
           ) : (
             <DetailCard label="Condition">

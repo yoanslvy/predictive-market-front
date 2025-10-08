@@ -47,7 +47,7 @@ export default function ResolutionProgressBar({
     {
       id: 'resolved',
       title: 'Grant Resolved',
-      subtitle: openingTimeDate ? openingTimeDate.toLocaleDateString() : 'Pending',
+      subtitle: undefined,
       status: resolved ? 'completed' : 'pending',
     },
   ]

@@ -112,9 +112,11 @@ export function GrantForm({ wallet, chainId }: { wallet: string; chainId: number
       // Check if we need approval first
       const needsApprove = await needsApproval()
 
-      console.log('needsApprove', needsApprove)
       if (needsApprove) {
         await approve()
+
+        // Wait for 3 seconds to confirm approval
+        await new Promise((resolve) => setTimeout(resolve, 3000))
       }
 
       await createGrantFromForm()
