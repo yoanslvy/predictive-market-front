@@ -64,6 +64,8 @@ export function GrantForm({ wallet, chainId }: { wallet: string; chainId: number
 
   const isLastStep = activeStepId === lastStepId
 
+  console.log('status', status)
+
   useEffect(() => {
     if (!wallet) {
       setActiveStepId(1)
@@ -147,6 +149,7 @@ export function GrantForm({ wallet, chainId }: { wallet: string; chainId: number
           canShowNextButton={showNextButton}
           canShowPreviousButton={showPreviousButton}
           canSkipStep={false}
+          loading={status === 'creating' || status === 'approving'}
         />
       </div>
     </>

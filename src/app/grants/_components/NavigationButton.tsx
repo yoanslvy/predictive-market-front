@@ -6,6 +6,7 @@ type NavigationButtonProps = {
   onClick: () => void
   disabled?: boolean
   skipMode?: boolean
+  loading?: boolean
 }
 
 export function NavigationButton({
@@ -13,6 +14,7 @@ export function NavigationButton({
   onClick,
   disabled = false,
   skipMode = false,
+  loading = false,
 }: NavigationButtonProps) {
   if (direction === 'previous') {
     return (
@@ -27,7 +29,7 @@ export function NavigationButton({
 
   return (
     <Btn disabled={disabled} variant="white" onClick={onClick}>
-      <span className="text-[16px]">{skipMode ? 'Skip' : 'Continue'}</span>
+      <span className="text-[16px]">{skipMode ? 'Skip' : loading ? 'Loading...' : 'Continue'}</span>
     </Btn>
   )
 }

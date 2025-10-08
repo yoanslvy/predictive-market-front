@@ -65,7 +65,7 @@ export function useGrant() {
 
     // Contract write for token approval
     const {
-        writeContract: writeApprovalContract,
+        writeContractAsync: writeApprovalContractAsync,
         data: approvalHash,
         isPending: isApprovalWritePending,
         error: approvalWriteError,
@@ -157,12 +157,25 @@ export function useGrant() {
             setErrorMsg(null)
             const amountBN = parseUnits(finalAmount, 18)
 
-            writeApprovalContract({
+            const hash = await writeApprovalContractAsync({
                 address: finalTokenAddress,
                 abi: erc20Abi,
                 functionName: 'approve',
                 args: [GRANT_MANAGER_ADDRESS, amountBN],
             })
+
+            const { status } = await waitForTransactionReceipt(config, {
+                hash: hash as `0x${string}`,
+                chainId: chainId as number,
+            })
+
+            if (status === 'reverted') {
+                throw new Error('Failed to approve token')
+            }
+
+            if (status !== 'success') {
+                throw new Error('Failed to approve token')
+            }
         } catch (error) {
             const message = error instanceof Error ? error.message : 'Unknown error'
             setErrorMsg(`Approval failed: ${message}`)
@@ -201,15 +214,6 @@ export function useGrant() {
             const amountBN = parseUnits(amount, 18)
             const minBondBN = parseUnits(minBond, 18)
 
-            console.log({
-                condition,
-                collateralToken,
-                amountBN,
-                recipient,
-                openingTime,
-                minBondBN,
-            })
-
             const hash = await writeGrantContractAsync({
                 address: GRANT_MANAGER_ADDRESS,
                 abi: simpleGrantManagerAbi,
@@ -225,8 +229,6 @@ export function useGrant() {
                 value: minBondBN
             })
 
-            console.log('hash', hash)
-
             const { status } = await waitForTransactionReceipt(config, {
                 hash: hash as `0x${string}`,
                 chainId: chainId as number,
@@ -241,6 +243,7 @@ export function useGrant() {
             }
 
             clearForm()
+            window.location.href = '/grants/explore/latest'
 
         } catch (error) {
             const message = error instanceof Error ? error.message : 'Unknown error'

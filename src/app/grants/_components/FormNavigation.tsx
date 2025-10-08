@@ -7,6 +7,7 @@ type FormNavigationProps = {
   canShowPreviousButton: boolean
   canShowNextButton: boolean
   canSkipStep: boolean
+  loading?: boolean
 }
 
 export function FormNavigation({
@@ -16,6 +17,7 @@ export function FormNavigation({
   canShowNextButton,
   canShowPreviousButton,
   canSkipStep,
+  loading,
 }: FormNavigationProps) {
   return (
     <div className="mt-[2em] flex w-full items-center justify-center gap-[1rem] flex-wrap pb-[2em]">
@@ -27,6 +29,7 @@ export function FormNavigation({
           onClick={onNext}
           disabled={!canGoNext}
           skipMode={canSkipStep}
+          loading={loading}
         />
       )}
     </div>
