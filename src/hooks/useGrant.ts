@@ -33,6 +33,8 @@ export function useGrant() {
 
     const { grantFormData, clearForm, isFormValid } = useGrantFormStore()
 
+
+
     // Check current allowance
     const {
         data: currentAllowance,
@@ -54,7 +56,7 @@ export function useGrant() {
 
     // Contract write for grant creation
     const {
-        writeContract: writeGrantContract,
+        writeContractAsync: writeGrantContractAsync,
         data: grantHash,
         isPending: isGrantWritePending,
         error: grantWriteError,
@@ -199,9 +201,16 @@ export function useGrant() {
             const amountBN = parseUnits(amount, 18)
             const minBondBN = parseUnits(minBond, 18)
 
-            const writeCreateGrant = useWriteContract()
+            console.log({
+                condition,
+                collateralToken,
+                amountBN,
+                recipient,
+                openingTime,
+                minBondBN,
+            })
 
-            const hash = await writeCreateGrant.writeContractAsync({
+            const hash = await writeGrantContractAsync({
                 address: GRANT_MANAGER_ADDRESS,
                 abi: simpleGrantManagerAbi,
                 functionName: 'createGrant',
