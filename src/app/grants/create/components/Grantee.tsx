@@ -8,11 +8,11 @@ export function Grantee() {
 
   return (
     <>
-      <div className={styles.section}>
+      {/*  <div className={styles.section}>
         <Heading size="md" className="mb-2">
           Chain
         </Heading>
-      </div>
+      </div> */}
       <div className={styles.section}>
         <Heading size="md" className="mb-2">
           Grant Recipient Address
