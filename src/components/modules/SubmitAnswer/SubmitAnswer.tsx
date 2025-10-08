@@ -144,7 +144,7 @@ export const SubmitAnswer: FC<SubmitAnswerProps> = ({
           )}
         </DetailCard>
 
-        <DetailCard label="Your Answer">
+        <DetailCard label={`Current answer: ${answerStatus}`}>
           <div className="flex items-center justify-between mb-3">
             <div className="text-[#757A8B] text-xs">
               Current Allocation Threshold: {formatEther(BigInt(grant.questionEntity.minBond))} ETH
@@ -192,12 +192,6 @@ export const SubmitAnswer: FC<SubmitAnswerProps> = ({
               {SubmitAnswerData.maxPrevious.message}
             </div>
           )}
-        </DetailCard>
-
-        <DetailCard>
-          <span className="text-[#757A8B] text-xs uppercase tracking-wide font-medium">
-            Current Answer Status: {answerStatus}
-          </span>
         </DetailCard>
 
         {error && (
