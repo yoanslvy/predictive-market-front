@@ -8,6 +8,7 @@ import Value from '@modules/Value'
 
 import { getGrant } from '@/src/app/server/getAllGrants'
 import Pagination from '@/src/components/modules/Pagination'
+import TokenAsset from '@/src/components/modules/TokenAsset'
 import { getAllGrantsDatasByChainFetcherCached } from '@/src/server/fetchers/getAllGrants'
 
 import EtherscanLink from '../../../_components/CollateralToken'
@@ -140,12 +141,12 @@ export default async function TokenTableServer({
 
   const allGrantsId = await getAllGrantsDatasByChainFetcherCached({ chain: '11155111' })
 
-  const grants = (await Promise.all(
+  /* const grants = (await Promise.all(
     allGrantsId.conditional_grants.map(async (grant) => {
       const grantData = await getGrant(grant.grantId)
       return grantData as Grant
     })
-  )) as Grant[]
+  )) as Grant[] */
 
   return (
     <>
@@ -157,20 +158,25 @@ export default async function TokenTableServer({
         columns={[
           {
             title: 'Grant Condition',
-            render: ({ data }) => <Tag type={'info'}>{data.question}</Tag>,
+            render: ({ data }) => <Tag type={'info'}>{data.questionEntity.question}</Tag>,
           },
           {
             title: 'Opening time',
             render: ({ data }) =>
-              !!data?.resolved ? 'Resolved' : timeDifference(Number(data.deadline) * 1000),
+              !!data?.resolved
+                ? 'Resolved'
+                : timeDifference(Number(data.questionEntity.openingTs) * 1000),
           },
 
           {
             title: 'Reward token',
             render: ({ data }) => (
-              <EtherscanLink
-                address={data.collateralToken}
-                shortenedAddress={shortenEthAddress(data.collateralToken)}
+              <TokenAsset
+                chainId={11155111}
+                address={data.collateralToken.tokenAddress}
+                name={data.collateralToken.name}
+                symbol={data.collateralToken.symbol}
+                size="md"
               />
             ),
           },
@@ -186,10 +192,14 @@ export default async function TokenTableServer({
             ),
           },
         ]}
-        data={paginate(grants, Number(props.page), Number(props.entriesPerPage))}
+        data={paginate(
+          allGrantsId.conditional_grants,
+          Number(props.page),
+          Number(props.entriesPerPage)
+        )}
       />
       <Pagination
-        total={Number(grants.length)}
+        total={Number(allGrantsId.conditional_grants.length)}
         perPage={Number(props.entriesPerPage)}
         page={props.page ? Number(props.page) : 1}
         pathname={`/grants/explore/latest`}
