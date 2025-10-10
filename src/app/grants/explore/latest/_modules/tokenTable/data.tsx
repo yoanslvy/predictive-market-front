@@ -158,14 +158,14 @@ export default async function TokenTableServer({
         columns={[
           {
             title: 'Grant Condition',
-            render: ({ data }) => <Tag type={'info'}>{data.questionEntity.question}</Tag>,
+            render: ({ data }) => (
+              <Tag type={'info'}>{data.questionEntity.question.slice(0, -10)}</Tag>
+            ),
           },
           {
             title: 'Opening time',
             render: ({ data }) =>
-              !!data?.resolved
-                ? 'Resolved'
-                : timeDifference(Number(data.questionEntity.openingTs) * 1000),
+              !!data?.resolved ? 'Resolved' : timeDifference(Number(data.questionEntity.openingTs)),
           },
 
           {
