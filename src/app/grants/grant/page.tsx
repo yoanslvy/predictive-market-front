@@ -42,10 +42,11 @@ export default async function GrantLayout({
   const now = new Date()
 
   let countdown = undefined
+  const waitingTime = 1000 // 1 sec
 
   if (filteredAnswer.length > 0) {
-    const firstAnswer = filteredAnswer[0]
-    const resolutionTime = new Date(Number(firstAnswer.creationTimestamp) + 24 * 60 * 60 * 1000) // +1 day
+    const lastAnswer = filteredAnswer.at(-1) as Answers
+    const resolutionTime = new Date(Number(lastAnswer.creationTimestamp) + waitingTime) 
     const countdownDiffMs = resolutionTime.getTime() - now.getTime()
 
     if (countdownDiffMs <= 0) {
